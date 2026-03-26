@@ -5,6 +5,8 @@ import {
   IconCamera,
   IconWorld,
 } from "@tabler/icons-react";
+import Image from "next/image";
+import logo from "../../../public/festiko-logo.png";
 
 const Footer = () => {
   return (
@@ -12,10 +14,18 @@ const Footer = () => {
       <footer className="bg-[#353029] w-full py-16 px-12 mt-auto">
         <div className="max-w-360 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 items-start">
           <div className="flex flex-col gap-6">
-            <span className="text-[#c8b273] font-headline text-3xl font-bold italic">
-              Festiko
-            </span>
-            <p className="font-body text-[#fcf2e8]/60 text-sm max-w-xs leading-relaxed">
+            <div className="flex items-center gap-0 -ml-7">
+              <Image
+                src={logo}
+                alt="Festiko Logo"
+                width={100}
+                height={100}
+              />
+              <span className="text-[#c8b273] font-headline text-3xl font-bold italic -ml-6">
+                Festiko
+              </span>
+            </div>
+            <p className="font-body text-[#fcf2e8]/60 text-sm max-w-xs leading-relaxed -mt-8">
               The premium digital infrastructure for elite event management and
               curated experiences.
             </p>

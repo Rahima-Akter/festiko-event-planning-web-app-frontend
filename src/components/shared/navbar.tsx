@@ -10,10 +10,12 @@ import {
   IconLogout,
 } from "@tabler/icons-react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+import logo from "../../../public/festiko-logo-dark.png";
 
 const Navbar = () => {
   // Simulate logged in user; null = not logged in
-  const user: any = { role: "ADMIN", avatarUrl: "/default-avatar.png" };
+  const user: any = { role: "USER", avatarUrl: "/default-avatar.png" };
   const [dropdownOpen, setDropdownOpen] = useState(false);
   // const [menuOpen, setMenuOpen] = useState(false);
 
@@ -28,10 +30,16 @@ const Navbar = () => {
     <header className="fixed top-0 w-full z-50 bg-[#fff8f4]/80 dark:bg-[#353029]/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(31,27,21,0.04)]">
       <nav className="flex justify-between items-center px-3 md:px-12 h-20 max-w-360 mx-auto">
         {/* Logo */}
-        <div className="text-2xl font-bold font-headline text-[#6e5d27] dark:text-[#c8b273] italic">
+        {/* <div className="text-2xl font-bold font-headline text-[#6e5d27] dark:text-[#c8b273] italic">
           Festiko
-        </div>
-
+        </div> */}
+        <Image
+          src={logo}
+          alt="Festiko Logo"
+          width={150}
+          height={150}
+          className=""
+        />
         {/* Desktop Links */}
         <div className="flex items-center justify-center gap-6">
           <Link
@@ -51,7 +59,7 @@ const Navbar = () => {
         {/* Right Side */}
         <div className="flex items-center gap-4">
           {/* Show login/register if not logged in */}
-          {user && (
+          {!user && (
             <div className="hidden md:flex gap-4">
               <Link
                 href="/login"
