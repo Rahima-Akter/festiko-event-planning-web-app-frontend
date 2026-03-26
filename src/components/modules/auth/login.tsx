@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 const LoginForm = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
 
   return (
     <main className="grow flex items-center justify-center p-6 md:p-12 lg:p-20 pt-28 bg-festiko-charcoal">

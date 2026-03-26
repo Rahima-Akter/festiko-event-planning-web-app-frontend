@@ -13,7 +13,7 @@ const HeroSection = () => {
         <div className="relative z-10 px-10 lg:px-24 max-w-4xl mx-auto md:mx-0">
           <h1 className="font-headline text-[42px] md:text-6xl font-bold text-[#c8b273] leading-tight mb-8 tracking-tighter italic">
             Where Every Occasion <br />
-            Becomes A Masterpiece....
+            Becomes A Masterpiece ....
           </h1>
           <p className="font-body text-xl text-[#fcf2e8] max-w-xl mb-12 leading-relaxed opacity-90">
             Experience a curated sensory journey designed for the world&apos;s

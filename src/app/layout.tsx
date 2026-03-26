@@ -1,23 +1,16 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Figtree, Outfit } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Manrope, Noto_Serif } from "next/font/google";
 
-const outfitHeading = Outfit({
+const manrope = Manrope({
   subsets: ["latin"],
-  variable: "--font-heading",
+  variable: "--font-manrope",
 });
 
-const figtree = Figtree({ subsets: ["latin"], variable: "--font-sans" });
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const notoSerif = Noto_Serif({
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  variable: "--font-noto-serif",
 });
 
 export const metadata: Metadata = {
@@ -35,11 +28,8 @@ export default function RootLayout({
       className={cn(
         "h-full",
         "antialiased",
-        geistSans.variable,
-        geistMono.variable,
-        "font-sans",
-        figtree.variable,
-        outfitHeading.variable,
+        manrope.variable,
+        notoSerif.variable,
       )}
     >
       <body className="min-h-full flex flex-col">{children}</body>
