@@ -1,9 +1,7 @@
+import Events from "@/components/modules/events/events";
+
 const EventsPage = () => {
-    return (
-        <div>
-            events
-        </div>
-    );
+  return <Events />;
 };
 
 export default EventsPage;

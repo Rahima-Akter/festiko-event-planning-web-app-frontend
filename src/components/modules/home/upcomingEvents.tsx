@@ -6,7 +6,7 @@ const UpcomingEventsSection = () => {
     <>
       <section className="py-24 px-12 bg-[#fff8f4]">
         <div className="max-w-360 mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end gap-8 mb-16">
+          <div className="flex flex-col lg:flex-row justify-between lg:items-end items-start gap-8 mb-16">
             <div>
               <h2 className="font-headline text-4xl text-[#1f1b15] font-semibold mb-2">
                 Upcoming Events
