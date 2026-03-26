@@ -2,7 +2,7 @@ const HeroSection = () => {
   return (
     <>
       <section className="relative lg:h-160 h-210 w-full overflow-hidden bg-[#2F2A24] flex items-center">
-        <div className="absolute inset-0 opacity-40">
+        <div className="absolute inset-0 opacity-60">
           <img
             alt="Luxury Gala Ballroom"
             className="w-full h-full object-cover"

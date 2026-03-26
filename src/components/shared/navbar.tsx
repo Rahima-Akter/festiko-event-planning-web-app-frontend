@@ -9,6 +9,7 @@ import {
   IconDashboard,
   IconLogout,
 } from "@tabler/icons-react";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   // Simulate logged in user; null = not logged in
@@ -21,6 +22,8 @@ const Navbar = () => {
     // Add your logout logic here
   };
 
+  const pathName = usePathname();
+
   return (
     <header className="fixed top-0 w-full z-50 bg-[#fff8f4]/80 dark:bg-[#353029]/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(31,27,21,0.04)]">
       <nav className="flex justify-between items-center px-3 md:px-12 h-20 max-w-360 mx-auto">
@@ -30,16 +33,16 @@ const Navbar = () => {
         </div>
 
         {/* Desktop Links */}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center justify-center gap-6">
           <Link
-            href="#"
-            className="flex items-center gap-1 font-headline font-semibold text-[#6e5d27] dark:text-[#c8b273] border-b-2 border-[#6e5d27] pb-1 hover:opacity-80 transition-all duration-300"
+            href="/"
+            className={`flex items-center justify-center ${pathName === "/" ? "bg-[#6e5d27]/20 px-3 pt-1.5 rounded-md" : "pt-2"} gap-1 font-headline font-semibold text-[#6e5d27] dark:text-[#c8b273] pb-1 hover:opacity-80 transition-all duration-300`}
           >
             <IconHome size={18} /> Home
           </Link>
           <Link
-            href="#"
-            className="flex items-center gap-1 font-headline font-semibold text-[#353029]/70 dark:text-[#fcf2e8]/70 hover:text-[#6e5d27] hover:opacity-80 transition-all duration-300"
+            href="/events"
+            className={`flex items-center gap-1 font-headline font-semibold text-[#353029]/70 dark:text-[#fcf2e8]/70 hover:text-[#6e5d27] hover:opacity-80 transition-all duration-300 ${pathName === "/events" ? "bg-[#6e5d27]/20 px-3 py-1.5 rounded-md" : ""}`}
           >
             <IconCalendarEvent size={18} /> Events
           </Link>
@@ -48,7 +51,7 @@ const Navbar = () => {
         {/* Right Side */}
         <div className="flex items-center gap-4">
           {/* Show login/register if not logged in */}
-          {!user && (
+          {user && (
             <div className="hidden md:flex gap-4">
               <Link
                 href="/login"
