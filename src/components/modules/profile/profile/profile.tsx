@@ -9,7 +9,7 @@ import {
 const ProfilePage = () => {
   return (
     <div className="flex min-h-screen bg-[#2F2A24] text-[#F7F1E3] font-body">
-      <main className="ml-72 pt-6 px-7 pb-20 w-full mx-auto">
+      <main className="lg:ml-72 ml-0 pt-8 px-12 pb-20 w-full mx-auto">
         {/* Expanded Profile Header Section */}
           <div className="col-span-12">
             <h1 className="font-headline text-6xl font-bold tracking-tight text-[#F7F1E3] mb-6">
@@ -23,7 +23,7 @@ const ProfilePage = () => {
         {/* Dashboard Grid */}
         <div className="grid grid-cols-12 gap-5 mb-16">
           {/* Next Premiere (Large Feature) */}
-          <div className="col-span-12 lg:col-span-8 relative overflow-hidden h-[360px] border border-[#ffffff]/5">
+          <div className="col-span-12 lg:col-span-8 relative overflow-hidden h-90 border border-[#ffffff]/5">
             <img 
               className="w-full h-full object-cover brightness-75 transition-transform duration-[2s] hover:scale-105" 
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJbJPLatnbV6HSKNagEx5plBmPP_tEmuB2LUD9u10psVBuEzOJ89dspzOQy0L9ixvH3tlRy4Jln-7067cVWMtKzGyjnl-dLXEBNWuWgEW0Vd5ulK13ec1HvpiLTM-xLtcS9PdO32Jy9IIITJGqjGKFgR113_Em5Bg-4Jdfupe0cQyG2m9ePNpeF-LP_Q5SNCaNIUhGetUMDM9m7zfS2iFfBfEgGPUOLp8MMhwd0DlQikcFxyfQ_QLV4RfJbKK8MaSaRw_UFK45VEwY" 
@@ -32,7 +32,7 @@ const ProfilePage = () => {
             <div className="absolute inset-0 bg-linear-to-r from-[#2F2A24]/95 via-[#2F2A24]/60 to-transparent flex items-center px-12">
               <div className="max-w-md">
                 <span className="font-label text-[10px] uppercase tracking-[0.3em] text-[#C8B273] font-bold mb-4 block">Next Premiere</span>
-                <h3 className="text-4xl font-headline text-[#ffffff] font-bold mb-6">The Midsummer Night's Gala</h3>
+                <h3 className="text-4xl font-headline text-[#ffffff] font-bold mb-6">The Midsummer Night&apos;s Gala</h3>
                 <div className="flex gap-8 items-center text-[#b4a692] font-label text-xs uppercase tracking-widest">
                   <span className="flex items-center gap-2"><IconCalendarEvent size={16} className="text-[#C8B273]"/> June 24, 2024</span>
                   <span className="flex items-center gap-2"><IconLocation size={16} className="text-[#C8B273]"/> Paris, FR</span>
@@ -89,7 +89,7 @@ const ProfilePage = () => {
                   <span className="text-[#a89145] text-[10px]">★★★★★</span>
                 </div>
                 <p className="text-[#baa97d] font-body italic text-sm leading-relaxed">
-                  "Alexander's attention to detail during the Yacht Soirée was unparalleled. Truly a masterclass in hospitality."
+                  &apos;Alexande&apos;s attention to detail during the Yacht Soirée was unparalleled. Truly a masterclass in hospitality.&apos;
                 </p>
               </div>
             </div>
@@ -104,7 +104,7 @@ const ProfilePage = () => {
                   <span className="text-[#a89145] text-[10px]">★★★★★</span>
                 </div>
                 <p className="text-[#baa97d] font-body italic text-sm leading-relaxed">
-                  "The curation of the private gallery view exceeded all expectations. Every element felt bespoke."
+                  &apos;The curation of the private gallery view exceeded all expectations. Every element felt bespoke.
                 </p>
               </div>
             </div>
@@ -115,7 +115,7 @@ const ProfilePage = () => {
         <section>
           <div className="flex items-center justify-between mb-12">
             <h2 className="font-headline text-3xl font-bold">Portfolio Highlights</h2>
-            <div className="h-[1px] flex-grow mx-12 bg-[#ffffff]/10"></div>
+            <div className="h-px grow mx-12 bg-[#ffffff]/10"></div>
             <button className="bg-[#6e5d27] px-6 py-2 text-[#ffffff] font-label text-[10px] uppercase tracking-widest font-bold">Add Project</button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
