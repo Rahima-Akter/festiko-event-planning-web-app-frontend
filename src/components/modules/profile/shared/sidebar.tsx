@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import logo from "../../../../../public/festiko-logo.png";
 import Link from "next/link";
@@ -14,6 +15,7 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 import { Dispatch, SetStateAction } from "react";
+import { usePathname } from "next/navigation";
 
 type Props = {
   isOpen: boolean;
@@ -21,6 +23,8 @@ type Props = {
 };
 
 const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
+  const pathName = usePathname();
+
   return (
     <>
       {isOpen && (
@@ -63,7 +67,7 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
         <nav className="flex flex-col gap-1 overflow-y-auto mb-3">
           {/* Navigation Links */}
           <Link
-            className="flex items-center gap-4 text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 transition-colors"
+            className={`flex items-center gap-4 ${pathName === "/" ? "bg-[#644d31] text-[#d0b260] font-semibold rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200" : "text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 hover:rounded-l-full hover:ml-4 hover:pl-6 hover:py-3 transition-colors"}`}
             href="/"
           >
             <span className="material-symbols-outlined">
@@ -73,9 +77,10 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
               Home
             </span>
           </Link>
+
           <Link
-            className="flex items-center gap-4 text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 transition-colors"
-            href="#"
+            className={`flex items-center gap-4 ${pathName === "/profile" ? "bg-[#644d31] text-[#d0b260] font-semibold rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200" : ""} text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 hover:rounded-l-full hover:ml-4 hover:pl-6 hover:py-3 transition-colors`}
+            href="/profile"
           >
             <span className="material-symbols-outlined">
               <IconUser />
@@ -84,9 +89,10 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
               Profile
             </span>
           </Link>
+
           <Link
-            className="flex items-center gap-4 text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 transition-colors"
-            href="#"
+            className={`flex items-center gap-4 ${pathName === "/profile/my-events" ? "bg-[#644d31] text-[#d0b260] font-semibold rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200" : "text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 hover:rounded-l-full hover:ml-4 hover:pl-6 hover:py-3 transition-colors"}`}
+            href="/profile/my-events"
           >
             <span className="material-symbols-outlined">
               <IconCalendarEvent />
@@ -95,9 +101,10 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
               My Events
             </span>
           </Link>
+
           <Link
-            className="flex items-center gap-4 text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 transition-colors"
-            href="#"
+            className={`flex items-center gap-4 ${pathName === "/profile/invitations" ? "bg-[#644d31] text-[#d0b260] font-semibold rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200" : "text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 hover:rounded-l-full hover:ml-4 hover:pl-6 hover:py-3 transition-colors"}`}
+            href="/profile/invitations"
           >
             <span className="material-symbols-outlined">
               <IconMail />
@@ -106,9 +113,10 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
               Invitations
             </span>
           </Link>
+
           <Link
-            className="flex items-center gap-4 text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 transition-colors"
-            href="#"
+            className={`flex items-center gap-4 ${pathName === "/profile/incoming-join-requests" ? "bg-[#644d31] text-[#d0b260] font-semibold rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200" : "text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 hover:rounded-l-full hover:ml-4 hover:pl-6 hover:py-3 transition-colors"}`}
+            href="/profile/incoming-join-requests"
           >
             <span className="material-symbols-outlined">
               <IconPointerQuestion />
@@ -117,9 +125,10 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
               Incoming Join Requests
             </span>
           </Link>
+
           <Link
-            className="flex items-center gap-4 text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 transition-colors"
-            href="#"
+            className={`flex items-center gap-4 ${pathName === "/profile/my-participations" ? "bg-[#644d31] text-[#d0b260] font-semibold rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200" : "text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 hover:rounded-l-full hover:ml-4 hover:pl-6 hover:py-3 transition-colors"}`}
+            href="/profile/my-participations"
           >
             <span className="material-symbols-outlined">
               <IconConfetti />
@@ -128,9 +137,10 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
               My Participations
             </span>
           </Link>
+
           <Link
-            className="flex items-center gap-4 bg-[#2F2A24] text-[#c8b273] rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200"
-            href="#"
+            className={`flex items-center gap-4 ${pathName === "/profile/my-reviews" ? "bg-[#644d31] text-[#d0b260] font-semibold rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200" : "text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 hover:rounded-l-full hover:ml-4 hover:pl-6 hover:py-3 transition-colors"}`}
+            href="/profile/my-reviews"
           >
             <span className="material-symbols-outlined">
               <IconCashEdit />
@@ -139,9 +149,10 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
               My Reviews
             </span>
           </Link>
+
           <Link
-            className="flex items-center gap-4 text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 transition-colors"
-            href="#"
+            className={`flex items-center gap-4 ${pathName === "/profile/settings" ? "bg-[#644d31] text-[#d0b260] font-semibold rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200" : "text-[#fcf2e8]/60 pl-10 py-3  hover:bg-white/10 hover:rounded-l-full hover:ml-4 hover:pl-6 hover:py-3 transition-colors"}`}
+            href="/profile/settings"
           >
             <span className="material-symbols-outlined">
               <IconSettings />
@@ -150,6 +161,7 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
               Settings
             </span>
           </Link>
+
           <button className="flex items-center gap-4 text-red-500/80 pl-10 py-3 hover:text-error transition-colors px-4 cursor-pointer">
             <span className="symbols-outlined">
               <IconLogout />
