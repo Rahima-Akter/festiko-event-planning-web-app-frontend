@@ -41,8 +41,8 @@ const MyEvents = () => {
     <>
       <main className="lg:ml-72 p-12 min-h-screen flex flex-col gap-12 bg-[#2f2a24]">
         {/* Header Section */}
-        <header className="flex justify-between items-end">
-          <div className="max-w-2xl flex flex-col">
+        <header className="flex flex-col justify-between items-center space-y-4">
+          <div className="max-w-2xl flex flex-col items-center">
             <h1 className="text-5xl font-bold text-[#ebe1d7] tracking-tight leading-tight">
               My Created Events
             </h1>
@@ -68,7 +68,7 @@ const MyEvents = () => {
         </header>
 
         {/* Search Input */}
-        <div className="mb-8 relative w-full">
+        <div className="relative w-full">
           <IconSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#d2ccc0]" />
           <input
             type="text"
