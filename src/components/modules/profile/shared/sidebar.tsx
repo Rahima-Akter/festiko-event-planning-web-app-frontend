@@ -48,10 +48,12 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
       >
         <button
           onClick={() => setIsOpen(false)}
-          className="lg:hidden text-white p-4 self-start"
+          className="lg:hidden text-white px-4 self-end"
         >
           ✕
         </button>
+        
+        {/* logo */}
         <div className="px-10 mb-3 text-center flex flex-col justify-center items-center">
           {/* <span className="text-2xl font-bold font-['Noto_Serif'] text-[#c8b273] italic mb-6 block">
           Festiko
