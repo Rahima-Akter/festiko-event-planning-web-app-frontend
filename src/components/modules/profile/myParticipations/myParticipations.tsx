@@ -1,5 +1,7 @@
-const MyParticipations = () => {
-  return <div>MyParticipations</div>;
-};
+// import InviteFormModal from "../myEvents/inviteFormModal";
 
-export default MyParticipations;
+// const MyParticipations = () => {
+//   return <InviteFormModal />;
+// };
+
+// export default MyParticipations;
