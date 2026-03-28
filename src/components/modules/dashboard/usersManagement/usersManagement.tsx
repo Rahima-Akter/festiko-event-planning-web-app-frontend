@@ -56,16 +56,9 @@ const UserManagement = () => {
     <div className="lg:ml-64 bg-[#2f2a24] ">
       <main className="md:p-10 p-6 lg:pl-20 space-y-8">
         {/* Header */}
-        <div className="flex justify-between items-end">
-          <div>
-            <h2 className="font-headline font-bold text-4xl text-[#fcf2e8] tracking-tight mb-2">
-              All Users
-            </h2>
-            <p className="text-[#fcf2e8]/70 font-body">
-              Manage and monitor all users on the platform.
-            </p>
-          </div>
-        </div>
+      <span className="text-lg font-bold uppercase tracking-[0.2em] text-[#C8B273]/60 mb-4 block">
+        All User Management
+      </span>
 
         {/* Search + Filter */}
         <div className="flex items-center gap-4">
