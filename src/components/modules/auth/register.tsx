@@ -1,11 +1,53 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { IconCamera, IconEye, IconEyeClosed } from "@tabler/icons-react";
+import { registerUser } from "@/services/auth/auth.service";
+import { RegisterFormValues, registerSchema } from "@/zod/auth.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { IconEye, IconEyeClosed } from "@tabler/icons-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 // RegisterForm Component
 const RegisterForm = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterFormValues>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const onSubmit = async (data: RegisterFormValues) => {
+    try {
+      const payload = {
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        profile_image: data.profile_image,
+        bio: data.bio,
+      };
+
+      const res = await registerUser(payload);
+
+      if (res?.success) {
+        toast.success("Account created successfully 🎉");
+      } else {
+        toast.error(`${res?.message}`);
+      }
+    } catch (err: any) {
+      // Axios error handling
+      if (err.response?.data?.message) {
+        toast.error(`${err.response.data.message}`);
+      } else {
+        toast.error("Registration failed");
+      }
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <main className="grow py-10 flex items-center justify-center px-6">
@@ -50,155 +92,136 @@ const RegisterForm = () => {
               </p>
             </div>
 
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid grid-cols-1 gap-6">
                 {/* Full Name */}
                 <div className="space-y-2">
-                  <label
-                    className="font-label text-xs uppercase tracking-widest text-[#a69e8e]"
-                    htmlFor="full_name"
-                  >
+                  <label className="font-label text-xs uppercase tracking-widest text-[#a69e8e]">
                     Full Name
                   </label>
                   <input
+                    {...register("name")}
                     className="w-full bg-[#3E3830] border-none rounded-lg px-5 py-4 focus:ring-1 focus:ring-[#c8b273]/30 focus:bg-[#4a433a] transition-all text-[#fcf2e8] placeholder:text-[#a69e8e]/50 font-body"
-                    id="full_name"
                     placeholder="Evelyn Thorne"
-                    type="text"
                   />
+                  {errors.name && (
+                    <p className="text-red-400 text-xs">
+                      {errors.name.message}
+                    </p>
+                  )}
                 </div>
 
                 {/* Email Address */}
                 <div className="space-y-2">
-                  <label
-                    className="font-label text-xs uppercase tracking-widest text-[#a69e8e]"
-                    htmlFor="email"
-                  >
+                  <label className="font-label text-xs uppercase tracking-widest text-[#a69e8e]">
                     Email Address
                   </label>
                   <input
+                    {...register("email")}
                     className="w-full bg-[#3E3830] border-none rounded-lg px-5 py-4 focus:ring-1 focus:ring-[#c8b273]/30 focus:bg-[#4a433a] transition-all text-[#fcf2e8] placeholder:text-[#a69e8e]/50 font-body"
-                    id="email"
                     placeholder="evelyn@festiko.com"
                     type="email"
                   />
+                  {errors.email && (
+                    <p className="text-red-400 text-xs">
+                      {errors.email.message}
+                    </p>
+                  )}
                 </div>
 
-                {/* Profile Image Upload */}
-                {/* <div className="space-y-3 pt-2">
-                  <label className="font-label text-xs uppercase tracking-widest text-[#a69e8e]">
-                    Profile Portrait
-                  </label>
-                  <div className="flex items-center gap-6">
-                    <div className="relative group">
-                      <div className="w-24 h-24 rounded-md bg-[#3E3830] border-2 border-dashed border-[#5d574d] flex flex-col items-center justify-center overflow-hidden transition-all group-hover:border-[#c8b273]/50 group-hover:bg-[#4a433a] cursor-pointer">
-                        <span className="material-symbols-outlined text-[#a69e8e] group-hover:text-[#c8b273] transition-colors mb-1">
-                          <IconCamera/>
-                        </span>
-                        <span className="text-[10px] font-label uppercase tracking-tighter text-[#a69e8e]/70 group-hover:text-[#c8b273]/70">
-                          Upload
-                        </span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="absolute inset-0 opacity-0 cursor-pointer"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xs font-body text-[#a69e8e] italic">
-                        &apos;Your portrait adds a personal touch to your exclusive concierge experience.&apos;
-                      </p>
-                    </div>
-                  </div>
-                </div> */}
+                {/* Profile Portrait */}
                 <div className="space-y-2">
                   <label className="font-label text-xs uppercase tracking-widest text-[#a69e8e]">
                     Profile Portrait
                   </label>
                   <input
+                    {...register("profile_image")}
                     className="w-full bg-[#3E3830] border-none rounded-lg px-5 py-4 focus:ring-1 focus:ring-[#c8b273]/30 focus:bg-[#4a433a] transition-all text-[#fcf2e8] placeholder:text-[#a69e8e]/50 font-body"
-                    id="profile_url"
-                    placeholder="paste your profile url here"
+                    placeholder="Paste your profile URL here"
                     type="url"
                   />
+                  {errors.profile_image && (
+                    <p className="text-red-400 text-xs">
+                      {errors.profile_image.message}
+                    </p>
+                  )}
                 </div>
 
-                {/* Bio Textarea */}
+                {/* Personal Bio */}
                 <div className="space-y-2">
-                  <label
-                    className="font-label text-xs uppercase tracking-widest text-[#a69e8e]"
-                    htmlFor="bio"
-                  >
+                  <label className="font-label text-xs uppercase tracking-widest text-[#a69e8e]">
                     Personal Bio
                   </label>
                   <textarea
+                    {...register("bio")}
                     className="w-full bg-[#3E3830] border-none rounded-lg px-5 py-4 focus:ring-1 focus:ring-[#c8b273]/30 focus:bg-[#4a433a] transition-all text-[#fcf2e8] placeholder:text-[#a69e8e]/50 font-body min-h-30 resize-none"
-                    id="bio"
                     placeholder="Share a brief introduction about your passion for hosting or curation..."
-                  ></textarea>
+                  />
+                  {errors.bio && (
+                    <p className="text-red-400 text-xs">{errors.bio.message}</p>
+                  )}
                 </div>
 
                 {/* Password Row */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2 relative">
-                    <label
-                      className="font-label text-xs uppercase tracking-widest text-[#a69e8e]"
-                      htmlFor="password"
-                    >
+                    <label className="font-label text-xs uppercase tracking-widest text-[#a69e8e]">
                       Password
                     </label>
                     <input
+                      {...register("password")}
                       className="w-full bg-[#3E3830] border-none rounded-lg px-5 py-4 focus:ring-1 focus:ring-[#c8b273]/30 focus:bg-[#4a433a] transition-all text-[#fcf2e8] placeholder:text-[#a69e8e]/50 font-body"
-                      id="password"
                       placeholder="••••••••"
                       type={isOpen ? "password" : "text"}
                     />
-                    <span className="absolute top-10 right-3 cursor-pointer">
-                      {isOpen ? (
-                        <IconEyeClosed onClick={() => setIsOpen(!isOpen)} />
-                      ) : (
-                        <IconEye onClick={() => setIsOpen(!isOpen)} />
-                      )}
-                    </span>
-                  </div>
-                  <div className="space-y-2 relative">
-                    <label
-                      className="font-label text-xs uppercase tracking-widest text-[#a69e8e]"
-                      htmlFor="confirm_password"
+                    <span
+                      className="absolute top-10 right-3 cursor-pointer"
+                      onClick={() => setIsOpen(!isOpen)}
                     >
+                      {isOpen ? <IconEyeClosed /> : <IconEye />}
+                    </span>
+                    {errors.password && (
+                      <p className="text-red-400 text-xs">
+                        {errors.password.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2 relative">
+                    <label className="font-label text-xs uppercase tracking-widest text-[#a69e8e]">
                       Confirm Password
                     </label>
                     <input
+                      {...register("confirmPassword")}
                       className="w-full bg-[#3E3830] border-none rounded-lg px-5 py-4 focus:ring-1 focus:ring-[#c8b273]/30 focus:bg-[#4a433a] transition-all text-[#fcf2e8] placeholder:text-[#a69e8e]/50 font-body"
-                      id="confirm_password"
                       placeholder="••••••••"
                       type={isOpen ? "password" : "text"}
                     />
-                    <span className="absolute top-10 right-3 cursor-pointer">
-                      {isOpen ? (
-                        <IconEyeClosed onClick={() => setIsOpen(!isOpen)} />
-                      ) : (
-                        <IconEye onClick={() => setIsOpen(!isOpen)} />
-                      )}
+                    <span
+                      className="absolute top-10 right-3 cursor-pointer"
+                      onClick={() => setIsOpen(!isOpen)}
+                    >
+                      {isOpen ? <IconEyeClosed /> : <IconEye />}
                     </span>
+                    {errors.confirmPassword && (
+                      <p className="text-red-400 text-xs">
+                        {errors.confirmPassword.message}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
 
-              {/* Terms and Conditions */}
+              {/* Terms */}
               <div className="flex items-start gap-3 pt-2">
                 <div className="flex items-center h-5">
                   <input
-                    id="terms"
+                    {...register("terms")}
                     type="checkbox"
                     className="w-4 h-4 text-[#c8b273] bg-[#3E3830] border-none rounded focus:ring-[#c8b273]/30"
                   />
                 </div>
-                <label
-                  htmlFor="terms"
-                  className="font-body text-sm text-[#a69e8e] leading-tight"
-                >
+                <label className="font-body text-sm text-[#a69e8e] leading-tight">
                   I agree to the{" "}
                   <Link href="#" className="text-[#c8b273] hover:underline">
                     Terms of Service
@@ -210,14 +233,18 @@ const RegisterForm = () => {
                   , and consent to receiving updates from Festiko.
                 </label>
               </div>
+              {errors.terms && (
+                <p className="text-red-400 text-xs">{errors.terms.message}</p>
+              )}
 
-              {/* Create Account Button */}
+              {/* Submit Button */}
               <div className="pt-4">
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="w-full py-5 bg-[#c8b273] text-[#2F2A24] font-label uppercase tracking-[0.15em] text-sm font-semibold rounded-lg shadow-lg shadow-[#c8b273]/10 hover:opacity-90 active:scale-[0.98] transition-all duration-300 cursor-pointer"
                 >
-                  Create Account
+                  {isSubmitting ? "Creating..." : "Create Account"}
                 </button>
               </div>
             </form>

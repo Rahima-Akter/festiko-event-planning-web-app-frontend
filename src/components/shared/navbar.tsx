@@ -15,7 +15,7 @@ import logo from "../../../public/festiko-logo-dark.png";
 
 const Navbar = () => {
   // Simulate logged in user; null = not logged in
-  const user: any = { role: "ADMIN", avatarUrl: "/default-avatar.png" };
+  const user: any = { role: "USER", avatarUrl: "/default-avatar.png" };
   const [dropdownOpen, setDropdownOpen] = useState(false);
   // const [menuOpen, setMenuOpen] = useState(false);
 

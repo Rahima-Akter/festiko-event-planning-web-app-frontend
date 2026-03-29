@@ -1,11 +1,11 @@
 import { IconX, IconFingerprint, IconSend } from "@tabler/icons-react";
 
-const InviteFormModal = () => {
+const InviteFormModal = ({ onClose }: { onClose: () => void }) => {
   return (
     <>
       {/* Invite Modal Overlay */}
       <div
-        className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-[#000000]/60 backdrop-blur-sm transition-opacity duration-300"
+        className="fixed inset-0 z-100 flex items-center justify-center p-4 bg-[#000000]/60 backdrop-blur-sm transition-opacity duration-300"
         id="invite-modal"
       >
         {/* Modal Content */}
@@ -16,7 +16,10 @@ const InviteFormModal = () => {
               <h2 className="text-2xl font-bold text-[#ebe1d7] tracking-tight font-headline">
                 Invite to Your Event
               </h2>
-              <button className="text-[#d2ccc0] hover:text-[#eec96d] transition-colors">
+              <button
+                onClick={onClose}
+                className="text-[#d2ccc0] hover:text-[#eec96d] transition-colors cursor-pointer"
+              >
                 <IconX />
               </button>
             </div>
@@ -48,13 +51,16 @@ const InviteFormModal = () => {
 
             {/* Footer Actions */}
             <div className="flex items-center justify-end gap-3 mt-10">
-              <button className="px-6 py-2.5 rounded-lg text-sm font-semibold text-[#d2ccc0] hover:text-[#ebe1d7] hover:bg-[#4b463a]/30 transition-all cursor-pointer">
+              <button
+                onClick={onClose}
+                className="px-6 py-2.5 rounded-lg text-sm font-semibold text-[#d2ccc0] hover:text-[#ebe1d7] hover:bg-[#4b463a]/30 transition-all cursor-pointer"
+              >
                 Cancel
               </button>
               <button
                 className="px-6 py-2.5 premium-gradient text-[#231b00] font-bold rounded-lg text-sm shadow-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
                 style={{
-                  "background":
+                  background:
                     "linear-gradient(135deg, #eec96d 0%, #ffdf96 100%)",
                 }}
               >

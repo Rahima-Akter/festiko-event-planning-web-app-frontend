@@ -1,6 +1,16 @@
-// MyEvents.jsx
-import Link from "next/link";
-import { IconPlus, IconFilter, IconCalendar, IconMapPin, IconSend, IconUsers, IconEdit, IconTrash, IconChevronLeft, IconChevronRight, IconSearch } from "@tabler/icons-react";
+import {
+  IconCalendar,
+  IconMapPin,
+  IconSend,
+  IconUsers,
+  IconEdit,
+  IconTrash,
+  IconChevronLeft,
+  IconChevronRight,
+  IconSearch,
+} from "@tabler/icons-react";
+import CreateEventButtonClient from "./client/createEventButton";
+import InviteToEventButtonClient from "./client/inviteToEventButton";
 
 const MyEvents = () => {
   // Event card data
@@ -39,7 +49,7 @@ const MyEvents = () => {
 
   return (
     <>
-      <main className="lg:ml-72 p-12 min-h-screen flex flex-col gap-12 bg-[#2f2a24]">
+      <main className="lg:ml-72 p-12 min-h-screen flex flex-col gap-12 bg-[#2f2a24] relative">
         {/* Header Section */}
         <header className="flex flex-col justify-between items-center space-y-4">
           <div className="max-w-2xl flex flex-col items-center">
@@ -47,24 +57,12 @@ const MyEvents = () => {
               My Created Events
             </h1>
             <p className="mt-4 text-[#d2ccc0] text-lg font-light italic">
-              Curate your exclusive experiences and manage the guest list with precision.
+              Curate your exclusive experiences and manage the guest list with
+              precision.
             </p>
           </div>
-          <div className="flex gap-4">
-            <button
-              style={{
-                background: "linear-gradient(135deg, #eec96d 0%, #ffdf96 100%)",
-              }}
-              className="py-2 px-6 text-[#231b00] font-bold rounded-lg flex items-center justify-center gap-2 hover:brightness-110 transition-all active:scale-95 duration-200 shadow-lg"
-            >
-              <IconPlus size={20} />
-              <span>Create Event</span>
-            </button>
-            <div className="bg-[#3a342d] px-6 py-3 rounded-lg flex items-center gap-2 border border-[#4b463a]/10">
-              <IconFilter size={20} className="text-[#eec96d]" />
-              <span className="text-label-md font-medium text-[#ebe1d7]">Filter</span>
-            </div>
-          </div>
+          {/* create event button */}
+          <CreateEventButtonClient />
         </header>
 
         {/* Search Input */}
@@ -93,7 +91,10 @@ const MyEvents = () => {
                 <div className="absolute top-3 left-3">
                   <span
                     className="text-[9px] px-2 py-0.5 tracking-widest uppercase rounded-full font-bold"
-                    style={{ backgroundColor: event.statusBg, color: event.statusText }}
+                    style={{
+                      backgroundColor: event.statusBg,
+                      color: event.statusText,
+                    }}
                   >
                     {event.status}
                   </span>
@@ -101,7 +102,9 @@ const MyEvents = () => {
               </div>
               <div className="p-4 flex flex-col gap-3">
                 <div>
-                  <h3 className="text-xl font-bold text-[#ebe1d7] mb-0.5">{event.title}</h3>
+                  <h3 className="text-xl font-bold text-[#ebe1d7] mb-0.5">
+                    {event.title}
+                  </h3>
                   <div className="flex flex-col gap-0.5 text-[#d2ccc0] text-xs">
                     <span className="flex items-center gap-2">
                       <IconCalendar size={16} />
@@ -115,13 +118,12 @@ const MyEvents = () => {
                 </div>
                 <div className="flex flex-col gap-2 pt-2">
                   <div className="grid grid-cols-2 gap-2">
-                    <button className="py-2 bg-[#4b463a] text-[#ebe1d7] font-semibold rounded-lg text-[11px] hover:bg-[#4b463a]/30 transition-colors flex items-center justify-center gap-2 uppercase tracking-wider">
-                      <IconSend size={16} />
-                      Invite
-                    </button>
+                    {/* invite button */}
+                    <InviteToEventButtonClient />
                     <button
                       style={{
-                        background: "linear-gradient(135deg, #eec96d 0%, #ffdf96 100%)",
+                        background:
+                          "linear-gradient(135deg, #eec96d 0%, #ffdf96 100%)",
                         color: "#231b00",
                       }}
                       className="py-2 font-semibold rounded-lg text-[11px] hover:brightness-110 transition-all flex items-center justify-center gap-2 uppercase tracking-wider"
@@ -149,14 +151,12 @@ const MyEvents = () => {
         {/* Pagination */}
         <footer className="mt-auto flex justify-center pt-6">
           <nav className="flex items-center gap-2">
-
             <button className="flex items-center gap-1 px-4 py-2 text-[#ebe1d7]/60 hover:text-[#eec96d] transition-colors text-sm font-medium cursor-pointer">
               <IconChevronLeft size={20} />
               Previous
             </button>
 
             <div className="flex items-center gap-1">
-
               <button className="w-10 h-10 bg-[#eec96d] text-[#231b00] font-bold flex items-center justify-center rounded-md cursor-pointer">
                 1
               </button>
@@ -168,14 +168,12 @@ const MyEvents = () => {
               <button className="w-10 h-10 rounded-md hover:bg-[#453f36] text-[#d2ccc0]/60 flex items-center justify-center transition-colors cursor-pointer">
                 3
               </button>
-
             </div>
 
             <button className="flex items-center gap-1 px-4 py-2 text-[#ebe1d7]/60 hover:text-[#eec96d] transition-colors text-sm font-medium cursor-pointer">
               Next
               <IconChevronRight size={20} />
             </button>
-
           </nav>
         </footer>
       </main>
