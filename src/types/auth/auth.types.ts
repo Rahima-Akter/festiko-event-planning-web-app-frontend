@@ -3,3 +3,8 @@ export type RegisterPayLoad = {
   email: string;
   password: string;
 };
+
+export type LoginPayLoad = {
+  email: string;
+  password: string;
+};

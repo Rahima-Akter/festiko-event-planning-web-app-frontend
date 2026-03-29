@@ -1,10 +1,44 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import { loginUser } from "@/services/auth/auth.service";
+import { LoginFormValues, loginSchema } from "@/zod/auth.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { IconArrowLeft, IconEye, IconEyeClosed } from "@tabler/icons-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const LoginForm = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormValues>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = async (data: LoginFormValues) => {
+    try {
+      const res = await loginUser(data);
+
+      if (res?.success) {
+        toast.success(res.message || "Logged in successfully 🎉");
+        // Redirect or perform post-login logic here
+      } else {
+        toast.error(res?.message || "Login failed!");
+      }
+    } catch (err: any) {
+      if (err.response?.data?.message) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("Login failed!");
+      }
+      console.error(err);
+    }
+  };
 
   return (
     <main className="grow flex items-center justify-center p-6 md:p-12 lg:p-20 pt-28 bg-festiko-charcoal">
@@ -45,7 +79,7 @@ const LoginForm = () => {
             </div>
 
             {/* Form */}
-            <form className="space-y-5">
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               {/* Email Field */}
               <div className="space-y-2">
                 <label
@@ -55,12 +89,15 @@ const LoginForm = () => {
                   Email Address
                 </label>
                 <input
+                  {...register("email")}
                   className="w-full bg-white/5 border border-white/10 text-white font-body px-4 py-3 rounded-none focus:ring-0 focus:border-[#c8b273] transition-all placeholder:text-white/20"
                   id="email"
-                  name="email"
                   placeholder="concierge@festiko.com"
                   type="email"
                 />
+                {errors.email && (
+                  <p className="text-red-400 text-xs">{errors.email.message}</p>
+                )}
               </div>
 
               {/* Password Field */}
@@ -80,27 +117,32 @@ const LoginForm = () => {
                   </Link>
                 </div>
                 <input
+                  {...register("password")}
                   className="w-full bg-white/5 border border-white/10 text-white font-body px-4 py-3 rounded-none focus:ring-0 focus:border-[#c8b273] transition-all placeholder:text-white/20"
                   id="password"
-                  name="password"
                   placeholder="••••••••"
                   type={isOpen ? "password" : "text"}
                 />
-                <span className="absolute top-9 right-5 cursor-pointer">
-                  {isOpen ? (
-                    <IconEyeClosed onClick={() => setIsOpen(!isOpen)} />
-                  ) : (
-                    <IconEye onClick={() => setIsOpen(!isOpen)} />
-                  )}
+                <span
+                  className="absolute top-9 right-5 cursor-pointer"
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  {isOpen ? <IconEyeClosed /> : <IconEye />}
                 </span>
+                {errors.password && (
+                  <p className="text-red-400 text-xs">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
 
               {/* Sign In Button */}
               <button
-                className="w-full bg-[#c8b273] hover:bg-[#D9C384] text-[#2F2A24] font-label font-bold py-4 rounded-none tracking-widest transition-all duration-300 mt-2 shadow-xl shadow-black/20 cursor-pointer"
                 type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-[#c8b273] hover:bg-[#D9C384] text-[#2F2A24] font-label font-bold py-4 rounded-none tracking-widest transition-all duration-300 mt-2 shadow-xl shadow-black/20 cursor-pointer"
               >
-                SIGN IN
+                {isSubmitting ? "Signing in..." : "SIGN IN"}
               </button>
             </form>
 
