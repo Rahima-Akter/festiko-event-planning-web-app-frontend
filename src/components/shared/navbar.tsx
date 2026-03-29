@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IconHome,
   IconCalendarEvent,
@@ -12,16 +11,34 @@ import {
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import logo from "../../../public/festiko-logo-dark.png";
+import { getProfile, logoutUser } from "@/services/auth/auth.service";
+import { User } from "@/types/auth/auth.types";
+import { UserRoles } from "@/roles/roles";
+import default_user from "../../../public/default_user.jpg";
 
 const Navbar = () => {
-  // Simulate logged in user; null = not logged in
-  const user: any = { role: "USER", avatarUrl: "/default-avatar.png" };
+  const [user, setUser] = useState<User | null>();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  // const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const res = await getProfile();
+        if (res?.success) {
+          setUser(res?.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUser();
+  }, []);
 
   const handleLogout = () => {
-    console.log("Logout clicked");
-    // Add your logout logic here
+    localStorage.removeItem("token");
+    logoutUser();
+    setUser(null);
+    setDropdownOpen(false);
   };
 
   const pathName = usePathname();
@@ -83,16 +100,21 @@ const Navbar = () => {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#6e5d27] dark:border-[#c8b273]"
               >
-                <img
-                  src={user.avatarUrl}
+                <Image
+                  src={user?.profile_image || default_user}
                   alt="User Avatar"
+                  width={100}
+                  height={100}
                   className="w-full h-full object-cover"
                 />
               </button>
 
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-[#fff8f4] dark:bg-[#353029] rounded-md shadow-lg py-2 z-50">
-                  {user.role === "ADMIN" ? (
+                  <p className="text-center border-b border-gray-200 pb-1">
+                    {user?.name}
+                  </p>
+                  {user.role === UserRoles.ADMIN ? (
                     <Link
                       href="/dashboard"
                       className="flex items-center gap-2 px-4 py-2 text-sm text-[#1f1b15] dark:text-[#fcf2e8] hover:bg-[#ecdec1] dark:hover:bg-[#4b463a]/70 transition-colors"

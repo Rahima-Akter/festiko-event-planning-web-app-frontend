@@ -34,12 +34,51 @@ export const registerSchema = z
     path: ["confirmPassword"],
   });
 
-export type RegisterFormValues = z.infer<typeof registerSchema>;
-
-
 export const loginSchema = z.object({
   email: z.string().email("Invalid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
+export const updateProfileSchema = z
+  .object({
+    name: z
+      .string()
+      .min(2, "Name must be at least 2 characters")
+      .max(100, "Name cannot exceed 100 characters")
+      .optional(),
+
+    profile_image: z.string().url("Invalid profile image URL").optional(),
+    bio: z.string().max(500, "Bio cannot exceed 500 characters").optional(),
+
+    currentPassword: z
+      .string()
+      .min(1, "Current password is required when changing password")
+      .optional(),
+
+    newPassword: z
+      .string()
+      .min(8, "New password must be at least 8 characters")
+      .regex(
+        passwordRegex,
+        "New password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number",
+      )
+      .optional(),
+  })
+  .refine(
+    (data) => {
+      // If newPassword is provided, currentPassword must also be provided
+      if (data.newPassword && !data.currentPassword) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Current password is required when setting a new password",
+      path: ["currentPassword"],
+    },
+  );
+
+
+export type RegisterFormValues = z.infer<typeof registerSchema>;
 export type LoginFormValues = z.infer<typeof loginSchema>;
+export type UpdateProfileInputValues = z.infer<typeof updateProfileSchema>;

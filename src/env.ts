@@ -5,6 +5,7 @@ export const env = createEnv({
   server: {
     BACKEND_URL: z.url(),
     FRONTEND_URL: z.url(),
+    Jwt_SECRET: z.string(),
   },
   client: {
     NEXT_PUBLIC_BACKEND_URL: z.url(),
@@ -13,6 +14,7 @@ export const env = createEnv({
   runtimeEnv: {
     BACKEND_URL: process.env.BACKEND_URL,
     FRONTEND_URL: process.env.FRONTEND_URL,
+    Jwt_SECRET: process.env.Jwt_SECRET,
     NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL,
     NEXT_PUBLIC_FRONTEND_URL: process.env.NEXT_PUBLIC_FRONTEND_URL,
   },
