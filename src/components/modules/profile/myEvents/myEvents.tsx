@@ -13,9 +13,9 @@ import { Event } from "@/types/event/event.types";
 import Image from "next/image";
 import { format } from "date-fns";
 import EditEventButtonClient from "./client/editEventButton";
+import DeleteEventButtonClient from "./client/deleteEventButton";
 
 const MyEvents = ({ allEvents }: { allEvents: Event[] | null }) => {
-  console.log(allEvents)
   // Event card data
   // const events = [
   //   {
@@ -145,10 +145,8 @@ const MyEvents = ({ allEvents }: { allEvents: Event[] | null }) => {
                   <div className="grid grid-cols-2 gap-2">
                     {/* edit button */}
                     <EditEventButtonClient event={event} />
-                    <button className="py-2 text-[#ffb4ab] font-medium text-[11px] hover:bg-[#ffb4ab]/10 transition-colors flex items-center justify-center gap-2 border border-[#ffb4ab]/20 rounded-lg">
-                      <IconTrash size={16} />
-                      Delete
-                    </button>
+                    {/* delete button */}
+                    <DeleteEventButtonClient id={event.id} />
                   </div>
                 </div>
               </div>

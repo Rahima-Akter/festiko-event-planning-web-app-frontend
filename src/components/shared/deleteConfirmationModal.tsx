@@ -1,10 +1,42 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { deleteEvent } from "@/services/event/event.service";
 import { IconAlertTriangle, IconTrash, IconX } from "@tabler/icons-react";
+import { toast } from "sonner";
 
-const DeleteConfirmationModal = () => {
+const DeleteConfirmationModal = ({
+  onClose,
+  id,
+}: {
+  onClose: () => void;
+  id: string;
+}) => {
+  const handleDelete = async () => {
+    try {
+      const res = await deleteEvent(id);
+      if (res?.success) {
+        toast.success("Event deleted successfully");
+        window.location.reload();
+      } else {
+        toast.error("Error deleting event");
+        onClose();
+      }
+    } catch (err: any) {
+      if (err.response?.data?.message) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("Event deletion failed");
+      }
+      console.error("Error deleting event:", err);
+    }
+  };
+
   return (
     <>
       {/* Delete Confirmation Modal */}
-      <div className="fixed inset-0 z-100 flex items-center justify-center p-4" id="delete-modal">
+      <div
+        className="fixed inset-0 z-100 flex items-center justify-center p-4"
+        id="delete-modal"
+      >
         {/* Overlay */}
         <div className="absolute inset-0 bg-[#2f2a24]/80 backdrop-blur-sm shadow-2xl transition-opacity"></div>
 
@@ -21,15 +53,22 @@ const DeleteConfirmationModal = () => {
             </h2>
 
             <p className="text-[#d2ccc0] font-light italic leading-relaxed mb-8">
-              Are you sure you want to delete this event? This action cannot be undone.
+              Are you sure you want to delete this event? This action cannot be
+              undone.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 w-full">
-              <button className="flex-1 px-6 py-3 rounded-lg border border-[#4b463a] text-[#ebe1d7] font-semibold hover:bg-[#4b463a] transition-colors uppercase tracking-wider text-xs cursor-pointer">
+              <button
+                onClick={onClose}
+                className="flex-1 px-6 py-3 rounded-lg border border-[#4b463a] text-[#ebe1d7] font-semibold hover:bg-[#4b463a] transition-colors uppercase tracking-wider text-xs cursor-pointer"
+              >
                 Cancel
               </button>
 
-              <button className="flex-1 px-6 py-3 rounded-lg bg-[#ffb4ab] text-[#ffffff] font-bold hover:brightness-110 transition-all active:scale-95 shadow-lg shadow-[#ffb4ab]/20 uppercase tracking-wider text-xs flex items-center justify-center gap-2 cursor-pointer">
+              <button
+                onClick={handleDelete}
+                className="flex-1 px-6 py-3 rounded-lg bg-[#ffb4ab] text-[#ffffff] font-bold hover:brightness-110 transition-all active:scale-95 shadow-lg shadow-[#ffb4ab]/20 uppercase tracking-wider text-xs flex items-center justify-center gap-2 cursor-pointer"
+              >
                 <IconTrash className="text-sm" />
                 Delete Event
               </button>
@@ -37,7 +76,10 @@ const DeleteConfirmationModal = () => {
           </div>
 
           {/* Close Button (Top Right) */}
-          <button className="absolute top-4 right-4 text-[#d2ccc0] hover:text-[#ebe1d7] transition-colors">
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 text-[#d2ccc0] hover:text-[#ebe1d7] transition-colors cursor-pointer"
+          >
             <IconX />
           </button>
         </div>

@@ -8,13 +8,12 @@ const EditEventButtonClient = ({ event }: { event: Event }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleModal = () => {
     setIsOpen(!isOpen);
-    console.log("clicked");
   };
   return (
     <>
       <button
         onClick={toggleModal}
-        className="py-2 text-[#eec96d] font-medium text-[11px] hover:bg-[#eec96d]/10 transition-colors flex items-center justify-center gap-2 border border-[#eec96d]/20 rounded-lg"
+        className="py-2 text-[#eec96d] font-medium text-[11px] hover:bg-[#eec96d]/10 transition-colors flex items-center justify-center gap-2 border border-[#eec96d]/20 rounded-lg cursor-pointer"
       >
         <IconEdit size={16} />
         Edit
