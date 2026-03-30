@@ -1,15 +1,58 @@
-import { IconPhoto, IconCalendar, IconClock, IconX } from "@tabler/icons-react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createEvent } from "@/services/event/event.service";
+import { CreateEventInput, createEventSchema } from "@/zod/event.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  IconCalendar,
+  IconCaretDownFilled,
+  IconClock,
+  IconPhoto,
+  IconX,
+} from "@tabler/icons-react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 const EventCreationForm = ({ onClose }: { onClose: () => void }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<CreateEventInput>({
+    resolver: zodResolver(createEventSchema),
+  });
+
+  const onSubmit = async (data: CreateEventInput) => {
+    try {
+      const res = await createEvent(data);
+
+      if (res?.success) {
+        toast.success("Event created successfully 🎉");
+        onClose();
+      } else {
+        toast.error(res?.message || "Failed to create event");
+      }
+    } catch (err: any) {
+      if (err.response?.data?.message) {
+        toast.error(err.response.data.message);
+      } else {
+        toast.error("Event creation failed");
+      }
+      console.log(err);
+    }
+  };
+
   return (
     <>
       {/* Modal Overlay */}
       <div className="absolute inset-0 z-100 flex items-start justify-center overflow-y-auto bg-[#000000]/60 backdrop-blur-sm p-6">
         {/* Modal Container */}
         <div className="w-full max-w-6xl relative">
-          <IconX className="absolute text-white top-2 right-2 cursor-pointer" onClick={onClose} />
+          <IconX
+            className="absolute text-white top-2 right-2 cursor-pointer"
+            onClick={onClose}
+          />
           {/* Modal Content */}
-          <div className="bg-[#2f2a24]">
+          <div className="bg-[#2f2a24] rounded-md">
             <main className="lg:ml-0 pt-16 pb-20 px-12 min-h-screen">
               <div className="max-w-5xl mx-auto">
                 {/* Header Section */}
@@ -24,8 +67,8 @@ const EventCreationForm = ({ onClose }: { onClose: () => void }) => {
                 </div>
 
                 {/* Bento-Style Form Container */}
-                <form className="space-y-8">
-                  {/* Section 1: Identity & Description */}
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+                  {/* Section 1 */}
                   <div className="bg-[#3a342d] p-8 rounded-xl border border-[#4b463a]/10 shadow-lg">
                     <div className="grid grid-cols-1 gap-6">
                       <div className="space-y-2">
@@ -33,25 +76,38 @@ const EventCreationForm = ({ onClose }: { onClose: () => void }) => {
                           Event Title
                         </label>
                         <input
+                          {...register("title")}
                           className="w-full bg-[#1f1b15] border border-[#4b463a]/10 rounded-lg p-4 text-sm focus:ring-1 focus:ring-[#eec96d] transition-all text-[#ebe1d7] placeholder:text-[#d2ccc0]/30"
                           placeholder="e.g. Midnight Soirée at The Louvre"
                           type="text"
                         />
+                        {errors.title && (
+                          <p className="text-red-400 text-xs">
+                            {errors.title.message}
+                          </p>
+                        )}
                       </div>
+
                       <div className="space-y-2">
                         <label className="text-[11px] font-medium all-caps tracking-[0.05em] uppercase text-[#eec96d]">
                           Event Description
                         </label>
                         <textarea
+                          {...register("description")}
                           className="w-full bg-[#1f1b15] border border-[#4b463a]/10 rounded-lg p-4 text-sm focus:ring-1 focus:ring-[#eec96d] transition-all text-[#ebe1d7] placeholder:text-[#d2ccc0]/30"
                           placeholder="Describe the atmosphere, dress code, and flow of your curated event..."
                           rows={4}
                         ></textarea>
+                        {errors.description && (
+                          <p className="text-red-400 text-xs">
+                            {errors.description.message}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
 
-                  {/* Section 2: Category & Venue Name */}
+                  {/* Section 2 */}
                   <div className="bg-[#3a342d] p-8 rounded-xl border border-[#4b463a]/10 shadow-lg">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div className="space-y-2">
@@ -60,57 +116,68 @@ const EventCreationForm = ({ onClose }: { onClose: () => void }) => {
                         </label>
                         <div className="relative">
                           <select
+                            {...register("category")}
                             className="w-full bg-[#1f1b15] border border-[#4b463a]/10 rounded-lg p-4 text-sm appearance-none focus:ring-1 focus:ring-[#eec96d] transition-all text-[#ebe1d7]"
-                            size={4}
                           >
-                            <option selected value="PUBLIC">
-                              PUBLIC
-                            </option>
+                            <option value="PUBLIC">PUBLIC</option>
                             <option value="PRIVATE">PRIVATE</option>
                             <option value="PAID">PAID</option>
                             <option value="FREE">FREE</option>
                           </select>
+                          <IconCaretDownFilled className="text-white right-3 top-4 cursor-pointer absolute" />
                         </div>
                       </div>
+
                       <div className="space-y-2">
                         <label className="text-[11px] font-medium all-caps tracking-[0.05em] uppercase text-[#eec96d]">
                           Venue Name
                         </label>
                         <input
+                          {...register("venue")}
                           className="w-full bg-[#1f1b15] border border-[#4b463a]/10 rounded-lg p-4 text-sm focus:ring-1 focus:ring-[#eec96d] transition-all text-[#ebe1d7] placeholder:text-[#d2ccc0]/30"
                           placeholder="e.g. The Grand Ballroom"
                           type="text"
                         />
+                        {errors.venue && (
+                          <p className="text-red-400 text-xs">
+                            {errors.venue.message}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
 
-                  {/* Section 3: Event Cover & Logistics (Flex Row) */}
+                  {/* Section 3 */}
                   <div className="flex flex-col lg:flex-row gap-8">
-                    {/* Image Upload Preview Card */}
                     <div className="flex-1 bg-[#3a342d] p-6 rounded-xl border border-[#4b463a]/10 shadow-lg relative overflow-hidden group">
-                      <div className="absolute inset-0 bg-[#eec96d]/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div className="absolute inset-0 bg-[#eec96d]/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
                       <label className="text-[11px] font-medium all-caps tracking-[0.05em] uppercase text-[#eec96d] block mb-4">
                         Event Cover
                       </label>
-                      <div className="border-2 border-dashed border-[#4b463a]/30 rounded-lg h-48 flex flex-col items-center justify-center space-y-2 cursor-pointer hover:border-[#eec96d]/50 transition-colors">
+                      <div className="border-2 border-dashed border-[#4b463a]/30 rounded-lg h-48 flex flex-col items-center justify-center space-y-2 hover:border-[#eec96d]/50 transition-colors">
                         <IconPhoto className="text-3xl text-[#eec96d]/40" />
                         <span className="text-[10px] font-label all-caps tracking-widest text-[#d2ccc0] uppercase">
                           Upload High-Res Visual
                         </span>
                       </div>
                       <input
+                        {...register("image")}
                         className="mt-4 w-full bg-[#1f1b15] border border-[#4b463a]/10 rounded-lg p-3 text-xs focus:ring-1 focus:ring-[#eec96d] transition-all text-[#ebe1d7]"
                         placeholder="paste image URL here"
                         type="text"
                       />
+                      {errors.image && (
+                        <p className="text-red-400 text-xs">
+                          {errors.image.message}
+                        </p>
+                      )}
                     </div>
 
-                    {/* Logistics Quick Info */}
                     <div className="flex-1 bg-[#3a342d] p-8 rounded-xl border border-[#4b463a]/10 shadow-xl">
                       <h4 className="text-[11px] font-bold all-caps tracking-widest uppercase text-[#eec96d] mb-6">
                         Logistics &amp; Privacy
                       </h4>
+
                       <div className="space-y-6">
                         <div className="space-y-2">
                           <label className="text-[11px] font-medium all-caps tracking-[0.05em] uppercase text-[#eec96d]">
@@ -118,68 +185,102 @@ const EventCreationForm = ({ onClose }: { onClose: () => void }) => {
                           </label>
                           <div className="relative">
                             <select
+                              {...register("isPublic", {
+                                setValueAs: (v) => v === "true",
+                              })}
                               className="w-full bg-[#1f1b15] border border-[#4b463a]/10 rounded-lg p-3 text-sm appearance-none focus:ring-1 focus:ring-[#eec96d] text-[#ebe1d7]"
-                              size={2}
                             >
-                              <option selected value="PUBLIC">
-                                Public
-                              </option>
-                              <option value="PRIVATE">Private</option>
+                              <option value="true">Public</option>
+                              <option value="false">Private</option>
                             </select>
+                            <IconCaretDownFilled className="text-white right-3 top-2 cursor-pointer absolute" />
                           </div>
+                          {errors.isPublic && (
+                            <p className="text-red-400 text-xs">
+                              {errors.isPublic.message}
+                            </p>
+                          )}
                         </div>
+
                         <div className="grid grid-cols-2 gap-4">
                           <div className="space-y-2">
                             <label className="text-[10px] font-label all-caps tracking-widest text-[#ebe1d7]/60 uppercase">
                               Capacity
                             </label>
                             <input
+                              {...register("capacity", { valueAsNumber: true })}
                               className="w-full bg-[#1f1b15] border border-[#4b463a]/10 rounded-lg p-3 text-sm focus:ring-1 focus:ring-[#eec96d] text-[#ebe1d7]"
                               type="number"
-                              value={10}
+                              defaultValue={10}
                             />
+                            {errors.capacity && (
+                              <p className="text-red-400 text-xs">
+                                {errors.capacity.message}
+                              </p>
+                            )}
                           </div>
+
                           <div className="space-y-2">
                             <label className="text-[10px] font-label all-caps tracking-widest text-[#ebe1d7]/60 uppercase">
                               Registration Fee ($)
                             </label>
                             <input
+                              {...register("fee", { valueAsNumber: true })}
                               className="w-full bg-[#1f1b15] border border-[#4b463a]/10 rounded-lg p-3 text-sm focus:ring-1 focus:ring-[#eec96d] text-[#ebe1d7]"
                               type="number"
-                              value={0}
+                              defaultValue={0}
                             />
+                            {errors.fee && (
+                              <p className="text-red-400 text-xs">
+                                {errors.fee.message}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Section 4: Time and Date Overlay */}
+                  {/* Section 4 */}
                   <div className="bg-[#3a342d] p-10 rounded-xl border border-[#4b463a]/10 shadow-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-center">
                     <div className="space-y-2">
                       <label className="text-[11px] font-medium all-caps tracking-[0.05em] uppercase text-[#eec96d]">
                         Event Date
                       </label>
                       <div className="relative">
-                        <IconCalendar className="absolute right-3 top-3 text-[#eec96d] text-sm" />
+                        <IconCalendar className="absolute right-3 top-3 text-[#eec96d] text-sm z-0 pointer-events-none" />
                         <input
+                          {...register("date")}
                           className="w-full bg-[#1f1b15] border border-[#4b463a]/10 rounded-lg p-3 text-sm focus:ring-1 focus:ring-[#eec96d] text-[#ebe1d7]"
                           type="date"
                         />
                       </div>
+                      {errors.date && (
+                        <p className="text-red-400 text-xs">
+                          {errors.date.message}
+                        </p>
+                      )}
                     </div>
+
                     <div className="space-y-2">
                       <label className="text-[11px] font-medium all-caps tracking-[0.05em] uppercase text-[#eec96d]">
                         Starting Time
                       </label>
                       <div className="relative">
-                        <IconClock className="absolute right-3 top-3 text-[#eec96d] text-sm" />
+                        <IconClock className="absolute right-3 top-3 text-[#eec96d] text-sm z-0 pointer-events-none" />
                         <input
+                          {...register("time")}
                           className="w-full bg-[#1f1b15] border border-[#4b463a]/10 rounded-lg p-3 text-sm focus:ring-1 focus:ring-[#eec96d] text-[#ebe1d7]"
                           type="time"
                         />
                       </div>
+                      {errors.time && (
+                        <p className="text-red-400 text-xs">
+                          {errors.time.message}
+                        </p>
+                      )}
                     </div>
+
                     <div className="md:col-span-2 flex justify-end items-center space-x-6 pt-4">
                       <button
                         onClick={onClose}
@@ -195,8 +296,9 @@ const EventCreationForm = ({ onClose }: { onClose: () => void }) => {
                             "linear-gradient(135deg, #eec96d 0%, #ffdf96 100%)",
                         }}
                         type="submit"
+                        disabled={isSubmitting}
                       >
-                        Create Event
+                        {isSubmitting ? "Creating..." : "Create Event"}
                       </button>
                     </div>
                   </div>

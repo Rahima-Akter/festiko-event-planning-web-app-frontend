@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   IconCalendar,
   IconMapPin,
-  IconSend,
   IconUsers,
   IconEdit,
   IconTrash,
@@ -11,8 +11,9 @@ import {
 } from "@tabler/icons-react";
 import CreateEventButtonClient from "./client/createEventButton";
 import InviteToEventButtonClient from "./client/inviteToEventButton";
+import { Event } from "@/types/event/event.types";
 
-const MyEvents = () => {
+const MyEvents = ({ allEvents }: { allEvents: Event[] | null }) => {
   // Event card data
   const events = [
     {

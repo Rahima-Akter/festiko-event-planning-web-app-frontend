@@ -1,8 +1,8 @@
 import {
-  IconCalendar,
   IconUsers,
   IconCashMinus,
   IconCalendarBolt,
+  IconCalendar,
 } from "@tabler/icons-react";
 
 const Overview = () => {
