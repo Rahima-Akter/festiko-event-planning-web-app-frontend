@@ -11,7 +11,19 @@ export const createEventSchema = z.object({
   image: z.string().url("Image must be a valid URL"),
   capacity: z.number().min(10, "Capacity must be at least 10"),
 
-  date: z.string().refine((val) => !isNaN(Date.parse(val)), "Invalid date"),
+  date: z
+    .string()
+    .refine((val) => !isNaN(Date.parse(val)), "Invalid date")
+    .refine((val) => {
+      const inputDate = new Date(val);
+      const today = new Date();
+
+      // Remove time part for fair comparison
+      today.setHours(0, 0, 0, 0);
+      inputDate.setHours(0, 0, 0, 0);
+
+      return inputDate >= today;
+    }, "Date cannot be in the past"),
   time: z
     .string()
     .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, "Time must be in HH:mm format"),

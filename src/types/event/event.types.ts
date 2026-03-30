@@ -43,3 +43,16 @@ export type EventResponse = {
   data: Event[];
   meta: Meta;
 };
+
+export interface UpdateEventInput {
+  title?: string;
+  description?: string;
+  image?: string;
+  capacity?: number;
+  date?: Date;
+  time?: string;
+  venue?: string;
+  isPublic?: boolean;
+  fee?: number;
+  category?: EventCategories;
+}

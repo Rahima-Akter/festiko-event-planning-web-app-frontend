@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {
-  createEvent,
-  getMyCreatedEvents,
-} from "@/services/event/event.service";
-import { CreateEventInput, createEventSchema } from "@/zod/event.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { updateEvent } from "@/services/event/event.service";
+import { Event, UpdateEventInput } from "@/types/event/event.types";
 import {
   IconCalendar,
   IconCaretDownFilled,
@@ -15,31 +11,48 @@ import {
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const EventCreationForm = ({ onClose }: { onClose: () => void }) => {
+const UpdateEventForm = ({
+  onClose,
+  event,
+}: {
+  onClose: () => void;
+  event: Event;
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<CreateEventInput>({
-    resolver: zodResolver(createEventSchema),
+  } = useForm<UpdateEventInput>({
+    defaultValues: {
+      title: event.title,
+      description: event.description,
+      image: event.image,
+      capacity: event.capacity,
+      date: new Date(event.date),
+      time: event.time,
+      venue: event.venue,
+      isPublic: event.isPublic,
+      fee: event.fee,
+      category: event.category,
+    },
   });
 
-  const onSubmit = async (data: CreateEventInput) => {
+  const onSubmit = async (data: UpdateEventInput) => {
     try {
-      const res = await createEvent(data);
+      const res = await updateEvent(event.id, data);
 
       if (res?.success) {
-        toast.success("Event created successfully 🎉");
-        window.location.reload();
+          toast.success("Event updated successfully 🎉");
+          window.location.reload();
         onClose();
       } else {
-        toast.error(res?.message || "Failed to create event");
+        toast.error(res?.message || "Failed to update event");
       }
     } catch (err: any) {
       if (err.response?.data?.message) {
         toast.error(err.response.data.message);
       } else {
-        toast.error("Event creation failed");
+        toast.error("Event update failed");
       }
       console.log(err);
     }
@@ -302,7 +315,7 @@ const EventCreationForm = ({ onClose }: { onClose: () => void }) => {
                         type="submit"
                         disabled={isSubmitting}
                       >
-                        {isSubmitting ? "Creating..." : "Create Event"}
+                        {isSubmitting ? "Updating..." : "Update Event"}
                       </button>
                     </div>
                   </div>
@@ -345,4 +358,4 @@ const EventCreationForm = ({ onClose }: { onClose: () => void }) => {
   );
 };
 
-export default EventCreationForm;
+export default UpdateEventForm;

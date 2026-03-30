@@ -7,6 +7,7 @@ const CreateEventButtonClient = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleModal = () => {
     setIsOpen(!isOpen);
+    console.log("clicked")
   };
 
   return (

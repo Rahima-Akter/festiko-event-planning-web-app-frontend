@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { axiosActions } from "@/lib/axios/axiosHttp";
-import { CreateEventPayLoad } from "@/types/event/event.types";
+import { CreateEventPayLoad, UpdateEventInput } from "@/types/event/event.types";
 
 export const createEvent = async (payLoad: CreateEventPayLoad) => {
   try {
@@ -24,7 +24,7 @@ export const getAllEvents = async () => {
 
 export const getMyCreatedEvents = async () => {
   try {
-    const response = await axiosActions.axiosGet("/events/my-created-events");
+    const response = await axiosActions.axiosGet("events/my-created-events");
     return response;
   } catch (err: any) {
     console.log(err.message);
@@ -40,10 +40,10 @@ export const getEventById = async (id: string) => {
   }
 };
 
-export const updateEvent = async (id: string, payLoad: any) => {
+export const updateEvent = async (id: string, payLoad: UpdateEventInput) => {
   try {
     const response = await axiosActions.axiosPatch(`/events/${id}`, {
-      data: payLoad,
+      data: payLoad as Record<string, unknown>,
     });
     return response;
   } catch (err: any) {

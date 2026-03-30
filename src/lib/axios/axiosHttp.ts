@@ -1,7 +1,8 @@
 import { env } from "@/env";
 import axios from "axios";
 
-const apiUrl = env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/festiko/v1";
+const apiUrl =
+  env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000/festiko/v1";
 
 if (!apiUrl) {
   throw new Error("API URL is not defined");
