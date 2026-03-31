@@ -14,6 +14,7 @@ import Image from "next/image";
 import { format } from "date-fns";
 import EditEventButtonClient from "./client/editEventButton";
 import DeleteEventButtonClient from "./client/deleteEventButton";
+import Link from "next/link";
 
 const MyEvents = ({ allEvents }: { allEvents: Event[] | null }) => {
   // Event card data
@@ -131,7 +132,8 @@ const MyEvents = ({ allEvents }: { allEvents: Event[] | null }) => {
                     {/* invite button */}
                     <InviteToEventButtonClient eventId={event.id} />
 
-                    <button
+                    <Link
+                      href={`/profile/my-events/participants/${event.id}`}
                       style={{
                         background:
                           "linear-gradient(135deg, #eec96d 0%, #ffdf96 100%)",
@@ -141,7 +143,7 @@ const MyEvents = ({ allEvents }: { allEvents: Event[] | null }) => {
                     >
                       <IconUsers size={16} />
                       Manage
-                    </button>
+                    </Link>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     {/* edit button */}

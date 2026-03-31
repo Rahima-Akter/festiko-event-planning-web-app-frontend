@@ -44,8 +44,8 @@ export const approveRejectParticipation = async (
   status: string,
 ) => {
   try {
-    const response = await axiosActions.axiosPatch(`/participation/:id`, {
-      data: { id, status },
+    const response = await axiosActions.axiosPatch(`/participation/${id}`, {
+      data: { status },
     });
     return response;
   } catch (err) {

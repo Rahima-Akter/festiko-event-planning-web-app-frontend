@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import logo from "../../../../../public/festiko-logo.png";
+import logo from "@/assets/festiko-logo.png";
 import Link from "next/link";
 import {
   IconCalendarEvent,
