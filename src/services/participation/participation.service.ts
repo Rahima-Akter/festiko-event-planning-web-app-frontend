@@ -24,12 +24,12 @@ export const inviteUser = async (eventId: string, userId: string) => {
   }
 };
 
-export const exceptRejectInvite = async (id: string, status: string) => {
+export const acceptRejectInvite = async (id: string, status: string) => {
   try {
     const response = await axiosActions.axiosPatch(
       `/participation/invitation/${id}`,
       {
-        data: { id, status },
+        data: { status },
       },
     );
     return response;
@@ -70,6 +70,18 @@ export const getMyParticipations = async () => {
   try {
     const response = await axiosActions.axiosGet(
       "/participation/my-participations",
+    );
+    return response;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+};
+
+export const getMyInvitations = async () => {
+  try {
+    const response = await axiosActions.axiosGet(
+      "/participation/my-invitations",
     );
     return response;
   } catch (err) {

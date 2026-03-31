@@ -1,7 +1,7 @@
-import Invitations from "@/components/modules/profile/invitations/invitations";
+import InvitationsClient from "@/components/modules/profile/invitations/client/invitationsClient";
 
 const InvitationsPage = () => {
-  return <Invitations />;
+  return <InvitationsClient />;
 };
 
 export default InvitationsPage;

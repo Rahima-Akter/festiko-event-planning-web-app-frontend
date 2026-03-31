@@ -52,7 +52,7 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
         >
           ✕
         </button>
-        
+
         {/* logo */}
         <div className="px-10 mb-3 text-center flex flex-col justify-center items-center">
           {/* <span className="text-2xl font-bold font-['Noto_Serif'] text-[#c8b273] italic mb-6 block">

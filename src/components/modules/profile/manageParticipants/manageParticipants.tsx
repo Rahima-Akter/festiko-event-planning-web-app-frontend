@@ -23,37 +23,6 @@ const ManageParticipants = ({
 }: {
   participants: Participants[] | null;
 }) => {
-  // const participant = [
-  //   {
-  //     name: "Julianna Moore",
-  //     email: "julianna.m@concierge.com",
-  //     id: "#USR-88291",
-  //     status: "Joined",
-  //     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBKQm3c-_dAyUVC8RfVVr5MRGtyoZ37tWkRNhJmynS1f7PzB7Fj8F6PsELzqveYNzrs-9cScV6F9ouQI7-PmOUXOjkTmcFQs6tUPvVhwjqyWO8fQy8RGYNbopXdA5rD_ifRUQUHoYhb-7L4ZWn8KOS35EvVklb3HUacpzEhAdjmDzD2sRS7kDfjwC_rv46gCkMc0kHCXWO55Y6cSc_oXb-pCXyi5XbUIakbWPvvmkZco8XkiNSvQ-lQAO4USxJaeunC_xkHwgLWLqWC",
-  //   },
-  //   {
-  //     name: "Marcus Thorne",
-  //     email: "m.thorne@design.co",
-  //     id: "#USR-44120",
-  //     status: "Pending",
-  //     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuC7CSAmGpJ4-GGRNxCKt_JPBIobEuuqxqyHRaNlg3fAMMATqw2w4Tt2J7ah1PpaJle51kKHD_BUahCRItGW6YI5z5MUvoLXUs039G-vSRMoBSwQY8sbXPloIMMzWfN4_ZRjCeq9UyvVt1E1iYatTlTv24FjNB9JZ7ihFL6mq_3idRRKq-s9aqUvi3LKQi_djd56qcHMMAOLlCI7O0GsYRkeT3Y5fZ6C4cvyVDzKA0iIrLthB-IyH3VX2uzJszLy13_LIdDf4E-X1Wx8",
-  //   },
-  //   {
-  //     name: "Elena Rossi",
-  //     email: "e.rossi@vogue.it",
-  //     id: "#USR-00293",
-  //     status: "Invited",
-  //     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuB-5BuuN6D13jntNhAvHUWkD-qU0Ymfn8Uv5eGKQVam7xwp85K-wCDs1q03E_93rsB0WyWgC3GJiAbcN019YHcR2yL78HYlQjhXd-U7nXxCW4wIZlCzYXsLXAP8dJkTkgBbdnxKmvzMpuXNnZ7vUr9-BlI1WNZmaxmYswC8SUgr9EeqzljfwJbKSQpa48tg-ZKIFbPmdJiig5R58MHsPrctjADHzXSmWVB-xuuXhN571O2jbNuGc8RpZHI-kQcjwpGotLkVA1Lne50T",
-  //   },
-  //   {
-  //     name: "David Chen",
-  //     email: "d.chen@global.com",
-  //     id: "#USR-11928",
-  //     status: "Joined",
-  //     img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDcXvBkU4TJLA4V90Xnb_ll0yovZHqsYcCH_ly7AVPVcEGipLBSjK94H9nt71YakPhLSFECmxwEXU_SY-AJ9xMOKAPNAt6j4UInqK0oIyrWDhiuu8MojaIRO0g60TDqkJI7fwZvQUiRXF6e-AjP921be9KgeMbn_dgsy-LL9lsGZSpkcTxj3sxChhCtKdYkY5rbXco8AYqr8-igIBIPmo2njroam282tRcqrhAqJB5dy6ldGSH4G1A2wvjb3SXCFLjGmWtNqY3CcLMx",
-  //   },
-  // ];
-
   // const eventTitle = participants[0].event.title;
   return (
     <>
