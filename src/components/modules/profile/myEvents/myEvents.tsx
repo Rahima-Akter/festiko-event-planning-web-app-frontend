@@ -129,7 +129,8 @@ const MyEvents = ({ allEvents }: { allEvents: Event[] | null }) => {
                 <div className="flex flex-col gap-2 pt-2">
                   <div className="grid grid-cols-2 gap-2">
                     {/* invite button */}
-                    <InviteToEventButtonClient />
+                    <InviteToEventButtonClient eventId={event.id} />
+
                     <button
                       style={{
                         background:

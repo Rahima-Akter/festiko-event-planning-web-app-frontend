@@ -1,6 +1,16 @@
 import { IconX, IconFingerprint, IconSend } from "@tabler/icons-react";
 
-const InviteFormModal = ({ onClose }: { onClose: () => void }) => {
+const InviteFormModal = ({
+  onClose,
+  handleInvite,
+  inputUserId,
+  setInputUserId,
+}: {
+  onClose: () => void;
+  handleInvite: () => void;
+  inputUserId: string;
+  setInputUserId: (val: string) => void;
+}) => {
   return (
     <>
       {/* Invite Modal Overlay */}
@@ -28,7 +38,7 @@ const InviteFormModal = ({ onClose }: { onClose: () => void }) => {
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <label
-                  className="text-sm font-medium text-[#ebe1d7]/70 ml-1"
+                  className="text-sm font-medium text-[#ebe1d7]/70 ml-1 self-star"
                   htmlFor="user-id-input"
                 >
                   Enter the User ID
@@ -36,6 +46,8 @@ const InviteFormModal = ({ onClose }: { onClose: () => void }) => {
                 <div className="relative">
                   <IconFingerprint className="absolute left-4 top-1/2 -translate-y-1/2 text-[#d2ccc0]/70" />
                   <input
+                    value={inputUserId}
+                    onChange={(e) => setInputUserId(e.target.value)}
                     className="w-full bg-[#453f36] border border-[#4b463a]/30 rounded-xl py-3.5 pl-12 pr-4 text-[#ebe1d7] placeholder:text-[#d2ccc0]/40 focus:ring-2 focus:ring-[#eec96d] focus:border-transparent transition-all"
                     id="user-id-input"
                     placeholder="e.g. ID12345"
@@ -50,7 +62,7 @@ const InviteFormModal = ({ onClose }: { onClose: () => void }) => {
             </div>
 
             {/* Footer Actions */}
-            <div className="flex items-center justify-end gap-3 mt-10">
+            <div className="flex items-center justify-end gap-3 mt-6">
               <button
                 onClick={onClose}
                 className="px-6 py-2.5 rounded-lg text-sm font-semibold text-[#d2ccc0] hover:text-[#ebe1d7] hover:bg-[#4b463a]/30 transition-all cursor-pointer"
@@ -58,6 +70,7 @@ const InviteFormModal = ({ onClose }: { onClose: () => void }) => {
                 Cancel
               </button>
               <button
+                onClick={handleInvite}
                 className="px-6 py-2.5 premium-gradient text-[#231b00] font-bold rounded-lg text-sm shadow-lg hover:brightness-110 active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
                 style={{
                   background:
