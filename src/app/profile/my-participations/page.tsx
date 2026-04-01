@@ -1,7 +1,7 @@
-import MyParticipations from "@/components/modules/profile/myParticipations/myParticipations";
+import MyParticipationsClient from "@/components/modules/profile/myParticipations/client/myParticipationsClient";
 
 const MyParticipationsPage = () => {
-  return <MyParticipations/>;
+  return <MyParticipationsClient/>;
 };
 
 export default MyParticipationsPage;

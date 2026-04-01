@@ -13,16 +13,14 @@ import DeclineButtonClient from "./client/declineButtonClient";
 const Invitations = ({ invitations }: { invitations: Invitation[] | null }) => {
   return (
     <>
-      <main className="lg:ml-72 flex-1 pt-16 px-12 pb-5 bg-[#2F2A24]">
+      <main className="lg:ml-72 flex-1 pt-10 md:px-12 px-8 bg-[#2F2A24] min-h-screen">
         {/* Header */}
-        <header className="mb-16 max-w-5xl mx-auto">
-          <h1 className="font-headline text-6xl font-bold tracking-tight text-[#F7F1E3] mb-6">
-            Pending <span className="text-[#C8B273] italic">Invitations</span>
+        <header className="mb-8 max-w-5xl mx-auto">
+          <h1 className="text-lg font-bold uppercase tracking-[0.2em] text-[#C8B273]/60 mb-2 block">
+            {invitations?.length} Pending{" "}
+            <span className="text-[#C8B273] italic">Invitations</span>
           </h1>
-          <p className="font-body text-[#A39580] text-lg leading-relaxed max-w-2xl">
-            You have 3 curated experiences awaiting your response.
-          </p>
-          <div className="w-24 h-0.5 bg-[#C8B273] mt-8"></div>
+          <div className="w-24 h-0.5 bg-[#C8B273]"></div>
         </header>
 
         {/* Cards */}
