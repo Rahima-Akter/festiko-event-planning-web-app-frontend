@@ -39,36 +39,29 @@ export const loginSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-export const updateProfileSchema = z
-  .object({
+export const updateProfileSchema = z.object({
     name: z
       .string()
       .min(2, "Name must be at least 2 characters")
-      .max(100, "Name cannot exceed 100 characters")
+      .max(100)
       .optional(),
-
-    profile_image: z.string().url("Invalid profile image URL").optional(),
-    bio: z.string().max(500, "Bio cannot exceed 500 characters").optional(),
-
-    currentPassword: z
-      .string()
-      .min(1, "Current password is required when changing password")
-      .optional(),
+    profile_image: z.string().url("Invalid URL").optional(),
+    bio: z.string().max(500).optional(),
+    currentPassword: z.string().optional().or(z.literal("")),
 
     newPassword: z
       .string()
-      .min(8, "New password must be at least 8 characters")
-      .regex(
-        passwordRegex,
-        "New password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number",
-      )
-      .optional(),
+      .optional()
+      .or(z.literal(""))
+      .refine((val) => val === "" || passwordRegex.test(val!), {
+        message:
+          "New password must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number",
+      }),
   })
   .refine(
     (data) => {
-      // If newPassword is provided, currentPassword must also be provided
-      if (data.newPassword && !data.currentPassword) {
-        return false;
+      if (data.newPassword && data.newPassword !== "") {
+        return data.currentPassword && data.currentPassword !== "";
       }
       return true;
     },
@@ -78,7 +71,6 @@ export const updateProfileSchema = z
     },
   );
 
-
 export type RegisterFormValues = z.infer<typeof registerSchema>;
 export type LoginFormValues = z.infer<typeof loginSchema>;
-export type UpdateProfileInputValues = z.infer<typeof updateProfileSchema>;
+export type UpdateProfileInput = z.infer<typeof updateProfileSchema>;

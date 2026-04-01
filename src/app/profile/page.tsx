@@ -1,4 +1,4 @@
-import Profile from "@/components/modules/profile/profile/profile";
+import Profile from "@/components/modules/userInfo/userInfo";
 const ProfilePage = () => {
   return (
     <div className="">
