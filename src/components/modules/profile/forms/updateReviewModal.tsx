@@ -55,7 +55,7 @@ const UpdateReviewModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-blur-md bg-[#1f1b15]/60">
+    <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-md bg-[#1f1b15]/60">
       <div className="bg-[#fcf2e8] p-10 rounded-2xl w-full max-w-xl relative">
         {/* Close */}
         <button
