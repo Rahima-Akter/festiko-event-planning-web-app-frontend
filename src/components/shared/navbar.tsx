@@ -10,11 +10,11 @@ import {
 } from "@tabler/icons-react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import logo from "../../../public/festiko-logo-dark.png";
+import logo from "@/assets//festiko-logo-dark.png";
 import { getProfile, logoutUser } from "@/services/auth/auth.service";
 import { User } from "@/types/auth/auth.types";
 import { UserRoles } from "@/roles/roles";
-import default_user from "../../../public/default_user.jpg";
+import default_user from "@/assets/default_user.jpg";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>();

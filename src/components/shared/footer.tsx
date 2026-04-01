@@ -6,7 +6,7 @@ import {
   IconWorld,
 } from "@tabler/icons-react";
 import Image from "next/image";
-import logo from "../../../public/festiko-logo.png";
+import logo from "@/assets//festiko-logo.png";
 
 const Footer = () => {
   return (

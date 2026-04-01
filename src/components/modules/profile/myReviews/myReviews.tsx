@@ -1,8 +1,6 @@
 import { Review } from "@/types/reviews/reviews.types";
 import {
   IconStar,
-  IconEdit,
-  IconTrash,
   IconChevronLeft,
   IconChevronRight,
 } from "@tabler/icons-react";
@@ -10,7 +8,6 @@ import { format } from "date-fns";
 import ActionButtonsClient from "./client/actionButtonsClient";
 
 const MyReviews = ({ myAllReviews }: { myAllReviews: Review[] }) => {
-  console.log(myAllReviews);
   return (
     <>
       <main className="flex-1 ml-0 lg:ml-72 p-8 md:p-10 bg-[#2F2A24]">
@@ -56,7 +53,11 @@ const MyReviews = ({ myAllReviews }: { myAllReviews: Review[] }) => {
                 </div>
 
                 {/* buttons */}
-                <ActionButtonsClient />
+                <ActionButtonsClient
+                  reviewId={review.id}
+                  defaultRating={review.rating}
+                  defaultComment={review.comment}
+                />
               </div>
             ))}
           </div>
