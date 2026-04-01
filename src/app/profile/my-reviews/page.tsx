@@ -1,7 +1,7 @@
-import MyReviews from "@/components/modules/profile/myReviews/myReviews";
+import MyReviewsClient from "@/components/modules/profile/myReviews/client/myReviewsClient";
 
 const MyReviewsPage = () => {
-  return <MyReviews/>;
+  return <MyReviewsClient/>;
 };
 
 export default MyReviewsPage;
