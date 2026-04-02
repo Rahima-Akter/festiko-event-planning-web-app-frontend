@@ -1,9 +1,4 @@
-interface Meta {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
+import { Meta } from "../meta.types";
 
 interface ReviewEvent {
   title: string;

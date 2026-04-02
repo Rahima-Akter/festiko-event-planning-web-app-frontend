@@ -1,3 +1,5 @@
+import { Meta } from "../meta.types";
+
 export type EventCategories = "PUBLIC" | "PRIVATE" | "FREE" | "PAID";
 
 export type CreateEventPayLoad = {
@@ -28,13 +30,6 @@ export type Event = {
   title: string;
   updatedAt: string;
   venue: string;
-};
-
-export type Meta = {
-  limit: number;
-  page: number;
-  total: number;
-  totalPages: number;
 };
 
 export type EventResponse = {

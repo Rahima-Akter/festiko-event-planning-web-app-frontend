@@ -54,10 +54,22 @@ export const approveRejectParticipation = async (
   }
 };
 
-export const getEventParticipants = async (eventId: string) => {
+export const getEventParticipants = async (
+  eventId: string,
+  params?: {
+    page?: number;
+    limit?: number;
+  },
+) => {
   try {
     const response = await axiosActions.axiosGet(
       `/participation/participants/${eventId}`,
+      {
+        params: {
+          page: params?.page,
+          limit: params?.limit,
+        },
+      },
     );
     return response;
   } catch (err) {
@@ -66,10 +78,19 @@ export const getEventParticipants = async (eventId: string) => {
   }
 };
 
-export const getMyParticipations = async () => {
+export const getMyParticipations = async (params?: {
+  page?: number;
+  limit?: number;
+}) => {
   try {
     const response = await axiosActions.axiosGet(
       "/participation/my-participations",
+      {
+        params: {
+          page: params?.page,
+          limit: params?.limit,
+        },
+      },
     );
     return response;
   } catch (err) {
@@ -78,10 +99,19 @@ export const getMyParticipations = async () => {
   }
 };
 
-export const getMyInvitations = async () => {
+export const getMyInvitations = async (params?: {
+  page?: number;
+  limit?: number;
+}) => {
   try {
     const response = await axiosActions.axiosGet(
       "/participation/my-invitations",
+      {
+        params: {
+          page: params?.page,
+          limit: params?.limit,
+        },
+      },
     );
     return response;
   } catch (err) {

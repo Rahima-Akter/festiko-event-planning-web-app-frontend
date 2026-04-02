@@ -1,8 +1,9 @@
+import { Meta } from "../meta.types";
 interface User {
   id: string;
   name: string;
   email: string;
-  profile_image:string;
+  profile_image: string;
 }
 
 interface Event {
@@ -25,16 +26,9 @@ export interface Participants {
   event: Event;
 }
 
-export interface ParticipantsMeta {
-  page: number;
-  limit: number;
-  total: number;
-  totalPages: number;
-}
-
 export interface ParticipantsResponse {
   success: string;
   message: string;
   data: Participants[];
-  meta: ParticipantsMeta;
+  meta: Meta;
 }

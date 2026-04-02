@@ -9,19 +9,28 @@ const ManageParticipantsClient = ({ eventId }: { eventId: string }) => {
   const [participants, setParticipants] = useState<ParticipantsResponse | null>(
     null,
   );
-  // console.log(participants);
+  const [page, setPage] = useState<number>(1);
   useEffect(() => {
     const fetchParticipants = async () => {
       try {
-        const response = await getEventParticipants(eventId);
+        const response = await getEventParticipants(eventId, {
+          page,
+          limit: 10,
+        });
         setParticipants(response ?? null);
       } catch (err: any) {
         console.log(err.message);
       }
     };
     fetchParticipants();
-  }, [setParticipants, eventId]);
-  return <ManageParticipants participants={participants?.data ?? null} />;
+  }, [setParticipants, eventId, page]);
+  return (
+    <ManageParticipants
+      participants={participants?.data ?? null}
+      meta={participants?.meta ?? null}
+      setPage={setPage}
+    />
+  );
 };
 
 export default ManageParticipantsClient;

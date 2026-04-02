@@ -1,5 +1,4 @@
 "use client";
-
 import { IconStars } from "@tabler/icons-react";
 
 const EmptyState = () => {

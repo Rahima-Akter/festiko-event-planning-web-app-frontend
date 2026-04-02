@@ -22,18 +22,37 @@ export const updateReview = async (id: string, payLoad: any) => {
     console.log(err.message);
   }
 };
-export const getEventReviews = async (eventId: string) => {
+export const getEventReviews = async (
+  eventId: string,
+  params?: {
+    page?: number;
+    limit?: number;
+  },
+) => {
   try {
-    const response = await axiosActions.axiosGet(`/reviews/${eventId}`);
+    const response = await axiosActions.axiosGet(`/reviews/${eventId}`, {
+      params: {
+        page: params?.page,
+        limit: params?.limit,
+      },
+    });
     return response;
   } catch (err: any) {
     console.log(err.message);
   }
 };
 
-export const getMyReviews = async () => {
+export const getMyReviews = async (params?: {
+  page?: number;
+  limit?: number;
+}) => {
   try {
-    const response = await axiosActions.axiosGet("/reviews/my-reviews");
+    const response = await axiosActions.axiosGet("/reviews/my-reviews", {
+      params: {
+        page: params?.page,
+        limit: params?.limit,
+      },
+    });
     return response;
   } catch (err: any) {
     console.log(err.message);

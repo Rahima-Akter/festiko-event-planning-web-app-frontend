@@ -8,9 +8,19 @@ import {
 import { format } from "date-fns";
 import Image from "next/image";
 import DeclineButtonClient from "./client/declineButtonClient";
+import { Meta } from "@/types/meta.types";
+import Pagination from "@/components/shared/pagination";
 
 // Invitations Component
-const Invitations = ({ invitations }: { invitations: Invitation[] | null }) => {
+const Invitations = ({
+  invitations,
+  meta,
+  setPage,
+}: {
+  invitations: Invitation[] | null;
+  meta: Meta | null;
+  setPage: (page: number) => void;
+}) => {
   return (
     <>
       <main className="lg:ml-72 flex-1 pt-10 md:px-12 px-8 bg-[#2F2A24] min-h-screen">
@@ -121,33 +131,7 @@ const Invitations = ({ invitations }: { invitations: Invitation[] | null }) => {
         </div>
 
         {/* Pagination */}
-        <div className="mt-16 max-w-5xl mx-auto flex items-center justify-between py-8 border-t border-white/10">
-          <button className="text-[#A39580] hover:text-[#C8B273] flex items-center gap-2 transition-colors">
-            <IconChevronLeft size={16} />
-            <span className="text-[10px] font-bold uppercase tracking-widest">
-              Previous
-            </span>
-          </button>
-
-          <div className="flex items-center gap-4">
-            <button className="w-8 h-8 flex items-center justify-center bg-[#C8B273] text-[#2F2A24] text-xs font-bold rounded-sm">
-              1
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center text-[#A39580] hover:text-[#C8B273] text-xs font-bold transition-colors">
-              2
-            </button>
-            <button className="w-8 h-8 flex items-center justify-center text-[#A39580] hover:text-[#C8B273] text-xs font-bold transition-colors">
-              3
-            </button>
-          </div>
-
-          <button className="text-[#A39580] hover:text-[#C8B273] flex items-center gap-2 transition-colors text-right">
-            <span className="text-[10px] font-bold uppercase tracking-widest">
-              Next
-            </span>
-            <IconChevronRight size={16} />
-          </button>
-        </div>
+        {meta && <Pagination meta={meta} onPageChange={setPage} />}
 
         {/* Footer */}
         {/* <div className="mt-20 text-center opacity-30 text-[#F7F1E3]">

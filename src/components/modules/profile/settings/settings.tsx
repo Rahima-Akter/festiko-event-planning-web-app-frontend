@@ -154,6 +154,15 @@ const Settings = () => {
                     </p>
                   )}
                 </div>
+                {/* <div className="flex-1">
+                      <input
+                        className="block w-full text-xs text-[#CEC6B5] file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-[10px] file:font-bold file:uppercase file:tracking-widest file:bg-[#c8b273]/10 file:text-[#c8b273] hover:file:bg-[#c8b273]/20 transition-all cursor-pointer"
+                        type="file"
+                      />
+                      <p className="mt-2 text-[10px] text-[#CEC6B5]/60">
+                        JPG, GIF or PNG. Max size of 2MB.
+                      </p>
+                    </div> */}
               </div>
             </div>
 

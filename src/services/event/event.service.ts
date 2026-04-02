@@ -1,6 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { axiosActions } from "@/lib/axios/axiosHttp";
-import { CreateEventPayLoad, UpdateEventInput } from "@/types/event/event.types";
+import {
+  CreateEventPayLoad,
+  UpdateEventInput,
+} from "@/types/event/event.types";
+import { se } from "date-fns/locale";
 
 export const createEvent = async (payLoad: CreateEventPayLoad) => {
   try {
@@ -13,18 +17,47 @@ export const createEvent = async (payLoad: CreateEventPayLoad) => {
   }
 };
 
-export const getAllEvents = async () => {
+export const getAllEvents = async (params?: {
+  page?: number;
+  limit?: number;
+  search?: string;
+  category?: string;
+}) => {
   try {
-    const response = await axiosActions.axiosGet("/events");
+    const response = await axiosActions.axiosGet("/events", {
+      params: {
+        page: params?.page,
+        limit: params?.limit,
+        search: params?.search,
+        category: params?.category,
+      },
+    });
     return response;
   } catch (err: any) {
     console.log(err.message);
   }
 };
 
-export const getMyCreatedEvents = async () => {
+export const getMyCreatedEvents = async (params?: {
+  page?: number;
+  limit?: number;
+  query?: string;
+  search?: string;
+  searchFields?: string[];
+  enumFields?: string[];
+  category?: string;
+}) => {
   try {
-    const response = await axiosActions.axiosGet("events/my-created-events");
+    const response = await axiosActions.axiosGet("events/my-created-events", {
+      params: {
+        page: params?.page,
+        limit: params?.limit,
+        search: params?.search ?? params?.query,
+        category: params?.category,
+        searchFields: params?.searchFields,
+        enumFields: params?.enumFields,
+      },
+    });
     return response;
   } catch (err: any) {
     console.log(err.message);

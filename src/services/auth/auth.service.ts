@@ -78,9 +78,17 @@ export const getUserById = async (id: string) => {
   }
 };
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (params?: {
+  page?: number;
+  limit?: number;
+}) => {
   try {
-    const response = await axiosActions.axiosGet("/auth/users");
+    const response = await axiosActions.axiosGet("/auth/users", {
+      params: {
+        page: params?.page,
+        limit: params?.limit,
+      },
+    });
     return response;
   } catch (err: any) {
     console.error("Failed to get all users", err.response?.data || err.message);
@@ -100,9 +108,17 @@ export const permanentlyDeleteUser = async (targetUserId: string) => {
   }
 };
 
-export const getAllSoftDeletedUsers = async () => {
+export const getAllSoftDeletedUsers = async (params?: {
+  page?: number;
+  limit?: number;
+}) => {
   try {
-    const response = await axiosActions.axiosGet("/auth/users/soft-deleted");
+    const response = await axiosActions.axiosGet("/auth/users/soft-deleted", {
+      params: {
+        page: params?.page,
+        limit: params?.limit,
+      },
+    });
     return response;
   } catch (err: any) {
     console.error(

@@ -6,8 +6,18 @@ import {
 } from "@tabler/icons-react";
 import { format } from "date-fns";
 import ActionButtonsClient from "./client/actionButtonsClient";
+import Pagination from "@/components/shared/pagination";
+import { Meta } from "@/types/meta.types";
 
-const MyReviews = ({ myAllReviews }: { myAllReviews: Review[] }) => {
+const MyReviews = ({
+  myAllReviews,
+  meta,
+  setPage,
+}: {
+  myAllReviews: Review[];
+  meta: Meta | null;
+  setPage: (page: number) => void;
+}) => {
   return (
     <>
       <main className="flex-1 ml-0 lg:ml-72 p-8 md:p-10 bg-[#2F2A24]">
@@ -62,31 +72,8 @@ const MyReviews = ({ myAllReviews }: { myAllReviews: Review[] }) => {
             ))}
           </div>
 
-          {/* Pagination Component */}
-          <div className="mt-16 flex justify-center items-center gap-2">
-            <button
-              className="flex items-center justify-center w-10 h-10 rounded border border-[#c8b273]/30 text-[#c8b273] hover:bg-[#c8b273] hover:text-[#1f1b15] transition-all disabled:opacity-30 disabled:pointer-events-none"
-              disabled
-            >
-              <IconChevronLeft className="text-lg" />
-            </button>
-
-            <div className="flex gap-2">
-              <button className="w-10 h-10 rounded bg-[#c8b273] text-[#1f1b15] font-label font-bold text-xs flex items-center justify-center">
-                1
-              </button>
-              <button className="w-10 h-10 rounded border border-[#c8b273]/30 text-[#c8b273] hover:bg-[#c8b273]/10 font-label font-bold text-xs flex items-center justify-center transition-all">
-                2
-              </button>
-              <button className="w-10 h-10 rounded border border-[#c8b273]/30 text-[#c8b273] hover:bg-[#c8b273]/10 font-label font-bold text-xs flex items-center justify-center transition-all">
-                3
-              </button>
-            </div>
-
-            <button className="flex items-center justify-center w-10 h-10 rounded border border-[#c8b273]/30 text-[#c8b273] hover:bg-[#c8b273] hover:text-[#1f1b15] transition-all">
-              <IconChevronRight className="text-lg" />
-            </button>
-          </div>
+          {/* Pagination */}
+          {meta && <Pagination meta={meta} onPageChange={setPage} />}
         </div>
       </main>
     </>

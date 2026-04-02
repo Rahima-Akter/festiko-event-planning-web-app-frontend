@@ -1,3 +1,5 @@
+import Pagination from "@/components/shared/pagination";
+import { Meta } from "@/types/meta.types";
 import { MyParticipation } from "@/types/participation/myParticipation.types";
 import {
   IconSearch,
@@ -10,8 +12,12 @@ import Link from "next/link";
 
 const MyParticipations = ({
   myParticipations: events,
+  meta,
+  setPage,
 }: {
   myParticipations: MyParticipation[];
+  meta: Meta | null;
+  setPage: (page: number) => void;
 }) => {
   return (
     <main className="lg:ml-64 min-h-screen bg-[#2F2A24] px-4 sm:px-6 lg:pr-12 lg:pl-20 py-10 lg:py-10">
@@ -111,36 +117,7 @@ const MyParticipations = ({
       </div>
 
       {/* Pagination */}
-      <footer className="mt-5 flex flex-col md:flex-row items-center justify-between border-t border-[#C8B273]/10 pt-10 gap-6">
-        <p className="text-sm text-[#C8B273]/40">
-          Showing 6 of 24 curated participations
-        </p>
-
-        <div className="flex items-center gap-2">
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#3F3931] text-[#C8B273] hover:bg-[#4B463A]">
-            <IconChevronLeft size={18} />
-          </button>
-
-          <div className="flex gap-1">
-            <button className="w-10 h-10 rounded-lg bg-[#6e5d27] text-white font-bold text-sm">
-              1
-            </button>
-            <button className="w-10 h-10 rounded-lg bg-[#3F3931] text-[#C8B273]">
-              2
-            </button>
-            <button className="w-10 h-10 rounded-lg bg-[#3F3931] text-[#C8B273]">
-              3
-            </button>
-            <button className="w-10 h-10 rounded-lg bg-[#3F3931] text-[#C8B273]">
-              4
-            </button>
-          </div>
-
-          <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#3F3931] text-[#C8B273] hover:bg-[#4B463A]">
-            <IconChevronRight size={18} />
-          </button>
-        </div>
-      </footer>
+      {meta && <Pagination meta={meta} onPageChange={setPage} />}
     </main>
   );
 };

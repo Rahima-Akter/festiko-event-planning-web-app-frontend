@@ -16,12 +16,18 @@ import {
 import Image from "next/image";
 import default_user from "@/assets/default_user.jpg";
 import ActionButtonClient from "./client/actionButtonClient";
+import { Meta } from "@/types/meta.types";
+import Pagination from "@/components/shared/pagination";
 
 // ManageParticipants Component
 const ManageParticipants = ({
   participants,
+  meta,
+  setPage,
 }: {
   participants: Participants[] | null;
+  meta: Meta | null;
+  setPage: (page: number) => void;
 }) => {
   // const eventTitle = participants[0].event.title;
   return (
@@ -192,38 +198,7 @@ const ManageParticipants = ({
         </div>
 
         {/* Pagination */}
-        <footer className="mt-8 flex md:flex-row flex-col space-y-5 items-center justify-between">
-          <p className="font-label text-[10px] uppercase tracking-widest text-[#A39580] font-medium">
-            Showing <span className="text-[#C8B273]">1-4</span> of{" "}
-            <span className="text-[#C8B273]">42</span> participants
-          </p>
-
-          <div className="flex items-center gap-1">
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg text-[#A39580] opacity-30 cursor-not-allowed">
-              <IconChevronLeft size={18} />
-            </button>
-
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#C8B273] text-[#2F2A24] font-label text-xs font-bold shadow-lg">
-              1
-            </button>
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/5 text-[#F7F1E3] font-label text-xs transition-all">
-              2
-            </button>
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/5 text-[#F7F1E3] font-label text-xs transition-all">
-              3
-            </button>
-            <span className="w-10 h-10 flex items-center justify-center text-[#A39580]/50">
-              ...
-            </span>
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/5 text-[#F7F1E3] font-label text-xs transition-all">
-              11
-            </button>
-
-            <button className="w-10 h-10 flex items-center justify-center rounded-lg text-[#F7F1E3] hover:bg-white/5 transition-all">
-              <IconChevronRight size={18} />
-            </button>
-          </div>
-        </footer>
+        {meta && <Pagination meta={meta} onPageChange={setPage} />}
       </main>
     </>
   );
