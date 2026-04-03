@@ -3,6 +3,7 @@ import { getAllEvents } from "@/services/event/event.service";
 import { EventResponse } from "@/types/event/event.types";
 import { useEffect, useState } from "react";
 import UpcomingEventsSection from "../upcomingEvents";
+import FreePublicEventsSection from "../freePublicEvents";
 const UpcomingEventsClient = () => {
   const [allEvents, setAllEvents] = useState<EventResponse | null>(null);
   const [debouncedSearch, setDebouncedSearch] = useState<string>("");
@@ -48,6 +49,7 @@ const UpcomingEventsClient = () => {
         setCategory={setCategory}
         category={category}
       />
+      <FreePublicEventsSection allEvents={allEvents?.data ?? null} />
     </>
   );
 };
