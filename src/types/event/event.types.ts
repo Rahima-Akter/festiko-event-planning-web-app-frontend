@@ -30,6 +30,11 @@ export type Event = {
   title: string;
   updatedAt: string;
   venue: string;
+  organizer: {
+    name: string;
+    profile_image: string;
+    email: string;
+  };
 };
 
 export type EventResponse = {

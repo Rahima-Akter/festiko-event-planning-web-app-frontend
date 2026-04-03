@@ -151,3 +151,21 @@ body {
 .btn-primary-gradient {
   background: linear-gradient(135deg, #6e5d27 0%, #c8b273 100%);
 }
+
+/* /events route styles */
+.btn-gold {
+  background: #C8B273;
+  color: #2F2A24;
+}
+
+.btn-gold:hover {
+  background: #DCC584;
+}
+
+.glass-card {
+  background: rgba(61, 55, 47, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(200, 178, 115, 0.1);
+}
+
+/* /events route styles */

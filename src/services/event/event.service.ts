@@ -25,6 +25,8 @@ export const getAllEvents = async (params?: {
   searchFields?: string[];
   enumFields?: string[];
   category?: string;
+  sortBy?: string;
+  sortOrder?: string;
 }) => {
   try {
     const response = await axiosActions.axiosGet("/events", {
@@ -33,6 +35,8 @@ export const getAllEvents = async (params?: {
         limit: params?.limit,
         search: params?.search ?? params?.query,
         category: params?.category,
+        sortBy: params?.sortBy,
+        sortOrder: params?.sortOrder,
         searchFields: params?.searchFields,
         enumFields: params?.enumFields,
       },

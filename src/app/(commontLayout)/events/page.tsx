@@ -1,7 +1,7 @@
-import Events from "@/components/modules/events/events";
+import UpcomingEventsClient from "@/components/modules/home/client/upcomingEventsClient";
 
 const EventsPage = () => {
-  return <Events />;
+  return <UpcomingEventsClient />;
 };
 
 export default EventsPage;
