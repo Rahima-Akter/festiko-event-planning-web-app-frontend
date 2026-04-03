@@ -10,8 +10,8 @@ const FetchEventsClient = () => {
     null,
   );
   const [page, setPage] = useState<number>(1);
-  const [search, setSearch] = useState<string>("");
   const [category, setCategory] = useState<string>("");
+  const [search, setSearch] = useState<string>("");
   const [debouncedSearch, setDebouncedSearch] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 

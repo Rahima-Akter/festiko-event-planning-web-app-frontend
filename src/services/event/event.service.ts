@@ -20,7 +20,10 @@ export const createEvent = async (payLoad: CreateEventPayLoad) => {
 export const getAllEvents = async (params?: {
   page?: number;
   limit?: number;
+  query?: string;
   search?: string;
+  searchFields?: string[];
+  enumFields?: string[];
   category?: string;
 }) => {
   try {
@@ -28,8 +31,10 @@ export const getAllEvents = async (params?: {
       params: {
         page: params?.page,
         limit: params?.limit,
-        search: params?.search,
+        search: params?.search ?? params?.query,
         category: params?.category,
+        searchFields: params?.searchFields,
+        enumFields: params?.enumFields,
       },
     });
     return response;

@@ -10,9 +10,12 @@ const InvitationsClient = () => {
     null,
   );
   const [page, setPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
+
   useEffect(() => {
     const fetchInvitations = async () => {
       try {
+        setLoading(true);
         const response = await getMyInvitations({
           page,
           limit: 3,
@@ -20,6 +23,8 @@ const InvitationsClient = () => {
         setInvitations(response ?? null);
       } catch (err: any) {
         console.log(err.message);
+      }finally {
+        setLoading(false);
       }
     };
     fetchInvitations();
@@ -30,6 +35,7 @@ const InvitationsClient = () => {
       invitations={invitations?.data ?? null}
       meta={invitations?.meta ?? null}
       setPage={setPage}
+      loading={loading}
     />
   );
 };

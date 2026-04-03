@@ -9,25 +9,44 @@ const MyParticipationsClient = () => {
   const [myParticipations, setMyParticipations] =
     useState<MyParticipationResponse | null>(null);
   const [page, setPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>("");
+  const [debouncedSearch, setDebouncedSearch] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 500);
+
+    return () => clearTimeout(delay);
+  }, [search]);
+
   useEffect(() => {
     try {
       const fetchMyParticipations = async () => {
+        setLoading(true);
         const response = await getMyParticipations({
           page,
           limit: 6,
+          search: debouncedSearch,
+          searchFields: ["title", "date", "time", "venue"],
         });
         setMyParticipations(response ?? null);
       };
       fetchMyParticipations();
     } catch (err: any) {
       console.log(err.message);
+    } finally {
+      setLoading(false);
     }
-  }, [setMyParticipations, page]);
+  }, [setMyParticipations, page, debouncedSearch]);
   return (
     <MyParticipations
       myParticipations={myParticipations?.data ?? []}
       meta={myParticipations?.meta ?? null}
       setPage={setPage}
+      setSearch={setSearch}
+      loading={loading}
     />
   );
 };

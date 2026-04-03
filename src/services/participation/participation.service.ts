@@ -81,6 +81,9 @@ export const getEventParticipants = async (
 export const getMyParticipations = async (params?: {
   page?: number;
   limit?: number;
+  query?: string;
+  search?: string;
+  searchFields?: string[];
 }) => {
   try {
     const response = await axiosActions.axiosGet(
@@ -89,6 +92,8 @@ export const getMyParticipations = async (params?: {
         params: {
           page: params?.page,
           limit: params?.limit,
+          search: params?.search ?? params?.query,
+          searchFields: params?.searchFields,
         },
       },
     );

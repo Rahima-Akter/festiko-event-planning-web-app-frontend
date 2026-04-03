@@ -1,7 +1,7 @@
+import UpcomingEventsClient from "@/components/modules/home/client/upcomingEventsClient";
 import CreateYourOwnEliteEventSection from "@/components/modules/home/createYourOwnEvent";
 import FreePublicEventsSection from "@/components/modules/home/freePublicEvents";
 import HeroSection from "@/components/modules/home/heroSection";
-import UpcomingEventsSection from "@/components/modules/home/upcomingEvents";
 import WhyFestikoSection from "@/components/modules/home/whyFestikoSection";
 
 const HomePage = () => {
@@ -9,7 +9,7 @@ const HomePage = () => {
     <div>
       <HeroSection />
       <WhyFestikoSection />
-      <UpcomingEventsSection />
+      <UpcomingEventsClient />
       <FreePublicEventsSection />
       <CreateYourOwnEliteEventSection />
     </div>

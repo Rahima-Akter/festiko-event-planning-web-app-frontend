@@ -14,8 +14,10 @@ import {
   IconSettings,
   IconUser,
 } from "@tabler/icons-react";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { User } from "@/types/auth/auth.types";
+import { getProfile, logoutUser } from "@/services/auth/auth.service";
 
 type Props = {
   isOpen: boolean;
@@ -24,6 +26,21 @@ type Props = {
 
 const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
   const pathName = usePathname();
+  const [user, setUser] = useState<User | null>();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await getProfile();
+        if (res?.success) {
+          setUser(res?.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUser();
+  }, [setUser]);
 
   return (
     <>
@@ -152,7 +169,10 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
             </span>
           </Link>
 
-          <button className="flex items-center gap-4 text-red-500/80 pl-10 py-3 hover:text-error transition-colors px-4 cursor-pointer">
+          <button
+            onClick={() => logoutUser()}
+            className="flex items-center gap-4 text-red-500/80 pl-10 py-3 hover:text-error transition-colors px-4 cursor-pointer hover:bg-white/10 hover:py-3"
+          >
             <span className="symbols-outlined">
               <IconLogout />
             </span>
@@ -165,19 +185,33 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
         <div className="mt-auto flex flex-col gap-4">
           <div className="bg-[#2F2A24]/50 p-6 flex flex-col gap-4 border-t border-[#c8b273]/10">
             <div className="flex items-center gap-3 px-4">
-              <div className="w-10 h-10 rounded-full bg-[#c8b273] flex items-center justify-center text-[#2F2A24] font-bold overflow-hidden border-2 border-[#c8b273]/30">
-                <span className="material-symbols-outlined">
-                  <IconUser />
-                </span>
-              </div>
-              <div>
-                <p className="text-xs font-bold text-white leading-tight">
-                  Julian Vane
-                </p>
-                <p className="text-[10px] text-[#c8b273]/70 uppercase tracking-tighter">
-                  Gold Tier
-                </p>
-              </div>
+              <>
+                {user?.profile_image ? (
+                  <Image
+                    src={user.profile_image}
+                    alt="Profile Image"
+                    width={40}
+                    height={40}
+                    className="w-10 h-10 rounded-full bg-[#c8b273] flex items-center justify-center text-[#2F2A24] font-bold overflow-hidden border-2 border-[#c8b273]/30"
+                  />
+                ) : (
+                  <>
+                    <div className="w-10 h-10 rounded-full bg-[#c8b273] flex items-center justify-center text-[#2F2A24] font-bold overflow-hidden border-2 border-[#c8b273]/30">
+                      <span className="material-symbols-outlined">
+                        <IconUser />
+                      </span>
+                    </div>
+                  </>
+                )}
+                <div>
+                  <p className="text-xs font-bold text-white leading-tight">
+                    {user?.name || "User Name"}
+                  </p>
+                  <p className="text-[10px] text-[#c8b273]/70 uppercase tracking-tighter">
+                    {user?.role || "User Role"}
+                  </p>
+                </div>
+              </>
             </div>
           </div>
         </div>

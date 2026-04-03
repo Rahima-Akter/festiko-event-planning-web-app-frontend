@@ -34,7 +34,7 @@ const CreateEventButtonClient = ({
         <div className="relative">
           <select
             onChange={(e) => {
-              setPage(1); // ✅ reset page
+              setPage(1);
               setCategory(e.target.value);
             }}
             className="bg-[#1f1b15] border border-[#4b463a]/10 text-sm appearance-none focus:ring-1 focus:ring-[#eec96d] transition-all text-[#ebe1d7] px-3 py- pr-8 rounded-md"
