@@ -14,6 +14,7 @@ import Link from "next/link";
 import { Event } from "@/types/event/event.types";
 import AddReviewButtonClient from "./client/addReviewButton";
 import Loader from "@/components/shared/loader";
+import JoinEventClientButton from "./client/joinEventClientButton";
 
 const EventDetails = ({
   event,
@@ -251,11 +252,11 @@ const EventDetails = ({
                       </div>
                     </div>
 
-                    <button className="w-full bg-linear-to-br from-[#6e5d27] to-[#c8b273] text-[#ffffff] py-5 rounded-xl font-headline font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all mb-4">
-                      {event?.fee && event?.fee > 0
-                        ? "Pay & Request"
-                        : "Get Ticket"}
-                    </button>
+                    {/* event join button */}
+                    <JoinEventClientButton
+                      fee={event!.fee}
+                      eventId={event!.id}
+                    />
                   </div>
 
                   <div className="bg-[#fcf2e8] p-8 rounded-2xl">
