@@ -7,7 +7,7 @@ import { PublicProfile } from "@/types/auth/publicProfile.types";
 
 const UserInfoClient = ({ params }: { params: { id: string } }) => {
   const [profile, setProfile] = useState<PublicProfile | null>(null);
-// console.log(profile)
+// console.log(params)
   useEffect(() => {
     const fetchUser = async () => {
       try {

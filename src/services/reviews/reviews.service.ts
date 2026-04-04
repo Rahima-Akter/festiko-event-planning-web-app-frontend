@@ -1,10 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { axiosActions } from "@/lib/axios/axiosHttp";
 
-export const createReview = async (payLoad: any) => {
+export const createReview = async (
+  rating: number,
+  comment: string,
+  eventId: string,
+) => {
   try {
-    const response = await axiosActions.axiosPost("/reviews", {
-      data: payLoad,
+    const response = await axiosActions.axiosPost("/reviews/review", {
+      data: { rating, comment, eventId },
     });
     return response;
   } catch (err: any) {

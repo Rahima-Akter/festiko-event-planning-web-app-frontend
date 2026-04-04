@@ -132,7 +132,7 @@ const Events = ({
                           href={`/events/event-details/${event.id}`}
                           className="mt-auto text-center btn-gold py-2.5 text-sm rounded-lg font-bold cursor-pointer"
                         >
-                          {loading? "Loading..." : "View Details"}
+                          {loading ? "Loading..." : "View Details"}
                         </Link>
                       </div>
                     </div>

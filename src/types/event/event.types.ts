@@ -15,14 +15,20 @@ export type CreateEventPayLoad = {
   category: EventCategories;
 };
 
+type Review = {
+  rating: number;
+  comment: string;
+  createdAt: string;
+};
+
 export type Event = {
+  id: string;
   capacity: number;
   category: EventCategories;
   createdAt: string;
   date: string;
   description: string;
   fee: number;
-  id: string;
   image: string;
   isPublic: boolean;
   organizerId: string;
@@ -31,10 +37,14 @@ export type Event = {
   updatedAt: string;
   venue: string;
   organizer: {
+    id: string;
     name: string;
     profile_image: string;
     email: string;
+    bio: string;
+    createdAt: string;
   };
+  reviews: Review[];
 };
 
 export type EventResponse = {

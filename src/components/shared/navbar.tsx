@@ -55,9 +55,9 @@ const Navbar = () => {
           alt="Festiko Logo"
           width={150}
           height={150}
-          className=""
+          className="wauto h-full"
         />
-        {/* Desktop Links */}
+        {/* Links */}
         <div className="flex items-center justify-center gap-6">
           <Link
             href="/"
@@ -105,6 +105,7 @@ const Navbar = () => {
                   alt="User Avatar"
                   width={100}
                   height={100}
+                  unoptimized
                   className="w-full h-full object-cover"
                 />
               </button>
