@@ -10,7 +10,7 @@ const PaymentSuccessContent = () => {
   const eventId = searchParams.get("eventId");
   const clientSecret = searchParams.get("client_secret");
 
-  console.log("PaymentSuccessPage - URL params:", { eventId, clientSecret: clientSecret?.substring(0, 20) + "..." });
+  // console.log("PaymentSuccessPage - URL params:", { eventId, clientSecret: clientSecret?.substring(0, 20) + "..." });
 
   return <PaymentSuccess eventId={eventId} clientSecret={clientSecret} />;
 };

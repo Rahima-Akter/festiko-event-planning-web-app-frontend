@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { IconAlertCircle, IconArrowLeft } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
+import { getEventById } from "@/services/event/event.service";
 
 interface PaymentFailedProps {
   eventId: string | null;
@@ -28,16 +29,9 @@ const PaymentFailed = ({ eventId }: PaymentFailedProps) => {
     const fetchEventData = async () => {
       try {
         if (eventId) {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/events/${eventId}`,
-            {
-              method: "GET",
-              credentials: "include",
-            }
-          );
-          const json = await response.json();
-          if (json?.data) {
-            setEventData(json.data);
+          const response = await getEventById(eventId);
+          if (response?.dasuccessta) {
+            setEventData(response?.data);
           }
         }
       } catch (error) {
@@ -138,9 +132,7 @@ const PaymentFailed = ({ eventId }: PaymentFailedProps) => {
                   <span className="text-[10px] uppercase tracking-[0.2em] text-[#c8b273]/40 font-bold block mb-1">
                     Location
                   </span>
-                  <p className="text-sm text-[#F7F1E3]/80">
-                    {eventData.venue}
-                  </p>
+                  <p className="text-sm text-[#F7F1E3]/80">{eventData.venue}</p>
                 </div>
               </>
             )}
@@ -151,7 +143,7 @@ const PaymentFailed = ({ eventId }: PaymentFailedProps) => {
         <div className="w-full max-w-xs space-y-6">
           <button
             onClick={handleRetry}
-            className="w-full py-5 bg-[linear-gradient(135deg,#c8b273_0%,#a68d4f_100%)] text-[#2F2A24] font-label text-xs font-bold uppercase tracking-[0.25em] rounded-sm hover:brightness-110 transition-all shadow-xl active:scale-[0.98]"
+            className="w-full py-5 bg-[linear-gradient(135deg,#c8b273_0%,#a68d4f_100%)] text-[#2F2A24] font-label text-xs font-bold uppercase tracking-[0.25em] rounded-sm hover:brightness-110 transition-all shadow-xl active:scale-[0.98] cursor-pointer"
           >
             Try Again
           </button>
@@ -159,7 +151,7 @@ const PaymentFailed = ({ eventId }: PaymentFailedProps) => {
           <div className="flex justify-center">
             <Link
               href="/"
-              className="text-[#c8b273] font-label text-[10px] uppercase tracking-widest font-bold hover:text-[#F7F1E3] transition-colors flex items-center gap-2 group"
+              className="text-[#c8b273] font-label text-[10px] uppercase tracking-widest font-bold hover:text-[#F7F1E3] transition-colors flex items-center gap-2 group cursor-pointer"
             >
               <IconArrowLeft className="text-sm transition-transform group-hover:-translate-x-1" />
               Go Back Home

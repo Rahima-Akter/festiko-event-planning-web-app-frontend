@@ -14,7 +14,11 @@ import {
 } from "@tabler/icons-react";
 import { loadStripe } from "@stripe/stripe-js";
 import { toast } from "sonner";
-import { confirmPayment } from "@/services/participation/participation.service";
+import {
+  confirmPayment,
+  getMyParticipations,
+} from "@/services/participation/participation.service";
+import { getEventById } from "@/services/event/event.service";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
@@ -48,25 +52,18 @@ const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
   const [loading, setLoading] = useState(true);
 
   // Debug: Log eventId when component mounts or updates
-  useEffect(() => {
-    console.log("PaymentSuccess component - eventId:", eventId, "clientSecret:", clientSecret?.substring(0, 20) + "...");
-  }, [eventId, clientSecret]);
+  //   useEffect(() => {
+  //     console.log("PaymentSuccess component - eventId:", eventId, "clientSecret:", clientSecret?.substring(0, 20) + "...");
+  //   }, [eventId, clientSecret]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Fetch event data if eventId exists
         if (eventId) {
-          const eventResponse = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/events/${eventId}`,
-            {
-              method: "GET",
-              credentials: "include",
-            },
-          );
-          const eventJson = await eventResponse.json();
-          if (eventJson?.data) {
-            setEventData(eventJson.data);
+          const eventResponse = await getEventById(eventId);
+          if (eventResponse?.success) {
+            setEventData(eventResponse?.data);
           }
         }
 
@@ -94,18 +91,13 @@ const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
 
         // Fetch user name from participation
         try {
-          const participationsRes = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/participation/my-participations`,
-            { credentials: "include" }
-          );
-          const participationsData = await participationsRes.json();
-          console.log("Participations data for username:", participationsData);
-          
-          if (participationsData?.data && Array.isArray(participationsData.data)) {
+          const participationsRes = await getMyParticipations();
+          if (
+            participationsRes?.success &&
+            Array.isArray(participationsRes?.data)
+          ) {
             // Get first participation's userId
-            const firstParticipation = participationsData.data[0];
-            console.log("First participation userId:", firstParticipation?.userId);
-            
+            const firstParticipation = participationsRes?.data[0];
             if (firstParticipation?.userId) {
               setParticipationUserId(firstParticipation.userId);
             }
@@ -277,7 +269,7 @@ const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
                         Premium Pass
                       </p>
                       <p className="text-[10px] text-[#F7F1E3]/40 uppercase tracking-widest">
-                        Entry ID: FTK-9928-0012
+                        Entry ID: {participationUserId || "FTK-9928-0012"}
                       </p>
                     </div>
                   </div>
@@ -318,7 +310,8 @@ const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
                   Important: Download Your Ticket Now
                 </p>
                 <p className="text-[#F7F1E3]/70 text-sm leading-relaxed">
-                  Your event pass is unique to this session. Download your ticket immediately as it will expire when you leave this page.
+                  Your event pass is unique to this session. Download your
+                  ticket immediately as it will expire when you leave this page.
                 </p>
               </div>
             </div>
@@ -328,19 +321,19 @@ const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
               <div className="flex items-center gap-10">
                 <Link
                   href={`/event-pass?eventId=${eventId}${participationUserId ? `&userId=${participationUserId}` : ""}`}
-                  className="flex items-center gap-3 text-[#C8B273] font-label text-[10px] font-bold uppercase tracking-[0.25em] hover:opacity-70 transition-opacity"
+                  className="flex items-center gap-3 text-[#C8B273] font-label text-[10px] font-bold uppercase tracking-[0.25em] hover:opacity-70 transition-opacity cursor-pointer"
                 >
                   <IconDownload className="text-xl" />
                   Download Ticket
                 </Link>
 
-                <button className="flex items-center gap-3 text-[#F7F1E3]/60 font-label text-[10px] font-bold uppercase tracking-[0.25em] hover:text-[#F7F1E3] transition-colors">
+                <button className="flex items-center gap-3 text-[#F7F1E3]/60 font-label text-[10px] font-bold uppercase tracking-[0.25em] hover:text-[#F7F1E3] transition-colors cursor-pointer">
                   <IconReceipt className="text-xl" />
                   View Invoice
                 </button>
               </div>
 
-              <button className="w-full md:w-auto px-10 py-5 bg-[#ffffff]/5 border border-[#C8B273]/30 text-[#C8B273] font-bold text-[10px] uppercase tracking-[0.25em] rounded-lg hover:bg-[#C8B273]/10 transition-all duration-300">
+              <button className="w-full md:w-auto px-10 py-5 bg-[#ffffff]/5 border border-[#C8B273]/30 text-[#C8B273] font-bold text-[10px] uppercase tracking-[0.25em] rounded-lg hover:bg-[#C8B273]/10 transition-all duration-300 cursor-pointer">
                 Go to My Events
               </button>
             </div>

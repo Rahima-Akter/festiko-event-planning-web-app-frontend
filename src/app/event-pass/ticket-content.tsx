@@ -17,6 +17,8 @@ import { toast } from "sonner";
 import { toPng } from "html-to-image";
 import logo from "@/assets/festiko-logo.png";
 import Image from "next/image";
+import { getEventsByUserId } from "@/services/event/event.service";
+import { getMyParticipations } from "@/services/participation/participation.service";
 
 interface EventData {
   id: string;
@@ -51,40 +53,26 @@ const TicketContent = () => {
           return;
         }
 
-        console.log("Fetching data for eventId:", eventId);
-
         // Fetch event data
-        const eventResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/events/${eventId}`,
-          { credentials: "include" },
-        );
-        const eventJson = await eventResponse.json();
-        console.log("Event response:", eventJson);
-        if (eventJson?.data) {
-          setEventData(eventJson.data);
+        const eventResponse = await getEventsByUserId(eventId);
+        if (eventResponse?.success) {
+          setEventData(eventResponse?.data);
         } else {
           console.log("No event data in response");
         }
 
         // If userId is in URL, fetch the user data directly
         if (urlUserId) {
-          console.log("Fetching user data for userId:", urlUserId);
           try {
             // Try to get user data from participations using userId
-            const myParticipationsResponse = await fetch(
-              `${process.env.NEXT_PUBLIC_BACKEND_URL}/participation/my-participations`,
-              { credentials: "include" },
-            );
-            const myParticipationsJson = await myParticipationsResponse.json();
-            console.log("My participations response:", myParticipationsJson);
+            const myParticipationsResponse = await getMyParticipations();
 
             if (
-              myParticipationsJson?.data &&
-              Array.isArray(myParticipationsJson.data)
+              myParticipationsResponse?.success &&
+              Array.isArray(myParticipationsResponse?.data)
             ) {
               // Find any participation to get the user profile data
-              const participationWithUser = myParticipationsJson.data[0];
-              console.log("First participation data:", participationWithUser);
+              const participationWithUser = myParticipationsResponse?.data[0];
 
               // Get user info from window context or local storage - user1 is the default
               // Since we can't reliably get user data, use the userId to construct a default username
@@ -96,7 +84,6 @@ const TicketContent = () => {
               const userName =
                 defaultNames[urlUserId] || `User ${urlUserId.substring(0, 8)}`;
               setUserData({ name: userName, email: "" });
-              console.log("User data set to:", userName);
             }
           } catch (error) {
             console.log("Error fetching user data:", error);
@@ -108,41 +95,32 @@ const TicketContent = () => {
         } else if (urlUserName) {
           // Otherwise, try to fetch user data from participations
           try {
-            const myParticipationsResponse = await fetch(
-              `${process.env.NEXT_PUBLIC_BACKEND_URL}/participation/my-participations`,
-              { credentials: "include" },
-            );
-            const myParticipationsJson = await myParticipationsResponse.json();
-            console.log("My participations response:", myParticipationsJson);
+            const myParticipationsResponse = await getMyParticipations();
 
             if (
-              myParticipationsJson?.data &&
-              Array.isArray(myParticipationsJson.data)
+              myParticipationsResponse?.data &&
+              Array.isArray(myParticipationsResponse?.data)
             ) {
               // Find the participation for this specific event
-              const currentEventParticipation = myParticipationsJson.data.find(
-                (p: { eventId: string; user?: UserData }) =>
-                  p.eventId === eventId,
-              );
-
-              console.log(
-                "Current event participation:",
-                currentEventParticipation,
-              );
+              const currentEventParticipation =
+                myParticipationsResponse?.data?.find(
+                  (p: { eventId: string; user?: UserData }) =>
+                    p.eventId === eventId,
+                );
 
               // Log the entire participation object to debug structure
-              console.log(
-                "Full participation object:",
-                JSON.stringify(currentEventParticipation, null, 2),
-              );
+              //   console.log(
+              //     "Full participation object:",
+              //     JSON.stringify(currentEventParticipation, null, 2),
+              //   );
 
               // Try different ways to access user data
               if (currentEventParticipation?.user) {
                 setUserData(currentEventParticipation.user);
-                console.log(
-                  "User data from participation.user:",
-                  currentEventParticipation.user,
-                );
+                // console.log(
+                //   "User data from participation.user:",
+                //   currentEventParticipation.user,
+                // );
               } else if (
                 currentEventParticipation &&
                 "user" in currentEventParticipation
@@ -151,18 +129,12 @@ const TicketContent = () => {
                   currentEventParticipation as Record<string, unknown>
                 ).user as UserData;
                 if (userData) setUserData(userData);
-                console.log("User data found:", userData);
-              } else if (myParticipationsJson.data[0]?.user) {
+              } else if (myParticipationsResponse?.data[0]?.user) {
                 // Fallback to first user if found
-                setUserData(myParticipationsJson.data[0].user);
-                console.log(
-                  "Fallback user data:",
-                  myParticipationsJson.data[0].user,
-                );
+                setUserData(myParticipationsResponse?.data[0].user);
               } else {
                 console.log(
                   "No user data found in participation, full object:",
-                  currentEventParticipation,
                 );
               }
             }
@@ -303,7 +275,7 @@ const TicketContent = () => {
           {/* Top */}
           <div className="mt-8 flex flex-col items-center">
             {/* <IconSparkles className="text-[#c8b273] text-4xl mb-3" /> */}
-            <Image src={logo} alt="Festiko Logo" width={100} height={100}  />
+            <Image src={logo} alt="Festiko Logo" width={100} height={100} />
             <div className="text-[#c8b273]/60 font-headline text-[8px] tracking-[0.6em] uppercase">
               Private Access
             </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { axiosActions } from "@/lib/axios/axiosHttp";
 
 export const joinEvent = async (eventId: string) => {
@@ -14,15 +15,13 @@ export const joinEvent = async (eventId: string) => {
 
 export const confirmPayment = async (eventId: string) => {
   try {
-    const response = await axiosActions.axiosPost(
-      "/participation/confirm-payment",
+    const response = await axiosActions.axiosPost("/participation/confirm-payment",
       {
-        data: { 
+        data: {
           eventId,
         },
       },
     );
-    console.log("confirmPayment response:", response);
     return response.data;
   } catch (err: any) {
     console.log("Error in confirmPayment service:", {

@@ -5,7 +5,6 @@ import { joinEvent } from "@/services/participation/participation.service";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
-import { env } from "@/env";
 
 const JoinEventClientButton = ({
   fee,
@@ -20,10 +19,7 @@ const JoinEventClientButton = ({
   const handleJoin = async () => {
     try {
       setLoading(true);
-
-      // Call joinEvent which handles everything
       const response = await joinEvent(eventId);
-
       if (!response?.success) {
         toast.error(response?.message || "Failed to join event");
         setLoading(false);
