@@ -12,6 +12,28 @@ export const joinEvent = async (eventId: string) => {
   }
 };
 
+export const confirmPayment = async (eventId: string) => {
+  try {
+    const response = await axiosActions.axiosPost(
+      "/participation/confirm-payment",
+      {
+        data: { 
+          eventId,
+        },
+      },
+    );
+    console.log("confirmPayment response:", response);
+    return response.data;
+  } catch (err: any) {
+    console.log("Error in confirmPayment service:", {
+      message: err?.message,
+      status: err?.response?.status,
+      data: err?.response?.data,
+    });
+    throw err;
+  }
+};
+
 export const inviteUser = async (eventId: string, userId: string) => {
   try {
     const response = await axiosActions.axiosPost("participation/invite", {

@@ -13,6 +13,7 @@ const StripePaymentForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const clientSecret = searchParams.get("client_secret");
+  const eventId = searchParams.get("eventId");
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
@@ -35,9 +36,11 @@ const StripePaymentForm = () => {
     if (error) {
       toast.error(error.message);
       setLoading(false);
-      router.push("/payment-failed"); // Redirect to your fail page
+      const failUrl = `/payment-failed?eventId=${eventId}`;
+      router.push(failUrl);
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
-      router.push("/payment-success"); // Redirect to your success page
+      const successUrl = `/payment-success?client_secret=${encodeURIComponent(clientSecret!)}&eventId=${eventId}`;
+      router.push(successUrl);
     } else {
       toast.error("Payment not completed.");
       setLoading(false);

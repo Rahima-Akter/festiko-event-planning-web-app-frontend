@@ -1,11 +1,13 @@
-const PaymentFaildPage = () => {
-  return (
-    <div>
-      <h1>Payment Failed</h1>
-      <p>Please Try Again.</p>
-      <p>Redirecting to the home page...</p>
-    </div>
-  );
+"use client";
+
+import { useSearchParams } from "next/navigation";
+import PaymentFailed from "@/components/modules/paymentFailed/paymentFailed";
+
+const PaymentFailedPage = () => {
+  const searchParams = useSearchParams();
+  const eventId = searchParams.get("eventId");
+
+  return <PaymentFailed eventId={eventId} />;
 };
 
-export default PaymentFaildPage;
+export default PaymentFailedPage;

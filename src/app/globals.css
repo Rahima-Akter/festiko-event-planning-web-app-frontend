@@ -169,3 +169,67 @@ body {
 }
 
 /* /events route styles */
+
+/* event pass routes styles */
+.pass-texture {
+  background-image: radial-gradient(circle at 2px 2px, rgba(200, 178, 115, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+.ornament-border {
+  border: 1px solid rgba(200, 178, 115, 0.3);
+  position: relative;
+}
+
+.ornament-border::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  border: 0.5px solid rgba(200, 178, 115, 0.2);
+  pointer-events: none;
+}
+
+.ticket-notch::after {
+  content: "";
+  position: absolute;
+  bottom: 120px;
+  left: -12px;
+  width: 24px;
+  height: 24px;
+  background: #121212;
+  border-radius: 50%;
+  box-shadow: inset -4px 0 4px rgba(0,0,0,0.3);
+}
+
+.ticket-notch::before {
+  content: "";
+  position: absolute;
+  bottom: 120px;
+  right: -12px;
+  width: 24px;
+  height: 24px;
+  background: #121212;
+  border-radius: 50%;
+  box-shadow: inset 4px 0 4px rgba(0,0,0,0.3);
+}
+
+.art-deco-bg {
+  background-color: #121212;
+  background-image: 
+    linear-gradient(30deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+    linear-gradient(150deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+    linear-gradient(30deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+    linear-gradient(150deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
+    linear-gradient(60deg, #222222 25%, transparent 25.5%, transparent 75%, #222222 75%, #222222),
+    linear-gradient(60deg, #222222 25%, transparent 25.5%, transparent 75%, #222222 75%, #222222);
+  background-size: 80px 140px;
+  background-position: 0 0, 0 0, 40px 70px, 40px 70px, 0 0, 40px 70px;
+}
+
+.glow-aura {
+  background: radial-gradient(circle, rgba(200, 178, 115, 0.15) 0%, rgba(18, 18, 18, 0) 70%);
+}
+/* event pass styles */

@@ -2,7 +2,6 @@
 "use client";
 
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   IconCalendar,
@@ -14,16 +13,28 @@ import {
   IconCircleCheckFilled,
 } from "@tabler/icons-react";
 import { loadStripe } from "@stripe/stripe-js";
-import PaymentMethodDisplay from "./PaymentMethodDisplay";
+import { toast } from "sonner";
+import { confirmPayment } from "@/services/participation/participation.service";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
 );
 
-const PaymentSuccess = () => {
-  const searchParams = useSearchParams();
-  const clientSecret = searchParams.get("payment_intent_client_secret");
+interface PaymentSuccessProps {
+  eventId: string | null;
+  clientSecret: string | null;
+}
 
+interface EventData {
+  id: string;
+  title: string;
+  description: string;
+  date: string;
+  venue: string;
+  fee: number;
+}
+
+const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
   const [paymentData, setPaymentData] = useState<{
     amount: number;
     currency: string;
@@ -32,33 +43,123 @@ const PaymentSuccess = () => {
     last4: string;
   } | null>(null);
 
+  const [eventData, setEventData] = useState<EventData | null>(null);
+  const [participationUserId, setParticipationUserId] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+
+  // Debug: Log eventId when component mounts or updates
   useEffect(() => {
-    const fetchPaymentDetails = async () => {
-      if (!clientSecret) return;
+    console.log("PaymentSuccess component - eventId:", eventId, "clientSecret:", clientSecret?.substring(0, 20) + "...");
+  }, [eventId, clientSecret]);
 
-      const stripe = await stripePromise;
-      if (!stripe) return;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch event data if eventId exists
+        if (eventId) {
+          const eventResponse = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/events/${eventId}`,
+            {
+              method: "GET",
+              credentials: "include",
+            },
+          );
+          const eventJson = await eventResponse.json();
+          if (eventJson?.data) {
+            setEventData(eventJson.data);
+          }
+        }
 
-      const { paymentIntent } =
-        await stripe.retrievePaymentIntent(clientSecret);
+        // Fetch payment details from Stripe
+        if (clientSecret) {
+          const stripe = await stripePromise;
+          if (stripe) {
+            const { paymentIntent } =
+              await stripe.retrievePaymentIntent(clientSecret);
 
-      if (paymentIntent) {
-        // Stripe JS types are limited, so we use optional chaining safely
-        const pm = (paymentIntent.payment_method as any) || {};
-        const card = pm.card || {};
+            if (paymentIntent) {
+              const pm = (paymentIntent.payment_method as any) || {};
+              const card = pm.card || {};
 
-        setPaymentData({
-          amount: (paymentIntent.amount || 0) / 100, // Stripe amount is in cents
-          currency: (paymentIntent.currency || "BDT").toUpperCase(),
-          payment_method: pm.type || "card",
-          cardBrand: card.brand || "UNKNOWN",
-          last4: card.last4 || "0000",
-        });
+              setPaymentData({
+                amount: (paymentIntent.amount || 0) / 100,
+                currency: (paymentIntent.currency || "BDT").toUpperCase(),
+                payment_method: pm.type || "card",
+                cardBrand: card.brand || "UNKNOWN",
+                last4: card.last4 || "0000",
+              });
+            }
+          }
+        }
+
+        // Fetch user name from participation
+        try {
+          const participationsRes = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/participation/my-participations`,
+            { credentials: "include" }
+          );
+          const participationsData = await participationsRes.json();
+          console.log("Participations data for username:", participationsData);
+          
+          if (participationsData?.data && Array.isArray(participationsData.data)) {
+            // Get first participation's userId
+            const firstParticipation = participationsData.data[0];
+            console.log("First participation userId:", firstParticipation?.userId);
+            
+            if (firstParticipation?.userId) {
+              setParticipationUserId(firstParticipation.userId);
+            }
+          }
+        } catch (error) {
+          console.log("Error fetching participations for username:", error);
+        }
+
+        // Update participation status to PAID
+        if (eventId) {
+          try {
+            await confirmPayment(eventId);
+          } catch (error: any) {
+            console.log(
+              "Auto-update payment status error (non-critical):",
+              error?.response?.data?.message || error.message,
+            );
+            // Don't show error to user - they paid successfully, DB update is in background
+          }
+        }
+
+        toast.success("Payment successful! Your participation is now active.");
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchPaymentDetails();
-  }, [clientSecret]);
+    fetchData();
+  }, [eventId, clientSecret]);
+
+  // Format date helper
+  const formatDate = (dateString: string) => {
+    try {
+      const date = new Date(dateString);
+      return date.toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    } catch {
+      return dateString;
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="bg-[#2F2A24] text-[#F7F1E3] lg:pt-20 pt-24 min-h-screen flex items-center justify-center">
+        <div className="text-xl">Loading your confirmation...</div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -100,7 +201,7 @@ const PaymentSuccess = () => {
                   </span>
 
                   <h3 className="font-headline text-3xl text-[#F7F1E3] font-bold mb-8">
-                    The Golden Gala 2024
+                    {eventData?.title || "Event Title"}
                   </h3>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -109,11 +210,13 @@ const PaymentSuccess = () => {
                         <IconCalendar className="text-[#C8B273] text-xl" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-[#F7F1E3]">
-                          Friday, December 12th
-                        </p>
                         <p className="text-xs text-[#F7F1E3]/40 uppercase tracking-wider mt-1">
-                          Doors 19:00 • Black Tie
+                          Event Date
+                        </p>
+                        <p className="text-sm font-semibold text-[#F7F1E3]">
+                          {eventData?.date
+                            ? formatDate(eventData.date)
+                            : "Date TBA"}
                         </p>
                       </div>
                     </div>
@@ -123,42 +226,41 @@ const PaymentSuccess = () => {
                         <IconMapPin className="text-[#C8B273] text-xl" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-[#F7F1E3]">
-                          The Grand Atrium
-                        </p>
                         <p className="text-xs text-[#F7F1E3]/40 uppercase tracking-wider mt-1">
-                          742 Park Ave, New York
+                          Venue
+                        </p>
+                        <p className="text-sm font-semibold text-[#F7F1E3]">
+                          {eventData?.venue || "Location TBA"}
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                {/* <div className="mt-12 pt-8 border-t border-[#ffffff]/5 flex justify-between items-end">
-                  <div>
-                    <p className="text-[10px] uppercase tracking-[0.2em] text-[#F7F1E3]/40 mb-2">
-                      Total Amount Paid
-                    </p>
-                    <p className="text-4xl font-headline font-bold text-[#C8B273]">
-                      {paymentData
-                        ? `$${paymentData.amount.toFixed(2)} ${paymentData.currency}`
-                        : "$---"}
-                    </p>
+                {/* Payment Summary */}
+                {paymentData && (
+                  <div className="mt-12 pt-8 border-t border-[#ffffff]/5">
+                    <div className="grid grid-cols-2 gap-8">
+                      <div>
+                        <p className="text-[10px] uppercase tracking-[0.2em] text-[#F7F1E3]/40 mb-2">
+                          Amount Paid
+                        </p>
+                        <p className="text-2xl font-headline font-bold text-[#C8B273]">
+                          {paymentData.amount.toFixed(2)} {paymentData.currency}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-[10px] uppercase tracking-[0.2em] text-[#F7F1E3]/40 mb-2">
+                          Payment Method
+                        </p>
+                        <p className="text-sm font-semibold text-[#F7F1E3]">
+                          {paymentData.cardBrand.toUpperCase()} ••••{" "}
+                          {paymentData.last4}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-
-                  <div className="text-right">
-                    <p className="text-[10px] uppercase tracking-[0.2em] text-[#F7F1E3]/40 mb-2">
-                      Payment Method
-                    </p>
-                    <p className="text-sm font-medium text-[#F7F1E3] flex items-center justify-end gap-2">
-                      <IconCreditCard className="text-base text-[#C8B273]" />
-                      {paymentData
-                        ? `${paymentData.cardBrand.toUpperCase()} •••• ${paymentData.last4}`
-                        : "---"}
-                    </p>
-                  </div>
-                </div> */}
-                <PaymentMethodDisplay />
+                )}
               </div>
 
               {/* Side Details */}
@@ -206,13 +308,31 @@ const PaymentSuccess = () => {
               </div>
             </div>
 
+            {/* Download Alert */}
+            <div className="mb-12 p-6 rounded-xl bg-[#C8B273]/10 border border-[#C8B273]/30 flex items-start gap-4">
+              <div className="w-5 h-5 rounded-full bg-[#C8B273] flex items-center justify-center shrink-0 mt-1">
+                <span className="text-[#2F2A24] text-xs font-bold">!</span>
+              </div>
+              <div>
+                <p className="text-[#C8B273] font-label text-[11px] uppercase tracking-[0.15em] font-bold mb-2">
+                  Important: Download Your Ticket Now
+                </p>
+                <p className="text-[#F7F1E3]/70 text-sm leading-relaxed">
+                  Your event pass is unique to this session. Download your ticket immediately as it will expire when you leave this page.
+                </p>
+              </div>
+            </div>
+
             {/* Action Bar */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-8 py-8 px-4 border-y border-[#ffffff]/15">
               <div className="flex items-center gap-10">
-                <button className="flex items-center gap-3 text-[#C8B273] font-label text-[10px] font-bold uppercase tracking-[0.25em] hover:opacity-70 transition-opacity">
+                <Link
+                  href={`/event-pass?eventId=${eventId}${participationUserId ? `&userId=${participationUserId}` : ""}`}
+                  className="flex items-center gap-3 text-[#C8B273] font-label text-[10px] font-bold uppercase tracking-[0.25em] hover:opacity-70 transition-opacity"
+                >
                   <IconDownload className="text-xl" />
                   Download Ticket
-                </button>
+                </Link>
 
                 <button className="flex items-center gap-3 text-[#F7F1E3]/60 font-label text-[10px] font-bold uppercase tracking-[0.25em] hover:text-[#F7F1E3] transition-colors">
                   <IconReceipt className="text-xl" />

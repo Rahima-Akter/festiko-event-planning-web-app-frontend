@@ -21,41 +21,32 @@ const JoinEventClientButton = ({
     try {
       setLoading(true);
 
-      if (fee <= 0) {
-        // Free ticket
-        const response = await joinEvent(eventId);
-        if (response?.success) {
-          toast.success("Successfully joined the event!");
-        } else {
-          toast.error("Failed to join event");
-        }
+      // Call joinEvent which handles everything
+      const response = await joinEvent(eventId);
+
+      if (!response?.success) {
+        toast.error(response?.message || "Failed to join event");
         setLoading(false);
         return;
       }
 
-      // Paid ticket → create PaymentIntent on backend
-      const res = await fetch(
-        `${env.NEXT_PUBLIC_BACKEND_URL}/payments/create`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-          body: JSON.stringify({ eventId, amount: fee }),
-        }
-      );
+      // Free event - already joined
+      if (fee <= 0) {
+        toast.success("Successfully joined the event!");
+        setLoading(false);
+        return;
+      }
 
-      const data = await res.json();
-
-      if (!data?.data?.client_secret) {
+      // Paid event - redirect to payment with client secret
+      const clientSecret = response?.data?.clientSecret;
+      if (clientSecret) {
+        router.push(
+          `/pay?client_secret=${encodeURIComponent(clientSecret)}&eventId=${eventId}`
+        );
+      } else {
         toast.error("Failed to initiate payment");
         setLoading(false);
-        return;
       }
-
-      // Redirect to payment page with client secret in query string
-      router.push(
-        `/pay?client_secret=${encodeURIComponent(data.data.client_secret)}`
-      );
     } catch (err: any) {
       console.log(err);
       toast.error(err?.response?.data?.message || "Something went wrong");
