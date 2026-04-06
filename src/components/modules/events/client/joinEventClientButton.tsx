@@ -2,6 +2,7 @@
 "use client";
 
 import { joinEvent } from "@/services/participation/participation.service";
+import { getProfile } from "@/services/auth/auth.service";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -26,10 +27,16 @@ const JoinEventClientButton = ({
         return;
       }
 
-      // Free event - already joined
+      // Free event - already joined, redirect to event-pass
       if (fee <= 0) {
-        toast.success("Successfully joined the event!");
-        setLoading(false);
+        const profileResponse = await getProfile();
+        if (profileResponse?.success) {
+          const userId = profileResponse.data.id;
+          router.push(`/event-pass?eventId=${eventId}&userId=${userId}`);
+        } else {
+          toast.error("Failed to get user info");
+          setLoading(false);
+        }
         return;
       }
 
@@ -37,7 +44,7 @@ const JoinEventClientButton = ({
       const clientSecret = response?.data?.clientSecret;
       if (clientSecret) {
         router.push(
-          `/pay?client_secret=${encodeURIComponent(clientSecret)}&eventId=${eventId}`
+          `/pay?client_secret=${encodeURIComponent(clientSecret)}&eventId=${eventId}`,
         );
       } else {
         toast.error("Failed to initiate payment");
@@ -56,7 +63,11 @@ const JoinEventClientButton = ({
       disabled={loading}
       className="w-full bg-linear-to-br from-[#6e5d27] to-[#c8b273] text-white py-5 rounded-xl font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all mb-4 cursor-pointer"
     >
-      {fee && fee > 0 ? (loading ? "Loading..." : "Pay & Request") : "Get Ticket"}
+      {fee && fee > 0
+        ? loading
+          ? "Loading..."
+          : "Pay & Request"
+        : "Get Ticket"}
     </button>
   );
 };

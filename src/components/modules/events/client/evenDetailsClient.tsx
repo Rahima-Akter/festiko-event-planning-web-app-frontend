@@ -16,9 +16,9 @@ const EvenDetailsClient = ({ id: eventId }: { id: string }) => {
       try {
         setLoading(true);
         const response = await getEventById(eventId);
-        setEventDetails(response.data ?? null);
+        setEventDetails(response?.data ?? null);
         const userResponse = await getProfile();
-        setUser(userResponse.data ?? null);
+        setUser(userResponse?.data ?? null);
       } catch (err) {
         console.error(err);
         setEventDetails(null);

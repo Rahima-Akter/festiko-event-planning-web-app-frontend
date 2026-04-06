@@ -71,19 +71,32 @@ const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
         if (clientSecret) {
           const stripe = await stripePromise;
           if (stripe) {
-            const { paymentIntent } =
-              await stripe.retrievePaymentIntent(clientSecret);
-
+            const stripeResponse =
+              (await stripe.retrievePaymentIntent(clientSecret)) as any;
+            const paymentIntent = stripeResponse?.paymentIntent;
+            console.log('paymentIntent----------------------------------');
+            console.log(paymentIntent);
             if (paymentIntent) {
-              const pm = (paymentIntent.payment_method as any) || {};
-              const card = pm.card || {};
+              const charge = ((paymentIntent.charges as any)?.data?.[0] as any) || {};
+              const pmDetails = charge.payment_method_details || {};
+              const card = pmDetails.card || {};
+              const paymentMethodType =
+                pmDetails.type ||
+                paymentIntent.payment_method_types?.[0] ||
+                "card";
+              const cardBrand = (
+                card.brand ||
+                paymentMethodType ||
+                "Card"
+              ).toUpperCase();
+              const last4 = card.last4 || "";
 
               setPaymentData({
                 amount: (paymentIntent.amount || 0) / 100,
                 currency: (paymentIntent.currency || "BDT").toUpperCase(),
-                payment_method: pm.type || "card",
-                cardBrand: card.brand || "UNKNOWN",
-                last4: card.last4 || "0000",
+                payment_method: paymentMethodType,
+                cardBrand,
+                last4,
               });
             }
           }
@@ -246,8 +259,10 @@ const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
                           Payment Method
                         </p>
                         <p className="text-sm font-semibold text-[#F7F1E3]">
-                          {paymentData.cardBrand.toUpperCase()} ••••{" "}
-                          {paymentData.last4}
+                          {paymentData.cardBrand}
+                          {paymentData.last4
+                            ? ` •••• ${paymentData.last4}`
+                            : ""}
                         </p>
                       </div>
                     </div>

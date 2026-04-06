@@ -17,8 +17,9 @@ import { toast } from "sonner";
 import { toPng } from "html-to-image";
 import logo from "@/assets/festiko-logo.png";
 import Image from "next/image";
-import { getEventsByUserId } from "@/services/event/event.service";
+import { getEventById } from "@/services/event/event.service";
 import { getMyParticipations } from "@/services/participation/participation.service";
+import { format, parse } from "date-fns";
 
 interface EventData {
   id: string;
@@ -54,7 +55,7 @@ const TicketContent = () => {
         }
 
         // Fetch event data
-        const eventResponse = await getEventsByUserId(eventId);
+        const eventResponse = await getEventById(eventId);
         if (eventResponse?.success) {
           setEventData(eventResponse?.data);
         } else {
@@ -319,7 +320,10 @@ const TicketContent = () => {
                   Event Start&apos;s At
                 </p>
                 <p className="text-[#c8b273] font-headline font-medium text-sm">
-                  {eventData.time || "TBA"}
+                  {format(
+                    parse(eventData.time, "HH:mm", new Date()),
+                    "hh:mm a",
+                  )}
                 </p>
               </div>
               <IconClock className="text-[#c8b273]/30 text-lg" />
@@ -356,14 +360,14 @@ const TicketContent = () => {
       <div className="flex gap-6 relative z-10">
         <button
           onClick={handleDownload}
-          className="bg-[#c8b273] text-[#1a1714] px-10 py-4 rounded-none font-label font-bold text-[10px] uppercase tracking-[0.2em] flex items-center gap-3 hover:bg-[#dcc584] transition-all border border-[#c8b273]"
+          className="bg-[#c8b273] text-[#1a1714] px-10 py-4 rounded-none font-label font-bold text-[10px] uppercase tracking-[0.2em] flex items-center gap-3 hover:bg-[#dcc584] transition-all border border-[#c8b273] cursor-pointer"
         >
           <IconDownload className="text-sm" />
           Download
         </button>
 
         <Link href="/">
-          <button className="bg-transparent border border-[#c8b273]/30 text-[#c8b273] px-10 py-4 rounded-none font-label font-bold text-[10px] uppercase tracking-[0.2em] flex items-center gap-3 hover:bg-[#c8b273]/5 transition-all">
+          <button className="bg-transparent border border-[#c8b273]/30 text-[#c8b273] px-10 py-4 rounded-none font-label font-bold text-[10px] uppercase tracking-[0.2em] flex items-center gap-3 hover:bg-[#c8b273]/5 transition-all cursor-pointer">
             <IconHome className="text-sm" />
             Home
           </button>

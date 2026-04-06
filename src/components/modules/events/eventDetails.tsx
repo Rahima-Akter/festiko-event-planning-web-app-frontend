@@ -31,7 +31,6 @@ const EventDetails = ({
         <Loader />
       ) : (
         <main className="bg-[#fff8f4]">
-          {/* Hero Section */}
           <section className="relative w-full h-130 overflow-hidden bg-gray-900 flex items-center justify-center">
             <Image
               src={event!.image}
@@ -170,7 +169,6 @@ const EventDetails = ({
                                 {event.reviews.map((review, idx) => (
                                   <div key={idx}>
                                     <div className="flex text-[#6e5d27]">
-                                      {/* Render stars for this review */}
                                       {Array.from({
                                         length: review.rating,
                                       }).map((_, i) => (
