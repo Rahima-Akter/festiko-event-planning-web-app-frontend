@@ -1,7 +1,7 @@
-import UserManagement from "@/components/modules/dashboard/usersManagement/usersManagement";
+import UsersManagementClient from "@/components/modules/dashboard/usersManagement/client/usersManagementClient";
 
 const UsersManagementPage = () => {
-  return <UserManagement />;
+  return <UsersManagementClient />;
 };
 
 export default UsersManagementPage;

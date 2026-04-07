@@ -5,6 +5,7 @@ import {
   RegisterPayLoad,
   UpdateProfilePayLoad,
 } from "@/types/auth/auth.types";
+import { se } from "date-fns/locale";
 
 export const registerUser = async (payLoad: RegisterPayLoad) => {
   try {
@@ -81,12 +82,20 @@ export const getUserById = async (id: string) => {
 export const getAllUsers = async (params?: {
   page?: number;
   limit?: number;
+  search?: string;
+  searchFields?: string[];
+  enumFields?: string[];
+  role?: string;
 }) => {
   try {
     const response = await axiosActions.axiosGet("/auth/users", {
       params: {
         page: params?.page,
         limit: params?.limit,
+        search: params?.search,
+        searchFields: params?.searchFields,
+        enumFields: params?.enumFields,
+        role: params?.role,
       },
     });
     return response;
@@ -111,12 +120,20 @@ export const permanentlyDeleteUser = async (targetUserId: string) => {
 export const getAllSoftDeletedUsers = async (params?: {
   page?: number;
   limit?: number;
+  search?: string;
+  searchFields?: string[];
+  enumFields?: string[];
+  role?: string;
 }) => {
   try {
     const response = await axiosActions.axiosGet("/auth/users/soft-deleted", {
       params: {
         page: params?.page,
         limit: params?.limit,
+        search: params?.search,
+        searchFields: params?.searchFields,
+        enumFields: params?.enumFields,
+        role: params?.role,
       },
     });
     return response;

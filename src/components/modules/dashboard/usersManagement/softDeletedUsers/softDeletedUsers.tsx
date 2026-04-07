@@ -9,7 +9,7 @@ import Image from "next/image";
 import ActionButtonsClient from "./client/actionButtonsClient";
 import FilterButtonClient from "./client/filterButtonClient";
 
-const UsersManagement = ({
+const SoftDeletedUsersManagement = ({
   allUsers: users,
   meta,
   loading,
@@ -161,4 +161,4 @@ const UsersManagement = ({
   );
 };
 
-export default UsersManagement;
+export default SoftDeletedUsersManagement;

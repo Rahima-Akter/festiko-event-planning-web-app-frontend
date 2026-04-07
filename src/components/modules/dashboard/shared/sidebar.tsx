@@ -10,6 +10,7 @@ import {
   IconLogout,
   IconUser,
   IconUsersGroup,
+  IconUsersMinus,
 } from "@tabler/icons-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getProfile } from "@/services/auth/auth.service";
@@ -111,6 +112,17 @@ const DashboardSidebar = ({ isOpen, setIsOpen }: Props) => {
               <IconUsersGroup />
             </span>
             <span className="text-sm uppercase tracking-widest">All Users</span>
+          </Link>
+          <Link
+            className={`flex items-center gap-4 py-3 px-8 text-[#f9efe5]/60 hover:bg-[#C8B273]/5 hover:text-[#C8B273] transition-all duration-300 ${pathName === "/dashboard/soft-deleted-users-management" ? "text-[#d1b366] border-r-2 border-[#C8B273] bg-[#C8B273]/20 font-semibold" : ""}`}
+            href="/dashboard/soft-deleted-users-management"
+          >
+            <span className="material-symbols-outlined">
+              <IconUsersMinus />
+            </span>
+            <span className="text-sm uppercase tracking-widest">
+              Soft Deleted Users
+            </span>
           </Link>
         </nav>
         {/* Footer Section */}
