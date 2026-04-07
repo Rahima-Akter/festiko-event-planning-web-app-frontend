@@ -1,4 +1,5 @@
 import DeleteConfirmationModal from "@/components/shared/deleteConfirmationModal";
+import { deleteEvent } from "@/services/event/event.service";
 import { IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
 
@@ -17,7 +18,11 @@ const DeleteEventButtonClient = ({ id }: { id: string }) => {
         Delete
       </button>
       {isOpen && (
-        <DeleteConfirmationModal id={id} onClose={() => setIsOpen(false)} />
+        <DeleteConfirmationModal
+          onClose={() => setIsOpen(false)}
+          id={id}
+          deleteFunction={deleteEvent}
+        />
       )}
     </>
   );

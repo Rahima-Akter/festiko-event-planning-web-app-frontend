@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import logo from "../../../../../public/festiko-logo.png";
+import logo from "@/assets/festiko-logo.png";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -8,9 +8,12 @@ import {
   IconDashboard,
   IconHome,
   IconLogout,
+  IconUser,
   IconUsersGroup,
 } from "@tabler/icons-react";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { getProfile } from "@/services/auth/auth.service";
+import { User } from "@/types/auth/auth.types";
 
 type Props = {
   isOpen: boolean;
@@ -18,6 +21,21 @@ type Props = {
 };
 const DashboardSidebar = ({ isOpen, setIsOpen }: Props) => {
   const pathName = usePathname();
+  const [user, setUser] = useState<User | null>();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await getProfile();
+        if (res?.success) {
+          setUser(res?.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUser();
+  }, [setUser]);
   return (
     <>
       {isOpen && (
@@ -39,7 +57,6 @@ const DashboardSidebar = ({ isOpen, setIsOpen }: Props) => {
         >
           ✕
         </button>
-
         {/* logo */}
         <div className="px-10 mb-3 text-center flex flex-col justify-center items-center">
           {/* <span className="text-2xl font-bold font-['Noto_Serif'] text-[#c8b273] italic mb-6 block">
@@ -98,7 +115,6 @@ const DashboardSidebar = ({ isOpen, setIsOpen }: Props) => {
         </nav>
         {/* Footer Section */}
         <div className="mt-auto px-8 border-t border-[#f9efe5]/10 pt-8 space-y-6">
-          {/* 🔥 Logout moved ABOVE */}
           <Link
             className="pl-2 flex items-center gap-4 py-2 text-[#f9efe5]/60 hover:text-[#ffb4ab] transition-colors"
             href="#"
@@ -108,19 +124,36 @@ const DashboardSidebar = ({ isOpen, setIsOpen }: Props) => {
             </span>
             <span className="text-sm uppercase tracking-widest">Logout</span>
           </Link>
-
-          {/* User */}
-          <div className="flex items-center gap-4">
-            <img
-              alt="Admin Profile Avatar"
-              className="w-10 h-10 rounded-full object-cover border border-[#C8B273]/30"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaKeN-asLNJvQDwpw9ypo0_n02tPt2lsvoMBuaoVWs4799o1FoLXssnKLt61_fdz-bs8hDXePkVbG8aSrPRzynWbJWlCrAqmyvrI_X2yD7poSq77dTzq0YGiP2TBn4hpmDCA77yxrCxx7Xwl0yoKbgVLZIyylHBpDYjaABoma-VDFLK8vsNobaFwi80bZPuFf8iGw075a9t56niToIBM7ntbOTgBBSBQ9FoR5HeFMLeKijangZnpIzWbiilDb_KBYS1uL-JIsC30UI"
-            />
-            <div>
-              <p className="text-[#f9efe5] text-sm font-semibold">
-                Julian Thorne
-              </p>
-              <p className="text-[#f9efe5]/40 text-xs">Head of Operations</p>
+          <div className="flex flex-col gap-4 border-t border-[#c8b273]/10">
+            <div className="flex items-center gap-3">
+              <>
+                {user?.profile_image ? (
+                  <Image
+                    src={user.profile_image}
+                    alt="Profile Image"
+                    width={40}
+                    height={40}
+                    unoptimized
+                    className="w-9 h-9 rounded-md bg-[#c8b273] flex items-center justify-center text-[#2F2A24] font-bold overflow-hidden border-2 border-[#c8b273]/30"
+                  />
+                ) : (
+                  <>
+                    <div className="w-10 h-10 rounded-full bg-[#c8b273] flex items-center justify-center text-[#2F2A24] font-bold overflow-hidden border-2 border-[#c8b273]/30">
+                      <span className="material-symbols-outlined">
+                        <IconUser />
+                      </span>
+                    </div>
+                  </>
+                )}
+                <div>
+                  <p className="text-sm font-bold text-white leading-tight">
+                    {user?.name || "User Name"}
+                  </p>
+                  <p className="text-[10px] text-[#c8b273]/70 uppercase tracking-tighter">
+                    {user?.role || "User Role"}
+                  </p>
+                </div>
+              </>
             </div>
           </div>
         </div>

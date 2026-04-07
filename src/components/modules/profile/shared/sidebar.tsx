@@ -192,6 +192,7 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
                     alt="Profile Image"
                     width={40}
                     height={40}
+                    unoptimized
                     className="w-10 h-10 rounded-full bg-[#c8b273] flex items-center justify-center text-[#2F2A24] font-bold overflow-hidden border-2 border-[#c8b273]/30"
                   />
                 ) : (

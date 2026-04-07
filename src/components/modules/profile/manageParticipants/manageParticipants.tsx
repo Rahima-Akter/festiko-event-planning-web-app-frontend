@@ -18,6 +18,7 @@ import default_user from "@/assets/default_user.jpg";
 import ActionButtonClient from "./client/actionButtonClient";
 import { Meta } from "@/types/meta.types";
 import Pagination from "@/components/shared/pagination";
+import EmptyState from "@/components/shared/emptyState";
 
 // ManageParticipants Component
 const ManageParticipants = ({
@@ -71,91 +72,93 @@ const ManageParticipants = ({
           </div>
         </div>
 
-        {/* Table */}
-        <div className="bg-[#3A342D] rounded-xl overflow-auto border border-white/5">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="border-b border-white/5 bg-[#3A342D]/50">
-                <th className="px-8 py-5 font-label text-[10px] uppercase tracking-[0.2em] text-[#C8B273] font-bold">
-                  Participant
-                </th>
-                <th className="px-8 py-5 font-label text-[10px] uppercase tracking-[0.2em] text-[#C8B273] font-bold overflow-x-auto">
-                  User ID
-                </th>
-                <th className="px-8 py-5 font-label text-[10px] uppercase tracking-[0.2em] text-[#C8B273] font-bold">
-                  Status
-                </th>
-                <th className="px-8 py-5 font-label text-[10px] uppercase tracking-[0.2em] text-[#C8B273] font-bold text-right">
-                  Actions
-                </th>
-              </tr>
-            </thead>
+        {participants && participants.length > 0 ? (
+          <>
+            {/* Table */}
+            <div className="bg-[#3A342D] rounded-xl overflow-auto border border-white/5">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-white/5 bg-[#3A342D]/50">
+                    <th className="px-8 py-5 font-label text-[10px] uppercase tracking-[0.2em] text-[#C8B273] font-bold">
+                      Participant
+                    </th>
+                    <th className="px-8 py-5 font-label text-[10px] uppercase tracking-[0.2em] text-[#C8B273] font-bold overflow-x-auto">
+                      User ID
+                    </th>
+                    <th className="px-8 py-5 font-label text-[10px] uppercase tracking-[0.2em] text-[#C8B273] font-bold">
+                      Status
+                    </th>
+                    <th className="px-8 py-5 font-label text-[10px] uppercase tracking-[0.2em] text-[#C8B273] font-bold text-right">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
 
-            <tbody className="divide-y divide-white/5">
-              {participants?.map((p, i) => (
-                <tr
-                  key={i}
-                  className="hover:bg-white/5 transition-colors group"
-                >
-                  <td className="px-8 py-5">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-[#453F36] overflow-hidden border border-white/10 shrink-0">
-                        <Image
-                          alt="user avatar"
-                          src={p.user.profile_image || default_user}
-                          width={100}
-                          height={100}
-                          unoptimized={true}
-                          className="w-auto h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
-                        />
-                      </div>
-                      <div>
-                        <p className="font-headline font-bold text-[#F7F1E3]">
-                          {p.user.name}
-                        </p>
-                        <p className="font-body text-xs text-[#A39580]">
-                          {p.user.email}
-                        </p>
-                      </div>
-                    </div>
-                  </td>
+                <tbody className="divide-y divide-white/5">
+                  {participants?.map((p, i) => (
+                    <tr
+                      key={i}
+                      className="hover:bg-white/5 transition-colors group"
+                    >
+                      <td className="px-8 py-5">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 rounded-lg bg-[#453F36] overflow-hidden border border-white/10 shrink-0">
+                            <Image
+                              alt="user avatar"
+                              src={p.user.profile_image || default_user}
+                              width={100}
+                              height={100}
+                              unoptimized={true}
+                              className="w-auto h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                            />
+                          </div>
+                          <div>
+                            <p className="font-headline font-bold text-[#F7F1E3]">
+                              {p.user.name}
+                            </p>
+                            <p className="font-body text-xs text-[#A39580]">
+                              {p.user.email}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
 
-                  <td className="px-8 py-5">
-                    <span className="font-body text-sm font-medium text-[#A39580] overflow-x-auto">
-                      {p.id}
-                    </span>
-                  </td>
+                      <td className="px-8 py-5">
+                        <span className="font-body text-sm font-medium text-[#A39580] overflow-x-auto">
+                          {p.id}
+                        </span>
+                      </td>
 
-                  <td className="px-8 py-5">
-                    {p.status === "APPROVED" && (
-                      <span className="px-3 py-1 rounded-full bg-[#C8B273]/10 text-[#C8B273] font-label text-[9px] font-black uppercase tracking-widest border border-[#C8B273]/60">
-                        {p.status}
-                      </span>
-                    )}
-                    {p.status === "PENDING" && (
-                      <span className="px-3 py-1 rounded-full bg-[#453F36] text-[#A39580] font-label text-[9px] font-black uppercase tracking-widest border border-[#A39580]/60">
-                        {p.status}
-                      </span>
-                    )}
-                    {p.status === "REJECTED" && (
-                      <span className="px-3 py-1 rounded-full bg-rose-900 text-white/80 font-label text-[9px] font-black uppercase tracking-widest border border-white/60">
-                        {p.status}
-                      </span>
-                    )}
-                    {p.status === "BANNED" && (
-                      <span className="px-3 py-1 rounded-full bg-red-800 text-white/80 font-label text-[9px] font-black uppercase tracking-widest border border-white/60">
-                        {p.status}
-                      </span>
-                    )}
-                  </td>
+                      <td className="px-8 py-5">
+                        {p.status === "APPROVED" && (
+                          <span className="px-3 py-1 rounded-full bg-[#C8B273]/10 text-[#C8B273] font-label text-[9px] font-black uppercase tracking-widest border border-[#C8B273]/60">
+                            {p.status}
+                          </span>
+                        )}
+                        {p.status === "PENDING" && (
+                          <span className="px-3 py-1 rounded-full bg-[#453F36] text-[#A39580] font-label text-[9px] font-black uppercase tracking-widest border border-[#A39580]/60">
+                            {p.status}
+                          </span>
+                        )}
+                        {p.status === "REJECTED" && (
+                          <span className="px-3 py-1 rounded-full bg-rose-900 text-white/80 font-label text-[9px] font-black uppercase tracking-widest border border-white/60">
+                            {p.status}
+                          </span>
+                        )}
+                        {p.status === "BANNED" && (
+                          <span className="px-3 py-1 rounded-full bg-red-800 text-white/80 font-label text-[9px] font-black uppercase tracking-widest border border-white/60">
+                            {p.status}
+                          </span>
+                        )}
+                      </td>
 
-                  {/* ACTION DROPDOWN */}
-                  <td className="px-8 py-6 text-right">
-                    {/* ACTION button */}
-                    <ActionButtonClient status={p.status} id={p.id} />
-                  </td>
+                      {/* ACTION DROPDOWN */}
+                      <td className="px-8 py-6 text-right">
+                        {/* ACTION button */}
+                        <ActionButtonClient status={p.status} id={p.id} />
+                      </td>
 
-                  {/* <td className="px-8 py-5 text-right">
+                      {/* <td className="px-8 py-5 text-right">
                     <div className="flex justify-end gap-2">
                       {p.status === "Joined" && (
                         <>
@@ -191,14 +194,18 @@ const ManageParticipants = ({
                       )}
                     </div>
                   </td> */}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
-        {/* Pagination */}
-        {meta && <Pagination meta={meta} onPageChange={setPage} />}
+            {/* Pagination */}
+            {meta && <Pagination meta={meta} onPageChange={setPage} />}
+          </>
+        ) : (
+          <EmptyState />
+        )}
       </main>
     </>
   );

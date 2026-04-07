@@ -6,6 +6,7 @@ import UpcomingEventsSection from "../upcomingEvents";
 import FreePublicEventsSection from "../freePublicEvents";
 import Events from "../../events/events";
 import { usePathname } from "next/navigation";
+import EventsManagement from "../../dashboard/eventsManagement/eventsManagement";
 const UpcomingEventsClient = () => {
   const [allEvents, setAllEvents] = useState<EventResponse | null>(null);
   const [debouncedSearch, setDebouncedSearch] = useState<string>("");
@@ -69,6 +70,16 @@ const UpcomingEventsClient = () => {
           meta={allEvents?.meta ?? null}
           setCategory={setCategory}
           setPriceSort={setPriceSort}
+        />
+      )}
+      {pathName === "/dashboard/event-management" && (
+        <EventsManagement
+          allEvents={allEvents?.data ?? null}
+          loading={loading}
+          setSearch={setSearch}
+          setPage={setPage}
+          setCategory={setCategory}
+          meta={allEvents?.meta ?? null}
         />
       )}
     </>

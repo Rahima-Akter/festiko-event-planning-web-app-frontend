@@ -201,7 +201,7 @@ body {
   height: 24px;
   background: #121212;
   border-radius: 50%;
-  box-shadow: inset -4px 0 4px rgba(0,0,0,0.3);
+  box-shadow: inset -4px 0 4px rgba(0, 0, 0, 0.3);
 }
 
 .ticket-notch::before {
@@ -213,12 +213,12 @@ body {
   height: 24px;
   background: #121212;
   border-radius: 50%;
-  box-shadow: inset 4px 0 4px rgba(0,0,0,0.3);
+  box-shadow: inset 4px 0 4px rgba(0, 0, 0, 0.3);
 }
 
 .art-deco-bg {
   background-color: #121212;
-  background-image: 
+  background-image:
     linear-gradient(30deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
     linear-gradient(150deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
     linear-gradient(30deg, #1a1a1a 12%, transparent 12.5%, transparent 87%, #1a1a1a 87.5%, #1a1a1a),
@@ -232,4 +232,19 @@ body {
 .glow-aura {
   background: radial-gradient(circle, rgba(200, 178, 115, 0.15) 0%, rgba(18, 18, 18, 0) 70%);
 }
+
 /* event pass styles */
+
+/* empty states styles */
+@keyframes subtle-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* empty states styles */

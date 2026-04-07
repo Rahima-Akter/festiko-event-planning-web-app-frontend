@@ -117,7 +117,7 @@ const MyParticipations = ({
                   Contact Host
                 </button> */}
                         <Link
-                          href=""
+                          href={`/events/event-details/${event.id}`}
                           className="flex-1 text-center py-2 bg-linear-to-r from-[#6e5d27] to-[#c8b273] hover:from-[#c8b273] hover:to-[#6e5d27] transition-colors duration-500 text-white font-bold text-[9px] uppercase tracking-widest rounded cursor-pointer"
                         >
                           View Details
