@@ -32,7 +32,7 @@ const UpcomingEventsClient = () => {
         const response = await getAllEvents({
           page,
           limit: 8,
-          search: debouncedSearch,
+          search: debouncedSearch || undefined,
           category,
           sortBy: "fee",
           sortOrder: priceSort,
@@ -51,12 +51,13 @@ const UpcomingEventsClient = () => {
 
   return (
     <>
-      {pathName === "/home" && (
+      {pathName === "/" && (
         <>
           <UpcomingEventsSection
             allEvents={allEvents?.data ?? null}
             setCategory={setCategory}
             category={category}
+            loading={loading}
           />
           <FreePublicEventsSection allEvents={allEvents?.data ?? null} />
         </>

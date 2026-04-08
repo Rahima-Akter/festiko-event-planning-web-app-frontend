@@ -55,7 +55,7 @@ const Navbar = () => {
           alt="Festiko Logo"
           width={150}
           height={150}
-          className="wauto h-full"
+          className="w-auto h-full"
         />
         {/* Links */}
         <div className="flex items-center justify-center gap-6">

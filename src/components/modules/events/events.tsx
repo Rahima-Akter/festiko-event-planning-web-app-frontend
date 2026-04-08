@@ -48,12 +48,12 @@ const Events = ({
               </h1>
 
               {/* SEARCH */}
-              <FilterActionClient
-                setSearch={setSearch}
-                setPage={setPage}
-                setCategory={setCategory}
-                setPriceSort={setPriceSort}
-              />
+                <FilterActionClient
+                  setSearch={setSearch}
+                  setPage={setPage}
+                  setCategory={setCategory}
+                  setPriceSort={setPriceSort}
+                />
             </div>
           </section>
 

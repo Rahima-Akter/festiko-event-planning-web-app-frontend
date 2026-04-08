@@ -2,6 +2,7 @@ import { Event } from "@/types/event/event.types";
 import { IconError404 } from "@tabler/icons-react";
 import { format } from "date-fns";
 import Image from "next/image";
+import Link from "next/link";
 
 const FreePublicEventsSection = ({
   allEvents,
@@ -27,7 +28,7 @@ const FreePublicEventsSection = ({
           {filtered && filtered?.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {filtered?.map((event) => (
-                <div key={event.id} className="group flex flex-col h-full">
+                <div key={event.id} className="group flex flex-col h-full bg-[#fff8f4]/80 p-5">
                   <div className="relative overflow-hidden aspect-video mb-6 rounded-sm shadow-md">
                     <Image
                       className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
@@ -51,9 +52,12 @@ const FreePublicEventsSection = ({
                       {event.description}
                     </p>
                     <div className="mt-auto">
-                      <button className="w-full py-4 border border-[#6e5d27] text-[#6e5d27] font-label text-xs uppercase tracking-widest font-bold hover:bg-[#6e5d27] hover:text-[#ffffff] transition-all duration-300">
-                        Join Now
-                      </button>
+                      <Link
+                        href={`/events/event-details/${event.id}`}
+                        className="block w-full p-4 text-center border border-[#6e5d27] text-[#6e5d27] font-label text-xs uppercase tracking-widest font-bold hover:bg-[#6e5d27] hover:text-[#ffffff] transition-all duration-300"
+                      >
+                        See Details
+                      </Link>
                     </div>
                   </div>
                 </div>
