@@ -1,9 +1,8 @@
 import EmptyState from "@/components/shared/emptyState";
-import Loader from "@/components/shared/loader";
 import Pagination from "@/components/shared/pagination";
 import { Event } from "@/types/event/event.types";
 import { Meta } from "@/types/meta.types";
-import { IconDotsVertical, IconTrash, IconEye } from "@tabler/icons-react";
+import { IconDotsVertical, IconEye } from "@tabler/icons-react";
 import { format, parse } from "date-fns";
 import Image from "next/image";
 import FilterEventsButtonClient from "./client/filterEventsButtonClient";
