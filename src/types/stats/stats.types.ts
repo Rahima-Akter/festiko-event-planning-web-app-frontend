@@ -6,3 +6,11 @@ export interface IAdminStats {
   totalPaidParticipants: number;
   totalRevenue: number;
 }
+
+export interface IUserStats {
+  totalCreatedEvents: number;
+  totalJoinedEvents: number;
+  totalInvitationsReceived: number;
+  totalInvitationsAccepted: number;
+  totalPaidAmount: number;
+}

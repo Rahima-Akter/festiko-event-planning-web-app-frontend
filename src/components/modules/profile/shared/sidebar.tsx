@@ -6,6 +6,7 @@ import {
   IconCalendarEvent,
   IconCashEdit,
   IconConfetti,
+  IconDashboard,
   IconGitPullRequest,
   IconHome,
   IconLogout,
@@ -98,6 +99,18 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
           </Link>
 
           <Link
+            className={`flex items-center gap-4 ${pathName === "/profile" ? "bg-[#644d31] text-[#d0b260] font-semibold rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200" : "text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 hover:rounded-l-full hover:ml-4 hover:pl-6 hover:py-3 transition-colors"}`}
+            href="/profile"
+          >
+            <span className="material-symbols-outlined">
+              <IconDashboard />
+            </span>
+            <span className="font-['Manrope'] font-medium uppercase tracking-[0.05em] text-xs">
+              Overview
+            </span>
+          </Link>
+
+          <Link
             className={`flex items-center gap-4 ${pathName === "/profile/my-events" ? "bg-[#644d31] text-[#d0b260] font-semibold rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200" : "text-[#fcf2e8]/60 pl-10 py-3 hover:bg-white/10 hover:rounded-l-full hover:ml-4 hover:pl-6 hover:py-3 transition-colors"}`}
             href="/profile/my-events"
           >
@@ -158,8 +171,8 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
           </Link>
 
           <Link
-            className={`flex items-center gap-4 ${pathName === "/profile" ? "bg-[#644d31] text-[#d0b260] font-semibold rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200" : "text-[#fcf2e8]/60 pl-10 py-3  hover:bg-white/10 hover:rounded-l-full hover:ml-4 hover:pl-6 hover:py-3 transition-colors"}`}
-            href="/profile"
+            className={`flex items-center gap-4 ${pathName === "/profile/settings" ? "bg-[#644d31] text-[#d0b260] font-semibold rounded-l-full ml-4 pl-6 py-3 shadow-sm active:translate-x-1 duration-200" : "text-[#fcf2e8]/60 pl-10 py-3  hover:bg-white/10 hover:rounded-l-full hover:ml-4 hover:pl-6 hover:py-3 transition-colors"}`}
+            href="/profile/settings"
           >
             <span className="material-symbols-outlined">
               <IconSettings />
