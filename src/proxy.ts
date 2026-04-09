@@ -6,6 +6,8 @@ import { UserRoles } from "./roles/roles";
 const ADMIN_ROUTES = ["/dashboard"];
 const USER_ROUTES = ["/profile"];
 const PRIVATE_ROUTES = [
+  "/events/:path*",
+  "/events/event-details/:id",
   "/events/event-details",
   "/pay",
   "/event-pass",
@@ -14,7 +16,7 @@ const PRIVATE_ROUTES = [
   "/user-info",
 ];
 
-const PUBLIC_ROUTES = ["/", "/login", "/register", "/events"];
+const PUBLIC_ROUTES = ["/", "/login", "/register"];
 
 // HELPER — decode JWT
 function getTokenPayload(request: NextRequest) {
