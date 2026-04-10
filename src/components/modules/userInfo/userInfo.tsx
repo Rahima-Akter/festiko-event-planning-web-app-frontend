@@ -247,7 +247,7 @@ const UserInfo = ({
                         {event?.title}
                       </h4>
                       <p className="font-body text-[#b3a380] text-sm">
-                        {event?.description}
+                        {event?.description.substring(0, 150) + "............"}
                       </p>
                     </div>
                   ))

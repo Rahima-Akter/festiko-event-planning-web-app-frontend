@@ -82,6 +82,7 @@ const axiosDelete = async (url: string, options?: AxiosParameterOptions) => {
     const response = await axiosInstance().delete(url, {
       params: options?.params,
       headers: options?.headers,
+      data: options?.data,
     });
     return response.data;
   } catch (error) {

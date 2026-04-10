@@ -16,9 +16,10 @@ import {
   IconUser,
 } from "@tabler/icons-react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { User } from "@/types/auth/auth.types";
 import { getProfile, logoutUser } from "@/services/auth/auth.service";
+import { toast } from "sonner";
 
 type Props = {
   isOpen: boolean;
@@ -26,6 +27,7 @@ type Props = {
 };
 
 const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
+  const router = useRouter();
   const pathName = usePathname();
   const [user, setUser] = useState<User | null>();
 
@@ -42,6 +44,19 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
     };
     fetchUser();
   }, [setUser]);
+
+  const handleLogout = async () => {
+    try {
+      const response = await logoutUser();
+      if (response?.success) {
+        toast.success("You are logged out successfully!");
+        window.location.href = "/login";
+        router.push("/login");
+      }
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
 
   return (
     <>
@@ -76,7 +91,13 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
           {/* <span className="text-2xl font-bold font-['Noto_Serif'] text-[#c8b273] italic mb-6 block">
           Festiko
         </span> */}
-          <Image src={logo} alt="Festiko Logo" width={150} height={150} />
+          <Image
+            src={logo}
+            alt="Festiko Logo"
+            width={150}
+            height={150}
+            loading="eager"
+          />
           <p className="font-['Manrope'] font-medium uppercase tracking-[0.05em] text-[#fcf2e8]/60 -mt-5">
             Welcome back
           </p>
@@ -183,7 +204,7 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
           </Link>
 
           <button
-            onClick={() => logoutUser()}
+            onClick={() => handleLogout()}
             className="flex items-center gap-4 text-red-500/80 pl-10 py-3 hover:text-error transition-colors px-4 cursor-pointer hover:bg-white/10 hover:py-3"
           >
             <span className="symbols-outlined">

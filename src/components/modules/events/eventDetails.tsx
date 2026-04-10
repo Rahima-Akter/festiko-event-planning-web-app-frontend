@@ -146,31 +146,84 @@ const EventDetails = ({
 
                       <div className="space-y-8 mb-12">
                         <div className="bg-[#ffffff] p-8 rounded-xl">
-                          {event?.reviews && event?.reviews?.length > 0 ? (
+                          {event?.reviews && event.reviews.length > 0 ? (
                             <>
-                              <div className="flex justify-between mb-4">
-                                <div className="flex items-center gap-3">
-                                  <Image
-                                    src={event?.organizer?.profile_image}
-                                    className="w-8 h-8 rounded-md object-cover"
-                                    alt={
-                                      event?.organizer?.name ||
-                                      "Organizer Image"
-                                    }
-                                    width={100}
-                                    height={100}
-                                    unoptimized
-                                  />
-                                  <div>
-                                    <p className="font-semibold text-sm text-[#1f1b15]">
-                                      {event?.organizer?.name}
-                                    </p>
+                              {/* Map through reviews */}
+                              {event.reviews.slice(0, 2).map((review, idx) => (
+                                <div key={idx} className="flex flex-col mb-6">
+                                  <div className="flex justify-between mb-2">
+                                    <div className="flex items-center gap-3">
+                                      <Image
+                                        src={
+                                          review.user.profile_image ||
+                                          "/default-avatar.png"
+                                        }
+                                        alt="User Avatar"
+                                        width={32}
+                                        height={32}
+                                        className="w-8 h-8 rounded-md object-cover"
+                                        unoptimized
+                                      />
+                                      <div>
+                                        <p className="font-semibold text-sm text-[#1f1b15]">
+                                          {review.user.name}
+                                        </p>
+                                        <p className="text-xs text-[#6e5d27]/70">
+                                          {format(
+                                            new Date(review.createdAt),
+                                            "MMMM d, yyyy",
+                                          )}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <div className="flex text-[#6e5d27]">
+                                      {Array.from({
+                                        length: review.rating,
+                                      }).map((_, i) => (
+                                        <IconStar
+                                          key={i}
+                                          size={15}
+                                          className="text-sm fill-[#6e5d27]"
+                                        />
+                                      ))}
+                                    </div>
                                   </div>
+                                  <p className="text-[#6e5d27] font-normal text-sm leading-normal">
+                                    {review.comment}
+                                  </p>
                                 </div>
-                                {event?.reviews?.length > 0 && (
-                                  <div className="flex flex-col gap-4">
-                                    {event.reviews.map((review, idx) => (
-                                      <div key={idx}>
+                              ))}
+
+                              {/* Scrollable remaining reviews */}
+                              {event.reviews.length > 2 && (
+                                <div className="max-h-60 overflow-y-auto space-y-4">
+                                  {event.reviews.slice(2).map((review, idx) => (
+                                    <div key={idx} className="flex flex-col">
+                                      <div className="flex justify-between mb-2">
+                                        <div className="flex items-center gap-3">
+                                          <Image
+                                            src={
+                                              review.user.profile_image ||
+                                              "/default-avatar.png"
+                                            }
+                                            alt="User Avatar"
+                                            width={32}
+                                            height={32}
+                                            className="w-8 h-8 rounded-md object-cover"
+                                            unoptimized
+                                          />
+                                          <div>
+                                            <p className="font-semibold text-sm text-[#1f1b15]">
+                                              {review.user.name}
+                                            </p>
+                                            <p className="text-xs text-[#6e5d27]/70">
+                                              {format(
+                                                new Date(review.createdAt),
+                                                "MMMM d, yyyy",
+                                              )}
+                                            </p>
+                                          </div>
+                                        </div>
                                         <div className="flex text-[#6e5d27]">
                                           {Array.from({
                                             length: review.rating,
@@ -182,27 +235,11 @@ const EventDetails = ({
                                             />
                                           ))}
                                         </div>
-                                        <p className="text-[#6e5d27]/50 text-xs flex justify-center">
-                                          {format(
-                                            new Date(review.createdAt),
-                                            "MMMM d, yyyy",
-                                          )}
-                                        </p>
                                       </div>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-
-                              {event?.reviews?.length > 0 && (
-                                <div className="flex">
-                                  {event.reviews.map((review, idx) => (
-                                    <p
-                                      key={idx}
-                                      className="text-[#6e5d27] font-normal text-sm leading-normal  "
-                                    >
-                                      {review.comment}
-                                    </p>
+                                      <p className="text-[#6e5d27] font-normal text-sm leading-normal">
+                                        {review.comment}
+                                      </p>
+                                    </div>
                                   ))}
                                 </div>
                               )}

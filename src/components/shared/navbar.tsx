@@ -10,13 +10,14 @@ import {
   IconMenu2,
   IconX,
 } from "@tabler/icons-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import logo from "@/assets/festiko-logo-dark.png";
 import { getProfile, logoutUser } from "@/services/auth/auth.service";
 import { User } from "@/types/auth/auth.types";
 import { UserRoles } from "@/roles/roles";
 import default_user from "@/assets/default_user.jpg";
+import { toast } from "sonner";
 
 const Navbar = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -24,6 +25,7 @@ const Navbar = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
   const pathName = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const getUser = async () => {
@@ -54,11 +56,20 @@ const Navbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [mobileOpen]);
 
-  const handleLogout = () => {
-    logoutUser();
-    setUser(null);
-    setDropdownOpen(false);
-    setMobileOpen(false);
+  const handleLogout = async () => {
+    try {
+      const response = await logoutUser();
+      if (response?.success) {
+        toast.success("You are logged out successfully!");
+        setUser(null);
+        setDropdownOpen(false);
+        setMobileOpen(false);
+        window.location.href = "/login";
+        router.push("/login");
+      }
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
   };
 
   const isActive = (route: string) =>
@@ -83,8 +94,8 @@ const Navbar = () => {
             alt="Festiko Logo"
             width={150}
             height={150}
+            loading="eager"
             className="w-auto md:h-full h-[80%] "
-            unoptimized
           />
 
           {/* Desktop Links */}
@@ -150,29 +161,46 @@ const Navbar = () => {
                 </button>
 
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-[#fff8f4] rounded-md shadow-lg py-2 z-50">
-                    <p className="text-center border-b pb-1">{user?.name}</p>
-                    {user.role === UserRoles.ADMIN ? (
-                      <Link
-                        href="/dashboard"
-                        className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-[#ecdec1]"
+                  <div className="absolute right-0 mt-0 w-56 bg-linear-to-br from-[#3a3326] via-[#2F2A24] to-[#1f1b15] backdrop-blur-xl rounded-xl shadow-2xl border border-[#C8B273]/30 py-2 z-50 overflow-hidden">
+                    {/* USER HEADER */}
+                    <div className="px-4 py-3 border-b border-[#C8B273]/20 bg-[#C8B273]/5">
+                      <p className="text-sm font-semibold text-center text-[#E6D3A3] truncate tracking-wide">
+                        {user?.name}
+                      </p>
+                    </div>
+
+                    {/* MENU ITEMS */}
+                    <div className="py-1">
+                      {user.role === UserRoles.ADMIN ? (
+                        <Link
+                          href="/dashboard"
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#F5E6C8]/80 hover:text-[#E6D3A3] hover:bg-[#C8B273]/15 transition-all duration-200"
+                        >
+                          <IconDashboard size={16} />
+                          Dashboard
+                        </Link>
+                      ) : (
+                        <Link
+                          href="/profile"
+                          className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#F5E6C8]/80 hover:text-[#E6D3A3] hover:bg-[#C8B273]/15 transition-all duration-200"
+                        >
+                          <IconUser size={16} />
+                          Profile
+                        </Link>
+                      )}
+
+                      {/* Divider */}
+                      <div className="my-2 border-t border-[#C8B273]/20"></div>
+
+                      {/* LOGOUT */}
+                      <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-red-300 hover:text-red-400 hover:bg-red-400/10 transition-all duration-200"
                       >
-                        <IconDashboard size={16} /> Dashboard
-                      </Link>
-                    ) : (
-                      <Link
-                        href="/profile"
-                        className="flex items-center gap-2 px-4 py-2 text-sm hover:bg-[#ecdec1]"
-                      >
-                        <IconUser size={16} /> Profile
-                      </Link>
-                    )}
-                    <button
-                      onClick={handleLogout}
-                      className="flex items-center gap-2 w-full px-4 py-2 text-sm hover:bg-[#ecdec1]"
-                    >
-                      <IconLogout size={16} /> Logout
-                    </button>
+                        <IconLogout size={16} />
+                        Logout
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>

@@ -19,6 +19,10 @@ type Review = {
   rating: number;
   comment: string;
   createdAt: string;
+  user: {
+    name: string;
+    profile_image: string;
+  };
 };
 
 export type Event = {

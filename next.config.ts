@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
         hostname: "static.vecteezy.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "img.freepik.com",
+        pathname: "/**",
+      },
     ],
   },
 };

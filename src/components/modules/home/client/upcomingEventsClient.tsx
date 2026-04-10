@@ -18,9 +18,12 @@ const UpcomingEventsClient = () => {
   const pathName = usePathname();
 
   useEffect(() => {
-    const delay = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 500);
+    const delay = setTimeout(
+      () => {
+        setDebouncedSearch(search);
+      },
+      search ? 500 : 0,
+    );
 
     return () => clearTimeout(delay);
   }, [search]);
@@ -31,12 +34,12 @@ const UpcomingEventsClient = () => {
         setLoading(true);
         const response = await getAllEvents({
           page,
-          limit: 8,
-          search: debouncedSearch || undefined,
+          limit: 10,
+          search: debouncedSearch || "",
           category,
           sortBy: "fee",
           sortOrder: priceSort,
-          searchFields: ["title", "date", "time", "venue"],
+          searchFields: ["title", "date", "time", "venue", "organizer.name"],
           enumFields: ["category"],
         });
         setAllEvents(response ?? null);

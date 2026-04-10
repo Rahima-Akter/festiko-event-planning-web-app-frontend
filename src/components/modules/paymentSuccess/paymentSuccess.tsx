@@ -251,7 +251,7 @@ const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
                           Amount Paid
                         </p>
                         <p className="text-2xl font-headline font-bold text-[#C8B273]">
-                          {paymentData.amount.toFixed(2)} {paymentData.currency}
+                          ${paymentData.amount.toFixed(2)}
                         </p>
                       </div>
                       <div className="text-right">
@@ -348,9 +348,9 @@ const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
                 </button>
               </div>
 
-              <button className="w-full md:w-auto px-10 py-5 bg-[#ffffff]/5 border border-[#C8B273]/30 text-[#C8B273] font-bold text-[10px] uppercase tracking-[0.25em] rounded-lg hover:bg-[#C8B273]/10 transition-all duration-300 cursor-pointer">
+              <Link href="/profile/my-events" className="w-full md:w-auto px-10 py-5 bg-[#ffffff]/5 border border-[#C8B273]/30 text-[#C8B273] font-bold text-[10px] uppercase tracking-[0.25em] rounded-lg hover:bg-[#C8B273]/10 transition-all duration-300 cursor-pointer">
                 Go to My Events
-              </button>
+              </Link>
             </div>
 
             {/* Support Footer */}

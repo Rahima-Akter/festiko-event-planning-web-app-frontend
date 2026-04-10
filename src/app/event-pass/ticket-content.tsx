@@ -20,6 +20,7 @@ import Image from "next/image";
 import { getEventById } from "@/services/event/event.service";
 import { getMyParticipations } from "@/services/participation/participation.service";
 import { format, parse } from "date-fns";
+import { getUserById } from "@/services/auth/auth.service";
 
 interface EventData {
   id: string;
@@ -66,30 +67,14 @@ const TicketContent = () => {
         if (urlUserId) {
           try {
             // Try to get user data from participations using userId
-            const myParticipationsResponse = await getMyParticipations();
-
-            if (
-              myParticipationsResponse?.success &&
-              Array.isArray(myParticipationsResponse?.data)
-            ) {
-              // Find any participation to get the user profile data
-              const participationWithUser = myParticipationsResponse?.data[0];
-
-              // Get user info from window context or local storage - user1 is the default
-              // Since we can't reliably get user data, use the userId to construct a default username
-              const defaultNames: Record<string, string> = {
-                cmn1l2yv600006gg566il3aqa: "user1",
-                cmn12yv600006gg566il3aqa: "John Doe",
-              };
-
-              const userName =
-                defaultNames[urlUserId] || `User ${urlUserId.substring(0, 8)}`;
-              setUserData({ name: userName, email: "" });
+            const response = await getUserById(urlUserId);
+            if (response?.success) {
+              setUserData(response?.data);
             }
           } catch (error) {
             console.log("Error fetching user data:", error);
             setUserData({
-              name: `User ${urlUserId.substring(0, 8)}`,
+              name: `Distinguished Guest`,
               email: "",
             });
           }
@@ -276,7 +261,13 @@ const TicketContent = () => {
           {/* Top */}
           <div className="mt-8 flex flex-col items-center">
             {/* <IconSparkles className="text-[#c8b273] text-4xl mb-3" /> */}
-            <Image src={logo} alt="Festiko Logo" width={100} height={100} />
+            <Image
+              src={logo}
+              alt="Festiko Logo"
+              width={100}
+              height={100}
+              loading="eager"
+            />
             <div className="text-[#c8b273]/60 font-headline text-[8px] tracking-[0.6em] uppercase">
               Private Access
             </div>

@@ -48,12 +48,12 @@ const Events = ({
               </h1>
 
               {/* SEARCH */}
-                <FilterActionClient
-                  setSearch={setSearch}
-                  setPage={setPage}
-                  setCategory={setCategory}
-                  setPriceSort={setPriceSort}
-                />
+              <FilterActionClient
+                setSearch={setSearch}
+                setPage={setPage}
+                setCategory={setCategory}
+                setPriceSort={setPriceSort}
+              />
             </div>
           </section>
 
@@ -70,13 +70,13 @@ const Events = ({
             {filtered && filtered?.length > 0 ? (
               <>
                 {/* GRID */}
-                <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-5">
                   {filtered.map((event) => (
                     <div
                       key={event.id}
                       className="group glass-card rounded-md overflow-hidden flex flex-col hover:-translate-y-1 transition-all"
                     >
-                      <div className="relative h-44 overflow-hidden">
+                      <div className="relative lg:h-36 h-48 overflow-hidden">
                         <Image
                           alt={"event image"}
                           src={event.image}
@@ -85,12 +85,11 @@ const Events = ({
                           unoptimized
                         />
 
-                        <div className="absolute top-2 left-2 bg-[#dac17c] px-3 py-1 font-semibold rounded-sm text-white border border-[#C8B273]/20 text-xs">
+                        <div className="absolute top-2 left-2 bg-[#dac17c] px-2 py-0.5 font-semibold rounded-sm text-white border border-[#C8B273]/20 text-[10px]">
                           {event.category}
                         </div>
                         <div className="absolute bottom-2 right-2 bg-[#3D372F]/30 backdrop-blur px-2 py-1 rounded-sm font-bold text-[#C8B273] border border-[#C8B273]/20 text-sm">
-                          <span className="font-extrabold">৳</span>
-                          {event.fee}
+                          ${event.fee}
                         </div>
                       </div>
 
@@ -101,11 +100,14 @@ const Events = ({
                           {format(new Date(`${event.date}`), "hh:mm a")}
                         </div>
 
-                        <h3 className="serif-heading text-2xl mb-4 group-hover:text-[#C8B273] transition-colors">
+                        <h3 className="serif-heading text-lg mb-4 group-hover:text-[#C8B273] transition-colors whitespace-nowrap lg:block hidden">
+                          {event.title.substring(0, 20) + "..."}
+                        </h3>
+                        <h3 className="serif-heading text-lg mb-4 group-hover:text-[#C8B273] transition-colors lg:hidden">
                           {event.title}
                         </h3>
 
-                        <div className="flex items-center gap-2 mb-5">
+                        <div className="flex items-center gap-2 lg:mb-3 mb-5">
                           <div className="w-6 h-6 rounded-md bg-[#C8B273]/10 flex items-center justify-center border border-[#C8B273]/20">
                             {event.organizer.profile_image ? (
                               <Image
@@ -130,7 +132,7 @@ const Events = ({
 
                         <Link
                           href={`/events/event-details/${event.id}`}
-                          className="mt-auto text-center btn-gold py-2.5 text-sm rounded-lg font-bold cursor-pointer"
+                          className="mt-auto text-center btn-gold py-2 text-xs rounded-lg font-bold cursor-pointer"
                         >
                           {loading ? "Loading..." : "View Details"}
                         </Link>
