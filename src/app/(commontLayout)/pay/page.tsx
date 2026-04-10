@@ -52,7 +52,7 @@ const StripePaymentForm = () => {
   }
 
   return (
-    <form onSubmit={handlePayment} className="max-w-md mx-auto my-24">
+    <form onSubmit={handlePayment} className="max-w-md md:mx-auto mx-10 my-24 pt-10">
       <PaymentElement />
       <button
         type="submit"

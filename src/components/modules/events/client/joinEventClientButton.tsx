@@ -6,13 +6,19 @@ import { getProfile } from "@/services/auth/auth.service";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { IconCreditCard } from "@tabler/icons-react";
 
 const JoinEventClientButton = ({
   fee,
   eventId,
+  ClassName,
+  size,
 }: {
   fee: number;
   eventId: string;
+  ClassName?: string;
+  size?: number;
 }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -58,11 +64,8 @@ const JoinEventClientButton = ({
   };
 
   return (
-    <button
-      onClick={handleJoin}
-      disabled={loading}
-      className="w-full bg-linear-to-br from-[#6e5d27] to-[#c8b273] text-white py-5 rounded-xl font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all mb-4 cursor-pointer"
-    >
+    <button onClick={handleJoin} disabled={loading} className={`${ClassName}`}>
+      {fee && fee > 0 && <IconCreditCard size={size} />}
       {fee && fee > 0
         ? loading
           ? "Loading..."

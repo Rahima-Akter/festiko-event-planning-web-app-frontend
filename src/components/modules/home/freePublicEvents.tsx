@@ -10,15 +10,15 @@ const FreePublicEventsSection = ({
   allEvents: Event[] | null;
 }) => {
   const filtered = allEvents?.filter(
-    (f) => f.category === "PUBLIC" && f.fee === 0,
+    (f) => f.category === "PUBLIC",
   );
   return (
     <>
       <section className="py-24 px-12 bg-[#ffffff]">
         <div className="max-w-360 mx-auto">
-          <div className="mb-16">
+          <div className="mb-16 lg:ml-5">
             <h2 className="font-headline text-4xl text-[#1f1b15] font-semibold mb-2">
-              Free Public Events
+              Public Events
             </h2>
             <p className="font-body text-[#4b463a] opacity-70">
               Experience elegance without boundaries.
@@ -28,7 +28,10 @@ const FreePublicEventsSection = ({
           {filtered && filtered?.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
               {filtered?.map((event) => (
-                <div key={event.id} className="group flex flex-col h-full bg-[#fff8f4]/80 p-5">
+                <div
+                  key={event.id}
+                  className="group flex flex-col h-full bg-[#fff8f4]/80 p-5"
+                >
                   <div className="relative overflow-hidden aspect-video mb-6 rounded-sm shadow-md">
                     <Image
                       className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"

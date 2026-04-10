@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-const NotFoundPage = () => {
+const NotFound = () => {
   return (
     <main className="grow flex flex-col items-center justify-center bg-[#2f2a24] relative overflow-hidden px-8 min-h-screen">
       {/* Background Glow */}
@@ -30,7 +30,7 @@ const NotFoundPage = () => {
           <div className="pt-">
             <Link
               href="/"
-              className="inline-flex items-center px-10 py-4 bg-linear-to-r from-[#6e5d27] to-[#c8b273] text-white font-bold uppercase tracking-widest text-sm rounded-lg shadow-xl hover:brightness-110 transition-all duration-300 group"
+              className="inline-flex items-center px-10 py-4 bg-linear-to-r from-[#6e5d27] to-[#c8b273] text-white font-bold uppercase tracking-widest text-sm rounded-lg shadow-xl hover:brightness-110 transition-all duration-300 group cursor-pointer"
             >
               Return to Home
               <span className="ml-3 text-lg group-hover:translate-x-1 transition-transform">
@@ -51,4 +51,4 @@ const NotFoundPage = () => {
   );
 };
 
-export default NotFoundPage;
+export default NotFound;

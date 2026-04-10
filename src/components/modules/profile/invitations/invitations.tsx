@@ -12,6 +12,8 @@ import { Meta } from "@/types/meta.types";
 import Pagination from "@/components/shared/pagination";
 import Loader from "@/components/shared/loader";
 import EmptyState from "@/components/shared/emptyState";
+import Link from "next/link";
+import JoinEventClientButton from "../../events/client/joinEventClientButton";
 
 // Invitations Component
 const Invitations = ({
@@ -53,27 +55,29 @@ const Invitations = ({
                         className="group relative flex flex-col md:flex-row bg-[#3A342D] border border-white/5 overflow-hidden transition-all duration-500 hover:border-[#C8B273]/30"
                       >
                         <div className="md:w-100 h-64 md:h-auto relative overflow-hidden">
-                          <Image
-                            src={item?.event?.image}
-                            width={100}
-                            height={100}
-                            alt={item.event.title}
-                            unoptimized={true}
-                            className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                          />
+                          <Link href={`/events/event-details/${item.event.id}`}>
+                            <Image
+                              src={item?.event?.image}
+                              width={100}
+                              height={100}
+                              alt={item.event.title}
+                              unoptimized={true}
+                              className="w-full h-full object-cover grayscale-[0.5] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                            />
+                          </Link>
                           <div className="absolute top-0 left-0 px-4 py-2 text-[10px] uppercase tracking-[0.2em] font-bold bg-[#C8B273] text-[#2F2A24]">
                             {item.event.category}
                           </div>
                         </div>
 
-                        <div className="flex-1 p-10 flex flex-col justify-between">
+                        <div className="flex-1 md:p-10 p-5 flex flex-col justify-between">
                           <div>
-                            <div className="flex justify-between items-start mb-6">
+                            <div className="flex md:flex-row flex-col justify-between items-start mb-6">
                               <h3 className="font-headline text-3xl font-bold text-[#F7F1E3] mb-2">
                                 {item.event.title}
                               </h3>
-                              <div className="text-right">
-                                <p className="font-headline text-2xl font-bold text-[#F7F1E3]">
+                              <div className="md:text-right">
+                                <p className="font-headline text-lg whitespace-nowrap font-bold text-[#F7F1E3]">
                                   {format(
                                     new Date(item.event.date),
                                     "MMM d yyyy",
@@ -105,7 +109,7 @@ const Invitations = ({
                                     className="text-[#C8B273]"
                                   />
                                   <span className="text-sm font-medium">
-                                    {item.event.fee}
+                                    {item.event.fee}$
                                   </span>
                                 </div>
                               )}
@@ -130,14 +134,20 @@ const Invitations = ({
                           </div>
 
                           <div className="flex items-center gap-4">
-                            <button className="bg-[#C8B273] text-[#2F2A24] px-8 py-4 text-[10px] uppercase tracking-widest font-bold hover:opacity-90 transition-all flex items-center gap-2">
+                            {/* <button className="bg-[#C8B273] text-[#2F2A24] px-8 py-4 text-[10px] uppercase tracking-widest font-bold hover:opacity-90 transition-all flex items-center gap-2">
                               {item.event.fee > 0 && (
                                 <IconCreditCard size={16} />
                               )}
                               {item.event.fee > 0
                                 ? "Pay & Accept"
                                 : "Accept Invitation"}
-                            </button>
+                            </button> */}
+                            <JoinEventClientButton
+                              fee={item.event.fee}
+                              eventId={item.event.id}
+                              ClassName="bg-[#C8B273] text-[#2F2A24] px-8 py-4 text-[10px] uppercase tracking-widest font-bold hover:opacity-90 transition-all flex items-center gap-2"
+                              size={16}
+                            />
                             {/* declined button */}
                             <DeclineButtonClient id={item.id} />
                           </div>

@@ -97,7 +97,7 @@ const EventsManagement = ({
                             />
                             <div>
                               <p className="font-bold text-[#F9EFE5] lg:whitespace-nowrap">
-                                {event.title}
+                                {event.title.substring(0, 20) + "..."}
                               </p>
                               <p className="text-xs text-[#F9EFE5]/40">
                                 {event.id}
@@ -113,7 +113,7 @@ const EventsManagement = ({
 
                         {/* Date */}
                         <td className="px-2 lg:pr-0 pr-4 text-[#F9EFE5]/80">
-                          <div className="text-[#F9EFE5] whitespace-nowrap">
+                          <div className="text-[#F9EFE5] whitespace-nowrap text-sm">
                             {format(new Date(event.date), "MMM dd, yyyy")}
                           </div>
                           <div className="text-xs text-[#F9EFE5]/40">

@@ -52,9 +52,9 @@ const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
   const [loading, setLoading] = useState(true);
 
   // Debug: Log eventId when component mounts or updates
-  //   useEffect(() => {
-  //     console.log("PaymentSuccess component - eventId:", eventId, "clientSecret:", clientSecret?.substring(0, 20) + "...");
-  //   }, [eventId, clientSecret]);
+  // useEffect(() => {
+  //   console.log("PaymentSuccess component - eventId:", eventId, "clientSecret:", clientSecret?.substring(0, 20) + "...");
+  // }, [eventId, clientSecret]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -71,13 +71,15 @@ const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
         if (clientSecret) {
           const stripe = await stripePromise;
           if (stripe) {
-            const stripeResponse =
-              (await stripe.retrievePaymentIntent(clientSecret)) as any;
+            const stripeResponse = (await stripe.retrievePaymentIntent(
+              clientSecret,
+            )) as any;
             const paymentIntent = stripeResponse?.paymentIntent;
-            console.log('paymentIntent----------------------------------');
-            console.log(paymentIntent);
+            // console.log("paymentIntent----------------------------------");
+            // console.log(paymentIntent);
             if (paymentIntent) {
-              const charge = ((paymentIntent.charges as any)?.data?.[0] as any) || {};
+              const charge =
+                ((paymentIntent.charges as any)?.data?.[0] as any) || {};
               const pmDetails = charge.payment_method_details || {};
               const card = pmDetails.card || {};
               const paymentMethodType =
@@ -348,7 +350,10 @@ const PaymentSuccess = ({ eventId, clientSecret }: PaymentSuccessProps) => {
                 </button>
               </div>
 
-              <Link href="/profile/my-events" className="w-full md:w-auto px-10 py-5 bg-[#ffffff]/5 border border-[#C8B273]/30 text-[#C8B273] font-bold text-[10px] uppercase tracking-[0.25em] rounded-lg hover:bg-[#C8B273]/10 transition-all duration-300 cursor-pointer">
+              <Link
+                href="/profile/my-events"
+                className="w-full md:w-auto px-10 py-5 bg-[#ffffff]/5 border border-[#C8B273]/30 text-[#C8B273] font-bold text-[10px] uppercase tracking-[0.25em] rounded-lg hover:bg-[#C8B273]/10 transition-all duration-300 cursor-pointer"
+              >
                 Go to My Events
               </Link>
             </div>

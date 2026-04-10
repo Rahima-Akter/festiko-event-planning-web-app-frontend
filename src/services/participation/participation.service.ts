@@ -15,7 +15,8 @@ export const joinEvent = async (eventId: string) => {
 
 export const confirmPayment = async (eventId: string) => {
   try {
-    const response = await axiosActions.axiosPost("/participation/confirm-payment",
+    const response = await axiosActions.axiosPost(
+      "/participation/confirm-payment",
       {
         data: {
           eventId,
@@ -80,6 +81,9 @@ export const getEventParticipants = async (
   params?: {
     page?: number;
     limit?: number;
+    search?: string;
+    searchFields?: string[];
+    enumFields?: string[];
   },
 ) => {
   try {
@@ -89,6 +93,9 @@ export const getEventParticipants = async (
         params: {
           page: params?.page,
           limit: params?.limit,
+          search: params?.search,
+          searchFields: params?.searchFields,
+          enumFields: params?.enumFields,
         },
       },
     );
@@ -102,9 +109,9 @@ export const getEventParticipants = async (
 export const getMyParticipations = async (params?: {
   page?: number;
   limit?: number;
-  query?: string;
   search?: string;
   searchFields?: string[];
+  enumFields?: string[];
 }) => {
   try {
     const response = await axiosActions.axiosGet(
@@ -113,8 +120,9 @@ export const getMyParticipations = async (params?: {
         params: {
           page: params?.page,
           limit: params?.limit,
-          search: params?.search ?? params?.query,
+          search: params?.search,
           searchFields: params?.searchFields,
+          enumFields: params?.enumFields,
         },
       },
     );

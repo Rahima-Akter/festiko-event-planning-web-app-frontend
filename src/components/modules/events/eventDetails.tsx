@@ -266,8 +266,7 @@ const EventDetails = ({
                             Admission Fee
                           </p>
                           <p className="text-4xl font-headline font-bold text-[#1f1b15] flex flex-row items-center">
-                            <span className="font-extrabold text-3xl">৳</span>
-                            {event?.fee}{" "}
+                            ${event?.fee}{" "}
                             <span className="text-lg font-normal text-[#7d7668]">
                               / person
                             </span>
@@ -293,8 +292,10 @@ const EventDetails = ({
 
                         {/* event join button */}
                         <JoinEventClientButton
-                          fee={event!.fee}
-                          eventId={event!.id}
+                          fee={event?.fee}
+                          eventId={event?.id}
+                          ClassName="flex items-center justify-center gap-2 w-full bg-linear-to-br from-[#6e5d27] to-[#c8b273] text-white py-5 rounded-xl font-bold text-lg shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all mb-4 cursor-pointer"
+                          size={20}
                         />
                       </div>
 

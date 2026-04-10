@@ -29,7 +29,8 @@ const MyParticipationsClient = () => {
           page,
           limit: 6,
           search: debouncedSearch,
-          searchFields: ["title", "date", "time", "venue"],
+          searchFields: ["event.title", "event.date", "event.venue"],
+          enumFields: ["status", "paymentStatus"],
         });
         setMyParticipations(response ?? null);
       };

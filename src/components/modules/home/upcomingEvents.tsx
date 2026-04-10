@@ -70,7 +70,7 @@ const UpcomingEventsSection = ({
                           {event.title}
                         </h3>
                         <p className="font-body text-sm text-[#4b463a] leading-relaxed mb-6">
-                          {event.description}
+                          {event.description.substring(0, 100) + "........."}
                         </p>
                         <Link
                           href={`/events/event-details/${event.id}`}
