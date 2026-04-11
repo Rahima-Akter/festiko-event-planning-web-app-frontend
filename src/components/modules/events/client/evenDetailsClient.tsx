@@ -9,26 +9,27 @@ import { Event } from "@/types/event/event.types";
 const EvenDetailsClient = ({ id: eventId }: { id: string }) => {
   const [eventDetails, setEventDetails] = useState<Event | null>(null);
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchEventDetails = async () => {
       try {
         setLoading(true);
         const response = await getEventById(eventId);
-        setEventDetails(response.data ?? null);
+        setEventDetails(response?.data ?? null);
         const userResponse = await getProfile();
-        setUser(userResponse.data ?? null);
+        setUser(userResponse?.data ?? null);
       } catch (err) {
         console.error(err);
         setEventDetails(null);
+        setUser(null);
       } finally {
         setLoading(false);
       }
     };
 
     fetchEventDetails();
-  }, [eventId]);
+  }, [eventId, setEventDetails, setUser]);
 
   return (
     <EventDetails

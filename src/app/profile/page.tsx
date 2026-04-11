@@ -1,7 +1,7 @@
-import Settings from "@/components/modules/profile/settings/settings";
+import UsersOverviewClient from "@/components/modules/profile/overview/client/usersOverviewClient";
 
 const SettingsPage = () => {
-  return <Settings />;
+  return <UsersOverviewClient />;
 };
 
 export default SettingsPage;

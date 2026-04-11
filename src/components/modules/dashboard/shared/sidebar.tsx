@@ -1,23 +1,58 @@
 "use client";
 import Image from "next/image";
-import logo from "../../../../../public/festiko-logo.png";
+import logo from "@/assets/festiko-logo.png";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   IconCalendarEvent,
   IconDashboard,
   IconHome,
   IconLogout,
+  IconUser,
   IconUsersGroup,
+  IconUsersMinus,
 } from "@tabler/icons-react";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { getProfile, logoutUser } from "@/services/auth/auth.service";
+import { User } from "@/types/auth/auth.types";
+import { toast } from "sonner";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
 const DashboardSidebar = ({ isOpen, setIsOpen }: Props) => {
+  const router = useRouter();
   const pathName = usePathname();
+  const [user, setUser] = useState<User | null>();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await getProfile();
+        if (res?.success) {
+          setUser(res?.data);
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUser();
+  }, [setUser]);
+
+  const handleLogout = async () => {
+    try {
+      const response = await logoutUser();
+      if (response?.success) {
+        toast.success("You are logged out successfully!");
+        window.location.href = "/login";
+        router.push("/login");
+      }
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
+
   return (
     <>
       {isOpen && (
@@ -39,13 +74,18 @@ const DashboardSidebar = ({ isOpen, setIsOpen }: Props) => {
         >
           ✕
         </button>
-
         {/* logo */}
         <div className="px-10 mb-3 text-center flex flex-col justify-center items-center">
           {/* <span className="text-2xl font-bold font-['Noto_Serif'] text-[#c8b273] italic mb-6 block">
           Festiko
         </span> */}
-          <Image src={logo} alt="Festiko Logo" width={150} height={150} />
+          <Image
+            src={logo}
+            alt="Festiko Logo"
+            width={150}
+            height={150}
+            loading="eager"
+          />
           <p className="font-['Manrope'] font-medium uppercase tracking-[0.05em] text-[#fcf2e8]/60 -mt-5">
             Welcome back
           </p>
@@ -95,32 +135,59 @@ const DashboardSidebar = ({ isOpen, setIsOpen }: Props) => {
             </span>
             <span className="text-sm uppercase tracking-widest">All Users</span>
           </Link>
+          <Link
+            className={`flex items-center gap-4 py-3 px-8 text-[#f9efe5]/60 hover:bg-[#C8B273]/5 hover:text-[#C8B273] transition-all duration-300 ${pathName === "/dashboard/soft-deleted-users-management" ? "text-[#d1b366] border-r-2 border-[#C8B273] bg-[#C8B273]/20 font-semibold" : ""}`}
+            href="/dashboard/soft-deleted-users-management"
+          >
+            <span className="material-symbols-outlined">
+              <IconUsersMinus />
+            </span>
+            <span className="text-sm uppercase tracking-widest">
+              Soft Deleted Users
+            </span>
+          </Link>
         </nav>
         {/* Footer Section */}
         <div className="mt-auto px-8 border-t border-[#f9efe5]/10 pt-8 space-y-6">
-          {/* 🔥 Logout moved ABOVE */}
-          <Link
+          <button
+            onClick={() => handleLogout()}
             className="pl-2 flex items-center gap-4 py-2 text-[#f9efe5]/60 hover:text-[#ffb4ab] transition-colors"
-            href="#"
           >
             <span className="material-symbols-outlined">
               <IconLogout />
             </span>
             <span className="text-sm uppercase tracking-widest">Logout</span>
-          </Link>
-
-          {/* User */}
-          <div className="flex items-center gap-4">
-            <img
-              alt="Admin Profile Avatar"
-              className="w-10 h-10 rounded-full object-cover border border-[#C8B273]/30"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaKeN-asLNJvQDwpw9ypo0_n02tPt2lsvoMBuaoVWs4799o1FoLXssnKLt61_fdz-bs8hDXePkVbG8aSrPRzynWbJWlCrAqmyvrI_X2yD7poSq77dTzq0YGiP2TBn4hpmDCA77yxrCxx7Xwl0yoKbgVLZIyylHBpDYjaABoma-VDFLK8vsNobaFwi80bZPuFf8iGw075a9t56niToIBM7ntbOTgBBSBQ9FoR5HeFMLeKijangZnpIzWbiilDb_KBYS1uL-JIsC30UI"
-            />
-            <div>
-              <p className="text-[#f9efe5] text-sm font-semibold">
-                Julian Thorne
-              </p>
-              <p className="text-[#f9efe5]/40 text-xs">Head of Operations</p>
+          </button>
+          <div className="flex flex-col gap-4 border-t border-[#c8b273]/10">
+            <div className="flex items-center gap-3">
+              <>
+                {user?.profile_image ? (
+                  <Image
+                    src={user.profile_image}
+                    alt="Profile Image"
+                    width={40}
+                    height={40}
+                    unoptimized
+                    className="w-9 h-9 rounded-md bg-[#c8b273] flex items-center justify-center text-[#2F2A24] font-bold overflow-hidden border-2 border-[#c8b273]/30"
+                  />
+                ) : (
+                  <>
+                    <div className="w-10 h-10 rounded-full bg-[#c8b273] flex items-center justify-center text-[#2F2A24] font-bold overflow-hidden border-2 border-[#c8b273]/30">
+                      <span className="material-symbols-outlined">
+                        <IconUser />
+                      </span>
+                    </div>
+                  </>
+                )}
+                <div>
+                  <p className="text-sm font-bold text-white leading-tight">
+                    {user?.name || "User Name"}
+                  </p>
+                  <p className="text-[10px] text-[#c8b273]/70 uppercase tracking-tighter">
+                    {user?.role || "User Role"}
+                  </p>
+                </div>
+              </>
             </div>
           </div>
         </div>

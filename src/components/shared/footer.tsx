@@ -20,6 +20,8 @@ const Footer = () => {
                 alt="Festiko Logo"
                 width={100}
                 height={100}
+                className="w-auto h-auto"
+                loading="eager"
               />
               <span className="text-[#c8b273] font-headline text-3xl font-bold italic -ml-6">
                 Festiko

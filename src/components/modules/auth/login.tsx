@@ -4,13 +4,18 @@ import { loginUser } from "@/services/auth/auth.service";
 import { LoginFormValues, loginSchema } from "@/zod/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IconArrowLeft, IconEye, IconEyeClosed } from "@tabler/icons-react";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const LoginForm = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const params = new URLSearchParams(window.location.search);
+  const redirect = params.get("redirect") || "/";
+  const router = useRouter();
 
   const {
     register,
@@ -26,7 +31,7 @@ const LoginForm = () => {
 
       if (res?.success) {
         toast.success(res.message || "Logged in successfully 🎉");
-        // Redirect or perform post-login logic here
+        router.push(redirect);
       } else {
         toast.error(res?.message || "Login failed!");
       }
@@ -45,8 +50,10 @@ const LoginForm = () => {
       <div className="flex flex-col md:flex-row w-full max-w-5xl bg-white/5 border border-white/10 shadow-2xl overflow-hidden min-h-150">
         {/* Left Column: Image */}
         <div className="hidden md:block w-1/2 relative">
-          <img
+          <Image
             alt="Luxury Candlelit Gala"
+            width={100}
+            height={100}
             className="absolute inset-0 w-full h-full object-cover"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDpGl1EN3lX06iODSmjeTWQHbn2Tg96VHc9snHW_uwYQHyQ5gmqsLTB7aINtt5boE3MsHTYSZ_d8qx7lZxR9X7yjMSSYoBwgY1Yktt7XkzdGdkr3cp9Zdgphiv29ULuSJzZjllQlf_AphT8lr5IrJfe6UlCgDgrazDpZskLoHoAKIwGtkEZ-K5ttZix4v00-w38l43pOHrZH3lzofkZqBb6GChitrDERl5Py088vBzXes2ForwsxyL8LgliSmOpF6noWuAZD6QICMj"
           />

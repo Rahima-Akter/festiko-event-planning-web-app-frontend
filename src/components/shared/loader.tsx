@@ -22,6 +22,7 @@ const Loader = () => {
               src={logo}
               width={100}
               height={100}
+              loading="eager"
               className="w-full h-full object-cover animate-pulse"
             />
           </div>

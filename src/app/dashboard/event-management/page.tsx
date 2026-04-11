@@ -1,10 +1,7 @@
-import EventsManagement from "@/components/modules/dashboard/eventsManagement/eventsManagement";
-import EmptyState from "@/components/shared/emptyState";
-import Loader from "@/components/shared/loader";
+import UpcomingEventsClient from "@/components/modules/home/client/upcomingEventsClient";
 
 const EventsManagementPage = () => {
-  return <EmptyState />;
-  // return <EventsManagement />;
+  return <UpcomingEventsClient />;
 };
 
 export default EventsManagementPage;

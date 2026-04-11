@@ -1,6 +1,7 @@
 import { Meta } from "../meta.types";
 
 interface InvitationEvent {
+  id: string;
   title: string;
   fee: number;
   date: string;

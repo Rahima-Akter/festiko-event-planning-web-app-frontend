@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const HeroSection = () => {
   return (
     <>
@@ -21,17 +23,23 @@ const HeroSection = () => {
             orchestrate elegance.
           </p>
           <div className="flex flex-col md:flex-row gap-3">
-            <button className="px-10 py-5 bg-linear-to-br from-[#6e5d27] to-[#c8b273] text-[#ffffff] font-label text-sm uppercase tracking-widest font-bold rounded shadow-xl hover:opacity-90 transition-all active:scale-95">
+            <Link
+              href="/events"
+              className="px-10 py-5 bg-linear-to-br from-[#6e5d27] to-[#c8b273] text-[#ffffff] font-label text-sm uppercase tracking-widest font-bold rounded shadow-xl hover:opacity-90 transition-all active:scale-95"
+            >
               Join An Event →
-            </button>
+            </Link>
             <div className="flex justify-center items-center gap-1 font-semibold text-white">
               <span>-</span>
               <span>OR</span>
               <span>-</span>
             </div>
-            <button className="px-10 py-5 bg-white/10 backdrop-blur-md text-[#c8b273] border border-[#c8b273]/30 font-label text-sm uppercase tracking-widest font-bold rounded hover:bg-white/20 transition-all">
+            <Link
+              href="/profile/my-events"
+              className="px-10 py-5 bg-white/10 backdrop-blur-md text-[#c8b273] border border-[#c8b273]/30 font-label text-sm uppercase tracking-widest font-bold rounded hover:bg-white/20 transition-all"
+            >
               Create An Event ?
-            </button>
+            </Link>
           </div>
         </div>
       </section>

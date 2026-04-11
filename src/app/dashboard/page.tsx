@@ -1,7 +1,7 @@
-import Overview from "@/components/modules/dashboard/overview/overview";
+import OverviewClient from "@/components/modules/dashboard/overview/client/overviewClient";
 
 const OverviewPage = () => {
-  return <Overview />;
+  return <OverviewClient />;
 };
 
 export default OverviewPage;

@@ -6,6 +6,7 @@ import UpcomingEventsSection from "../upcomingEvents";
 import FreePublicEventsSection from "../freePublicEvents";
 import Events from "../../events/events";
 import { usePathname } from "next/navigation";
+import EventsManagement from "../../dashboard/eventsManagement/eventsManagement";
 const UpcomingEventsClient = () => {
   const [allEvents, setAllEvents] = useState<EventResponse | null>(null);
   const [debouncedSearch, setDebouncedSearch] = useState<string>("");
@@ -17,9 +18,12 @@ const UpcomingEventsClient = () => {
   const pathName = usePathname();
 
   useEffect(() => {
-    const delay = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 500);
+    const delay = setTimeout(
+      () => {
+        setDebouncedSearch(search);
+      },
+      search ? 500 : 0,
+    );
 
     return () => clearTimeout(delay);
   }, [search]);
@@ -30,12 +34,12 @@ const UpcomingEventsClient = () => {
         setLoading(true);
         const response = await getAllEvents({
           page,
-          limit: 8,
-          search: debouncedSearch,
+          limit: 10,
+          search: debouncedSearch || "",
           category,
           sortBy: "fee",
           sortOrder: priceSort,
-          searchFields: ["title", "date", "time", "venue"],
+          searchFields: ["title", "date", "time", "venue", "organizer.name"],
           enumFields: ["category"],
         });
         setAllEvents(response ?? null);
@@ -50,12 +54,13 @@ const UpcomingEventsClient = () => {
 
   return (
     <>
-      {pathName === "/home" && (
+      {pathName === "/" && (
         <>
           <UpcomingEventsSection
             allEvents={allEvents?.data ?? null}
             setCategory={setCategory}
             category={category}
+            loading={loading}
           />
           <FreePublicEventsSection allEvents={allEvents?.data ?? null} />
         </>
@@ -69,6 +74,16 @@ const UpcomingEventsClient = () => {
           meta={allEvents?.meta ?? null}
           setCategory={setCategory}
           setPriceSort={setPriceSort}
+        />
+      )}
+      {pathName === "/dashboard/event-management" && (
+        <EventsManagement
+          allEvents={allEvents?.data ?? null}
+          loading={loading}
+          setSearch={setSearch}
+          setPage={setPage}
+          setCategory={setCategory}
+          meta={allEvents?.meta ?? null}
         />
       )}
     </>

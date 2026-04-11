@@ -39,7 +39,7 @@ const FilterActionClient = ({
               setFilterOpen(!filterOpen);
               setFeeOpen(false);
             }}
-            className="flex items-center gap-2 bg-[#2F2A24]/50 border border-[#C8B273]/20 rounded-lg px-6 py-4 min-w-35 hover:border-[#C8B273]/40"
+            className="flex items-center justify-between gap-2 bg-[#2F2A24]/50 border border-[#C8B273]/20 rounded-lg px-6 py-4 min-w-35 hover:border-[#C8B273]/40"
           >
             <span>Filter</span>
             <IconChevronDown size={16} className="text-[#C8B273]" />
@@ -76,7 +76,7 @@ const FilterActionClient = ({
               setFeeOpen(!feeOpen);
               setFilterOpen(false);
             }}
-            className="flex items-center gap-2 bg-[#2F2A24]/50 border border-[#C8B273]/20 rounded-lg px-6 py-4 min-w-35 hover:border-[#C8B273]/40"
+            className="flex items-center justify-between gap-2 bg-[#2F2A24]/50 border border-[#C8B273]/20 rounded-lg px-6 py-4 min-w-35 hover:border-[#C8B273]/40"
           >
             <span>Fee</span>
             <IconChevronDown size={16} className="text-[#C8B273]" />

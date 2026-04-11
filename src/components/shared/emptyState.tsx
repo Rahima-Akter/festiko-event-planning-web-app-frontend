@@ -4,7 +4,6 @@ import { IconStars } from "@tabler/icons-react";
 const EmptyState = () => {
   return (
     <>
-      {/* Main Canvas Container */}
       <main className="h-screen w-full relative flex items-center justify-center overflow-hidden bg-[#2F2A24] text-[#1f1b15]">
         {/* Ambient Lighting and Background Texture */}
         <div className="absolute inset-0 pointer-events-none">
@@ -53,19 +52,6 @@ const EmptyState = () => {
           </div>
         </div>
       </main>
-
-      {/* Tailwind Arbitrary Keyframes */}
-      <style global jsx>{`
-        @keyframes subtle-float {
-          0%,
-          100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(-10px);
-          }
-        }
-      `}</style>
     </>
   );
 };

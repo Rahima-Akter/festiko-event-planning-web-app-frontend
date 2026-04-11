@@ -16,6 +16,7 @@ import { Meta } from "@/types/meta.types";
 import Pagination from "@/components/shared/pagination";
 import Loader from "@/components/shared/loader";
 import EmptyState from "@/components/shared/emptyState";
+import { Spinner } from "@/components/ui/spinner";
 
 const MyEvents = ({
   allEvents,
@@ -34,40 +35,42 @@ const MyEvents = ({
 }) => {
   return (
     <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <main className="lg:ml-72 md:p-12 p-8 min-h-screen flex flex-col gap-12 bg-[#2f2a24] relative">
-          {/* Header Section */}
-          <header className="flex md:flex-row flex-col justify-between items-center space-y-4">
-            <h1 className="text-xl font-bold uppercase tracking-[0.2em] text-[#C8B273]/60 block">
-              My Created Events
-            </h1>
-            <CreateEventButtonClient
-              setPage={setPage}
-              setCategory={setCategory}
-            />
-          </header>
+      <main className="lg:ml-72 md:p-12 p-8 min-h-screen flex flex-col gap-12 bg-[#2f2a24] relative">
+        {/* Header Section */}
+        <header className="flex md:flex-row flex-col justify-between items-center space-y-4">
+          <h1 className="text-xl font-bold uppercase tracking-[0.2em] text-[#C8B273]/60 block">
+            My Created Events
+          </h1>
+          <CreateEventButtonClient
+            setPage={setPage}
+            setCategory={setCategory}
+          />
+        </header>
 
-          {/* Search Input */}
-          <div className="relative w-full -mt-8">
-            <IconSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#d2ccc0]" />
-            <input
-              onChange={(e) => {
-                setPage(1);
-                setSearch(e.target.value);
-              }}
-              type="text"
-              placeholder="Title, Date, Time, Venue"
-              className="w-full bg-[#3a342d] border-none rounded-xl py-4 pl-12 pr-4 text-[#ebe1d7] placeholder:text-[#d2ccc0]/50 focus:ring-1 focus:ring-[#eec96d] transition-all"
-            />
-          </div>
+        {/* Search Input */}
+        <div className="relative w-full -mt-8">
+          <IconSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#d2ccc0]" />
+          <input
+            onChange={(e) => {
+              setPage(1);
+              setSearch(e.target.value);
+            }}
+            type="text"
+            placeholder="Title, Date, Time, Venue"
+            className="w-full bg-[#3a342d] border-none rounded-xl py-4 pl-12 pr-4 text-[#ebe1d7] placeholder:text-[#d2ccc0]/50 focus:ring-1 focus:ring-[#eec96d] transition-all"
+          />
+        </div>
 
-          {allEvents && allEvents.length > 0 ? (
-            <>
-              {/* Event Cards */}
-              <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 -mb-20">
-                {allEvents.map((event) => (
+        {allEvents && allEvents.length > 0 ? (
+          <>
+            {/* Event Cards */}
+            <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 -mb-20">
+              {loading ? (
+                <div className="col-span-3 text-white place-items-center py-10">
+                  <Spinner />
+                </div>
+              ) : (
+                allEvents.map((event) => (
                   <div
                     key={event.id}
                     className="group bg-[#3a342d] flex flex-col overflow-hidden transition-all duration-500 hover:shadow-2xl rounded-xl border border-[#4b463a]/10"
@@ -88,16 +91,16 @@ const MyEvents = ({
                         <span
                           className={`${event.isPublic ? "bg-[#eec96d] text-[#231b00]" : "bg-[rgba(240,75,100,0.8)] text-white"} text-[9px] px-2 py-0.5 tracking-widest uppercase rounded-full font-bold`}
                         >
-                          {event.isPublic ? "Public" : "Private"}
+                          {event.category}
                         </span>
                       </div>
                     </div>
                     <div className="p-4 flex flex-col gap-3">
                       <div>
-                        <h3 className="text-xl font-bold text-[#ebe1d7] mb-0.5">
+                        <h3 className="text-xl font-bold text-[#ebe1d7] mb-4">
                           {event.title}
                         </h3>
-                        <div className="flex flex-col gap-0.5 text-[#d2ccc0] text-xs">
+                        <div className="flex flex-col gap-2 text-[#d2ccc0] text-xs">
                           <span className="flex items-center gap-2">
                             <IconCalendar size={16} />
                             {format(
@@ -136,19 +139,19 @@ const MyEvents = ({
                       </div>
                     </div>
                   </div>
-                ))}
-              </section>
+                ))
+              )}
+            </section>
 
-              {/* Pagination */}
-              {meta && <Pagination meta={meta} onPageChange={setPage} />}
-            </>
-          ) : (
-            <div className="flex justify-center items-center -mt-5">
-              <EmptyState />
-            </div>
-          )}
-        </main>
-      )}
+            {/* Pagination */}
+            {meta && <Pagination meta={meta} onPageChange={setPage} />}
+          </>
+        ) : (
+          <div className="flex justify-center items-center -mt-5">
+            <EmptyState />
+          </div>
+        )}
+      </main>
     </>
   );
 };

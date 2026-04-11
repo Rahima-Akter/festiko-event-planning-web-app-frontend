@@ -51,7 +51,7 @@ const MyReviews = ({
                       <div className="absolute top-0 right-0 w-24 h-24 bg-linear-to-br from-[#c8b273]/10 to-transparent rounded-full -mr-12 -mt-12 blur-2xl"></div>
 
                       <div className="mb-2">
-                        <h3 className="font-headline text-xl text-[#ffffff] font-semibold line-clamp-2 min-h-14 -mb-2">
+                        <h3 className="font-headline text-xl text-[#ffffff] font-semibold line-clamp-2 min-h-14 mb-2">
                           {review.event.title}
                         </h3>
                         <p className="font-label text-[10px] uppercase tracking-widest text-[#c8b273]">
