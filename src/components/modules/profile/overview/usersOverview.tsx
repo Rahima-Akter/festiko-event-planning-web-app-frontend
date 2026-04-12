@@ -82,7 +82,7 @@ const UsersOverview = ({
             </div>
 
             {/* Stat Card 4 */}
-            <div className="bg-[#25211C] p-8 rounded-xl border border-[#C8B273]/20 relative overflow-hidden group shadow-lg">
+            <div className="bg-[#25211C] p-8 rounded-xl border border-[#C8B273]/20 relative overflow-hidden group shadow-lg space-x-3">
               <div className="absolute top-3 right-0 p-4 opacity-70 group-hover:opacity-20 transition-opacity">
                 <IconBasketDollar className="text-6xl text-[#ecd79e]" />
               </div>
@@ -95,7 +95,7 @@ const UsersOverview = ({
             </div>
 
             {/* Stat Card 5 */}
-            <div className="bg-[#3A342D] p-8 rounded-xl border border-[#C8B273]/20 relative overflow-hidden group shadow-lg">
+            <div className="bg-[#3A342D] p-8 rounded-xl border border-[#C8B273]/20 relative overflow-hidden group shadow-lg space-x-3">
               <div className="absolute top-3 right-0 p-4 opacity-70 group-hover:opacity-20 transition-opacity">
                 <IconUsersGroup className="text-6xl text-[#ecd79e]" />
               </div>

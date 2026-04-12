@@ -6,15 +6,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IconArrowLeft, IconEye, IconEyeClosed } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 const LoginForm = () => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
-  const params = new URLSearchParams(window.location.search);
-  const redirect = params.get("redirect") || "/";
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect") || "/";
   const router = useRouter();
 
   const {

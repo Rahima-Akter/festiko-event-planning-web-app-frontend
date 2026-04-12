@@ -15,7 +15,7 @@ export default function DashboardLayout({
 
       {/* Content */}
       <div className="flex-1 w-full">
-        <button onClick={() => setIsOpen(true)} className="lg:hidden p-4">
+        <button onClick={() => setIsOpen(true)} className="lg:hidden p-4 bg-transparent! border-0! outline-none! shadow-none! appearance-none!">
           ☰
         </button>
         {children}

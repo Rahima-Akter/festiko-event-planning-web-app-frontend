@@ -7,11 +7,9 @@ import {
   IconCashEdit,
   IconConfetti,
   IconDashboard,
-  IconGitPullRequest,
   IconHome,
   IconLogout,
   IconMail,
-  IconPointerQuestion,
   IconSettings,
   IconUser,
 } from "@tabler/icons-react";
@@ -63,7 +61,7 @@ const ProfileSidebar = ({ isOpen, setIsOpen }: Props) => {
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
-          className="fixed inset-0 z-40 lg:hidden"
+          className="fixed inset-0 z-40 lg:hidden bg-black/40 backdrop-blur-sm top-0 right-0"
         />
       )}
       <aside
