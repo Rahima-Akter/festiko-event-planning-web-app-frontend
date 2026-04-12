@@ -681,7 +681,8 @@ We welcome contributions! Please follow these guidelines:
 ### Project Links
 
 - **GitHub Repository**: [frontend-repository](https://github.com/Rahima-Akter/festiko-event-planning-web-app-frontend.git)
-- **Live Demo**: [Add your live URL]
+- **Live Demo Frontend**: [Live Project](https://festiko-frontend.vercel.app/)
+- **Live Demo Backend**: [Live Project](https://festiko-backend.vercel.app/festiko/v1)
 - **Backend Repository**: [backend-repository](https://github.com/Rahima-Akter/festiko-event-planning-web-app-backend.git)
 
 ### Support
@@ -700,6 +701,13 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-**Made with ❤️ by Rahima Akter**
 
-Last Updated: April 10, 2026
+
+
+
+
+
+
+
+
+**Made with ❤️ by Rahima Akter**

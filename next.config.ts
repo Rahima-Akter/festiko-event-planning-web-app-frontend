@@ -22,6 +22,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: "https://festiko-backend.vercel.app/festiko/v1/:path*",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -1,11 +1,9 @@
 import type { Config } from "tailwindcss";
 
-export default {
+const config: Config = {
   darkMode: "class",
   content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
@@ -23,27 +21,27 @@ export default {
         "inverse-on-surface": "#f9efe5",
         "on-primary-fixed": "#231b00",
         "on-background": "#1f1b15",
-        error: "#ba1a1a",
+        "error": "#ba1a1a",
         "surface-container": "#f6ece3",
         "primary-fixed-dim": "#dcc584",
         "surface-container-low": "#fcf2e8",
-        tertiary: "#6a5e38",
+        "tertiary": "#6a5e38",
         "on-tertiary-fixed": "#231b00",
         "on-primary-fixed-variant": "#554511",
         "on-error-container": "#93000a",
         "on-secondary-container": "#6c624a",
         "surface-variant": "#ebe1d7",
         "primary-fixed": "#f9e19d",
-        background: "#fff8f4",
-        secondary: "#675d46",
+        "background": "#fff8f4",
+        "secondary": "#675d46",
         "surface-container-highest": "#ebe1d7",
         "surface-dim": "#e2d8cf",
         "on-tertiary-fixed-variant": "#514623",
         "secondary-fixed": "#efe1c4",
-        outline: "#7d7668",
+        "outline": "#7d7668",
         "on-error": "#ffffff",
         "surface-tint": "#6e5d27",
-        primary: "#6e5d27",
+        "primary": "#6e5d27",
         "tertiary-fixed-dim": "#d6c598",
         "on-surface-variant": "#4b463a",
         "inverse-surface": "#353029",
@@ -55,7 +53,7 @@ export default {
         "on-secondary-fixed": "#211b09",
         "on-secondary": "#ffffff",
         "tertiary-fixed": "#f3e1b2",
-        surface: "#fff8f4",
+        "surface": "#fff8f4",
         "surface-bright": "#fff8f4",
       },
       fontFamily: {
@@ -71,4 +69,5 @@ export default {
       },
     },
   },
-} satisfies Config;
+};
+export default config;
