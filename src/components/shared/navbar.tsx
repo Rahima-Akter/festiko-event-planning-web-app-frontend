@@ -9,6 +9,8 @@ import {
   IconLogout,
   IconMenu2,
   IconX,
+  IconPhone,
+  IconZoomExclamation,
 } from "@tabler/icons-react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
@@ -120,6 +122,28 @@ const Navbar = () => {
               }`}
             >
               <IconCalendarEvent size={18} /> Events
+            </Link>
+
+            <Link
+              href="/about"
+              className={`flex items-center gap-1 font-headline font-semibold transition-all ${
+                isActive("/events")
+                  ? "bg-[#6e5d27]/20 px-3 py-1.5 rounded-md text-[#6e5d27]"
+                  : "text-[#353029]/70 hover:text-[#6e5d27]"
+              }`}
+            >
+              <IconZoomExclamation size={18} /> About
+            </Link>
+
+            <Link
+              href="/contact"
+              className={`flex items-center gap-1 font-headline font-semibold transition-all ${
+                isActive("/events")
+                  ? "bg-[#6e5d27]/20 px-3 py-1.5 rounded-md text-[#6e5d27]"
+                  : "text-[#353029]/70 hover:text-[#6e5d27]"
+              }`}
+            >
+              <IconPhone size={18} /> Contact
             </Link>
           </div>
 

@@ -4,6 +4,8 @@ import {
   IconShare,
   IconCamera,
   IconWorld,
+  IconBrandLinkedin,
+  IconBrandGithub,
 } from "@tabler/icons-react";
 
 const Footer = () => {
@@ -35,19 +37,19 @@ const Footer = () => {
               Concierge
             </h4>
             <Link
-              href="#"
+              href="/about"
               className="font-body text-sm text-[#fcf2e8]/60 hover:text-white transition-colors duration-300"
             >
               About
             </Link>
             <Link
-              href="#"
+              href="/contact"
               className="font-body text-sm text-[#fcf2e8]/60 hover:text-white transition-colors duration-300"
             >
               Contact
             </Link>
             <Link
-              href="#"
+              href="/partnership"
               className="font-body text-sm text-[#fcf2e8]/60 hover:text-white transition-colors duration-300"
             >
               Partnerships
@@ -58,19 +60,19 @@ const Footer = () => {
               Legal
             </h4>
             <Link
-              href="#"
+              href="/privacy"
               className="font-body text-sm text-[#fcf2e8]/60 hover:text-white transition-colors duration-300"
             >
               Privacy
             </Link>
             <Link
-              href="#"
+              href="/terms"
               className="font-body text-sm text-[#fcf2e8]/60 hover:text-white transition-colors duration-300"
             >
               Terms
             </Link>
             <Link
-              href="#"
+              href="/coockie-policy"
               className="font-body text-sm text-[#fcf2e8]/60 hover:text-white transition-colors duration-300"
             >
               Cookie Policy
@@ -98,26 +100,28 @@ const Footer = () => {
           </p>
           <div className="flex gap-8">
             <Link
-              href="#"
+              href="https://github.com/Rahima-Akter"
               className="text-[#fcf2e8]/40 hover:text-[#c8b273] transition-colors"
             >
-              <IconShare className="text-xl" />
+              <IconBrandGithub className="text-xl" />
             </Link>
             <Link
-              href="#"
+              href="https://www.linkedin.com/in/rahima-akter99"
               className="text-[#fcf2e8]/40 hover:text-[#c8b273] transition-colors"
             >
-              <IconCamera className="text-xl" />
+              <IconBrandLinkedin className="text-xl" />
             </Link>
             <Link
-              href="#"
-              className="text-[#fcf2e8]/40 hover:text-[#c8b273] transition-colors"
+              href="https://rahima-akter-portfolio.netlify.app/"
+              className="text-[#fcf2e8]/40 hover:text-[#c8b273] transition-colors cursor-pointer"
             >
               <IconWorld className="text-xl" />
             </Link>
           </div>
         </div>
-        <p className="text-center text-xs text-amber-200/30 pt-6">Made by Rahima Akter with - ❤️</p>
+        <p className="text-center text-xs text-amber-200/30 pt-6">
+          Made by Rahima Akter with - ❤️
+        </p>
       </footer>
     </>
   );
