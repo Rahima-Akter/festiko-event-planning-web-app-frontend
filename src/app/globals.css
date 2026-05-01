@@ -133,6 +133,21 @@
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
+.glass-overlay {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+}
+
+.luxury-gradient {
+  background: linear-gradient(135deg, #6e5d27 0%, #c8b273 100%);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
 body {
   font-family: var(--font-sans);
   background-color: #fff8f4;
@@ -231,6 +246,7 @@ body {
 
 /* empty states styles */
 @keyframes subtle-float {
+
   0%,
   100% {
     transform: translateY(0);

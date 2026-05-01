@@ -87,7 +87,7 @@ const Navbar = () => {
   return (
     <>
       <header className="fixed top-0 w-full z-50 bg-[#fff8f4]/80 dark:bg-[#353029]/80 backdrop-blur-xl shadow-[0_8px_30px_rgb(31,27,21,0.04)]">
-        <nav className="flex justify-between items-center px-3 md:px-12 h-20 max-w-7xl mx-auto">
+        <nav className="flex justify-between items-center px-3 md:px-12 h-16 max-w-7xl mx-auto">
           {/* Logo */}
           <Image
             src={logo}
@@ -130,13 +130,13 @@ const Navbar = () => {
               <div className="hidden md:flex gap-4">
                 <Link
                   href="/login"
-                  className="px-4 py-2 border border-[#6e5d27] rounded-md text-[#6e5d27]"
+                  className="px-4 py-2 border border-[#6e5d27] rounded-md text-[#6e5d27] text-[12px]"
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
-                  className="px-4 py-2 bg-[#6e5d27] rounded-md text-white"
+                  className="px-4 py-2 bg-[#6e5d27] rounded-md text-white text-[12px]"
                 >
                   Register
                 </Link>
