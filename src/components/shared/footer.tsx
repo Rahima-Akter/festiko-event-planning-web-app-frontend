@@ -5,14 +5,12 @@ import {
   IconCamera,
   IconWorld,
 } from "@tabler/icons-react";
-import Image from "next/image";
-import logo from "@/assets//festiko-logo.png";
 
 const Footer = () => {
   return (
     <>
       <footer className="bg-[#353029] w-full pt-16 pb-8 px-12 mt-auto">
-        <div className="max-w-360 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 items-center justify-center place-items-center">
+        <div className="max-w-360 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 items-start justify-items-start text-left w-full">
           <div className="flex flex-col gap-6">
             <div className="flex items-center gap-0">
               {/* <Image
