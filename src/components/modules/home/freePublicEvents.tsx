@@ -26,7 +26,7 @@ const FreePublicEventsSection = ({
           </div>
 
           {filtered && filtered?.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:gap-12">
               {filtered?.map((event) => (
                 <div
                   key={event.id}

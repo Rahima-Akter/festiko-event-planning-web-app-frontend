@@ -34,7 +34,7 @@ const CreateYourOwnEliteEventSection = () => {
             </p>
             <Link
               href={`/profile/my-events`}
-              className="flex items-center gap-4 px-12 py-6 bg-[#6e5d27] text-[#ffffff] font-label text-sm uppercase tracking-widest font-bold group cursor-pointer w-1/2 whitespace-nowrap"
+              className="flex items-center gap-4 px-12 py-6 bg-[#6e5d27] text-[#ffffff] font-label text-sm uppercase tracking-widest font-bold group cursor-pointer lg:w-1/2 whitespace-nowrap"
             >
               Start Planning
               <IconArrowRight className="transition-transform group-hover:translate-x-2" />
